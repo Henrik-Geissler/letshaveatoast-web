@@ -1,52 +1,41 @@
-import { Layout } from '../components/Layout'
 import { withApollo } from '../utils/withApollo'
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-const Index = () => {
-  const [data, setData] = useState({ hits: [] })
-  useEffect(() => {
-    fetch('https://api.fullstack.fun', {
-      //fetch('http://localhost:4000', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: `
-          query {
-            toast {
-              firstname
-              lastname
-              id
-              amount
-              category
-            }
-          }`,
-      }),
-    })
-      .then(res => res.json())
-      .then(res => console.log(res.data))
-    //.then(res => setData(res.data))
-  }, [])
+import { gql, useQuery } from '@apollo/client'
 
-  if (!data) {
-    return (
-      <div>
-        <div>you got query failed for some reason</div>
-      </div>
-    )
+const FRESH_TOAST = gql`
+  query getToast {
+    getToast {
+      firstname
+      lastname
+      id
+      amount
+      category
+    }
+  }
+`
+
+interface StyleVProps {}
+
+const Todos: React.FC<StyleVProps> = () => {
+  const [data2, setData] = useState()
+  const [refresh, setRefresh] = useState(0)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('This will run every second!')
+      setRefresh(refresh + 1)
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
+  const fetchData = async () => {
+    const { loading, error, data } = await useQuery(FRESH_TOAST)
+    console.log(refresh)
+    setData(data)
   }
 
-  /*return (
-    <Layout>
-      <ul>
-        {data.hits.map(item => (
-          <li key={item.id}>
-            {item.firstname} {item.lastname} {item.category} {item.amount}
-          </li>
-        ))}
-      </ul>
-    </Layout>
-  )*/
-  return <>hi</>
+  fetchData()
+  console.log(data2)
+  if (data2 === undefined) return <>load</>
+  return <ul>{data2.getToast.firstname}</ul>
 }
 
-export default withApollo({ ssr: true })(Index)
+export default withApollo({ ssr: true })(Todos)
