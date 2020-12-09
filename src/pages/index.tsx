@@ -5,7 +5,7 @@ import axios from 'axios'
 const Index = () => {
   const [data, setData] = useState({ hits: [] })
   useEffect(() => {
-    fetch('https://api.letshaveatoast.app', {
+    fetch('https://api.fullstack.fun1 ^q', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
