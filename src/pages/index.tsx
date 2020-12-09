@@ -5,15 +5,24 @@ import axios from 'axios'
 const Index = () => {
   const [data, setData] = useState({ hits: [] })
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        'https://api.fullstack.fun/graphql?query={getToast{id,amount,category,firstname,lastname}}'
-      )
-
-      setData(result.data)
-    }
-
-    fetchData()
+    fetch('https://api.letshaveatoast.app', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `
+          query {
+            toast {
+              firstname
+              lastname
+              id
+              amount
+              category
+            }
+          }`,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => console.log(res.data))
   }, [])
 
   if (!data) {
