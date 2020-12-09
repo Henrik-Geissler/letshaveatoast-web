@@ -7,7 +7,7 @@ const Index = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
-        'https://api.fullstack.fun/graphql?query={getToast{amount,category,firstname,lastname}}'
+        'https://api.fullstack.fun/graphql?query={getToast{id,amount,category,firstname,lastname}}'
       )
 
       setData(result.data)
@@ -28,8 +28,8 @@ const Index = () => {
     <Layout>
       <ul>
         {data.hits.map(item => (
-          <li key={item.objectID}>
-            <a href={item.url}>{item.title}</a>
+          <li key={item.id}>
+            {item.firstname} {item.lastname} {item.category} {item.amount}
           </li>
         ))}
       </ul>
