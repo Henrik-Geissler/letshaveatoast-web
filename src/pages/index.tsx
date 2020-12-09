@@ -23,6 +23,7 @@ const Index = () => {
     })
       .then(res => res.json())
       .then(res => console.log(res.data))
+    //.then(res => setData(res.data))
   }, [])
 
   if (!data) {
@@ -33,7 +34,7 @@ const Index = () => {
     )
   }
 
-  return (
+  /*return (
     <Layout>
       <ul>
         {data.hits.map(item => (
@@ -43,7 +44,8 @@ const Index = () => {
         ))}
       </ul>
     </Layout>
-  )
+  )*/
+  return <>hi</>
 }
 
 export default withApollo({ ssr: true })(Index)
