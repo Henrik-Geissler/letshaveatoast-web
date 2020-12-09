@@ -115,8 +115,7 @@ export type PostInput = {
 }
 
 export type ToastInput = {
-  firstname: Scalars['String']
-  lastname: Scalars['String']
+  name: Scalars['String']
   amount: Scalars['Int']
   category: Scalars['Int']
 }

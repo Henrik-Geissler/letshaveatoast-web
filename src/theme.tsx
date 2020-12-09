@@ -10,7 +10,45 @@ const theme = {
     ...chakraTheme.colors,
     black: '#16161D',
   },
-  fonts,
+  fonts: {
+    body: 'system-ui, sans-serif',
+    heading: 'Georgia, serif',
+    mono: 'Menlo, monospace',
+  },
+  fontSizes: {
+    xs: '12px',
+    sm: '14px',
+    md: '16px',
+    lg: '18px',
+    xl: '20px',
+    '2xl': '24px',
+    '3xl': '28px',
+    '4xl': '36px',
+    '5xl': '48px',
+    '6xl': '64px',
+  },
+  fontWeights: {
+    normal: 400,
+    medium: 500,
+    bold: 700,
+  },
+  lineHeights: {
+    normal: 'normal',
+    none: '1',
+    shorter: '1.25',
+    short: '1.375',
+    base: '1.5',
+    tall: '1.625',
+    taller: '2',
+  },
+  letterSpacings: {
+    tighter: '-0.05em',
+    tight: '-0.025em',
+    normal: '0',
+    wide: '0.025em',
+    wider: '0.05em',
+    widest: '0.1em',
+  },
   breakpoints,
   icons: {
     ...chakraTheme.icons,
@@ -31,6 +69,61 @@ const theme = {
         </svg>
       ),
       viewBox: '0 0 3000 3163',
+    },
+  },
+  components: {
+    Button: {
+      // 1. We can update the base styles
+      baseStyle: {
+        fontWeight: '100', // Normally, it is "semibold"
+        bg: 'red.100',
+        fontSize: ['48px', '72px'],
+      },
+      // 2. We can add a new button size or extend existing
+      sizes: {
+        xl: {
+          h: '56px',
+          fontSize: 'lg',
+          px: '32px',
+        },
+      },
+      // 3. We can add a new visual variant
+      variants: {
+        'with-shadow': {
+          bg: 'red.400',
+          boxShadow: '0 0 2px 2px #efdfde',
+        },
+        // 4. We can override existing variants
+        solid: props => ({
+          bg: props.colorMode === 'dark' ? 'red.300' : 'red.500',
+        }),
+      },
+    },
+    Toast: {
+      // 1. We can update the base styles
+      baseStyle: {
+        fontWeight: '100', // Normally, it is "semibold"
+        backgroundColor: '#ffa',
+      },
+      // 2. We can add a new button size or extend existing
+      sizes: {
+        xl: {
+          h: '56px',
+          fontSize: 'lg',
+          px: '32px',
+        },
+      },
+      // 3. We can add a new visual variant
+      variants: {
+        'with-shadow': {
+          bg: 'red.400',
+          boxShadow: '0 0 2px 2px #efdfde',
+        },
+        // 4. We can override existing variants
+        solid: props => ({
+          bg: props.colorMode === 'dark' ? 'red.300' : 'red.500',
+        }),
+      },
     },
   },
 }
