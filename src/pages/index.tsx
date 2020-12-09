@@ -18,6 +18,7 @@ import {
 import { useToast } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import { Wrapper } from '../components/Wrapper'
+import { ToastInput } from '../generated/graphql'
 
 const FRESH_TOAST = gql`
   query getToast {
@@ -88,7 +89,7 @@ const Todos: React.FC<StyleVProps> = () => {
     <Wrapper>
       <Formik
         initialValues={{}}
-        onSubmit={(values, actions) => {
+        onSubmit={(values: any, actions) => {
           setTimeout(() => {
             pushToast({
               variables: {
