@@ -17,6 +17,7 @@
     "@emotion/react": "^11.1.2",
     "@emotion/styled": "^10.0.27",
     "@urql/exchange-graphcache": "^3.0.2",
+    "axios": "^0.21.0",
     "emotion-theming": "^10.0.27",
     "formik": "^2.1.5",
     "framer-motion": "^2.9.5",
