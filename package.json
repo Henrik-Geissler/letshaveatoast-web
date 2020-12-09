@@ -82,15 +82,5 @@
     "prettier": "^2.2.1",
     "typescript": "^3.9.7",
     "vercel": "^21.0.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,json,ts,tsx,eslintrc,graphql}": [
-      "eslint --fix"
-    ]
   }
 }

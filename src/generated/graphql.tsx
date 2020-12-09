@@ -114,6 +114,13 @@ export type PostInput = {
   text: Scalars['String']
 }
 
+export type ToastInput = {
+  firstname: Scalars['String']
+  lastname: Scalars['String']
+  amount: Scalars['Int']
+  category: Scalars['Int']
+}
+
 export type UserResponse = {
   __typename?: 'UserResponse'
   errors?: Maybe<Array<FieldError>>
