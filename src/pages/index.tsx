@@ -45,7 +45,7 @@ import ToastTable from '../components/Toast/ToastTable/ToastTable'
 const FRESH_TOAST = gql`
   query getToast {
     getToast {
-      name
+      firstname
       id
       amount
       category
@@ -61,7 +61,7 @@ const PUSH_TOAST = gql`
         message
       }
       toast {
-        name
+        firstname
         id
         amount
         category
@@ -184,7 +184,7 @@ const Todos: React.FC<StyleVProps> = () => {
                     style={{ pointerEvents: 'none' }}
                     fontFamily='Calibri, sans-serif'
                     fontWeight='thin'
-                  >{`${data.getToast.name}:`}</Text>
+                  >{`${data.getToast.firstname}:`}</Text>
                   <Text
                     style={{ pointerEvents: 'none' }}
                     fontFamily='Calibri, sans-serif'
@@ -224,7 +224,7 @@ const Todos: React.FC<StyleVProps> = () => {
               pushToast({
                 variables: {
                   options: {
-                    name: name,
+                    firstname: name,
                     amount: valueFromToast(amount),
                     category: valueFromCategory(category),
                   }!,
