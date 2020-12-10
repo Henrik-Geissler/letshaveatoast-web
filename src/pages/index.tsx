@@ -376,7 +376,6 @@ const Todos: React.FC<StyleVProps> = () => {
           closeOnOverlayClick={false}
           isCentered
           size='sm'
-          width='800px'
           scrollBehavior='inside'
         >
           <ModalOverlay
@@ -457,7 +456,6 @@ const Todos: React.FC<StyleVProps> = () => {
           closeOnOverlayClick={false}
           isCentered
           size='sm'
-          width='800px'
           scrollBehavior='inside'
         >
           <ModalOverlay

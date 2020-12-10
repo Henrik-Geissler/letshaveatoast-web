@@ -28,11 +28,6 @@ const theme = {
     '5xl': '48px',
     '6xl': '64px',
   },
-  fontWeights: {
-    normal: 400,
-    medium: 500,
-    bold: 700,
-  },
   lineHeights: {
     normal: 'normal',
     none: '1',
