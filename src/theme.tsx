@@ -14,6 +14,7 @@ const theme = {
     body: 'system-ui, sans-serif',
     heading: 'Georgia, serif',
     mono: 'Menlo, monospace',
+    sharp: 'Menlo, monospace',
   },
   fontSizes: {
     xs: '12px',
