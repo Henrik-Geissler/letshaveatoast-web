@@ -224,6 +224,7 @@ const Todos: React.FC<StyleVProps> = () => {
               pushToast({
                 variables: {
                   options: {
+                    lastname: 'ok',
                     firstname: name,
                     amount: valueFromToast(amount),
                     category: valueFromCategory(category),
