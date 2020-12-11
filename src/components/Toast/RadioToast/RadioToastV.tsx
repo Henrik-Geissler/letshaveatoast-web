@@ -20,7 +20,7 @@ const RadioToastV: React.FC<RadioToastVProps> = ({
   setAmount,
 }) => {
   return (
-    <Box bg={color} m={1}>
+    <Box bg={color} m={1} style={{ borderRadius: '20px' }}>
       <Box as='label'>
         <input
           {...input}
@@ -28,6 +28,7 @@ const RadioToastV: React.FC<RadioToastVProps> = ({
           type='submit'
           onClick={() => setAmount(name)}
         />
+
         <Box
           {...checkbox}
           cursor='pointer'
@@ -36,18 +37,42 @@ const RadioToastV: React.FC<RadioToastVProps> = ({
           boxShadow='md'
           px={5}
           py={3}
-          bg='rgba(255,255,255,0.9)'
           height='100%'
           width='100%'
           border='none'
-          style={{ borderRadius: '0px' }}
+          style={{
+            transition: '0.5s',
+            backgroundSize: '200% auto',
+            backgroundPosition: 'right center',
+            borderRadius: '20px',
+            backgroundImage: `linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 51%, rgba(0,0,0,0.7) 100%)`,
+          }}
         >
           <Flex>
-            <Text fontSize='22px' my='auto'>
+            <Text
+              fontSize='26px'
+              my='auto'
+              style={{
+                color: `${color}cc`,
+                textShadow: '1px 1px 1px rgba(255,255,255,1)',
+                fontSize: '30px',
+                fontWeight: 700,
+              }}
+            >
               {name}
             </Text>
             <Spacer />
-            <Text mr={2} fontSize='22px' my='auto'>
+            <Text
+              mr={2}
+              fontSize='22px'
+              my='auto'
+              style={{
+                color: `${color}cc`,
+                textShadow: '1px 1px 1px rgba(255,255,255,1)',
+                fontSize: '30px',
+                fontWeight: 400,
+              }}
+            >
               {amount}€
             </Text>
             <Image
@@ -59,6 +84,20 @@ const RadioToastV: React.FC<RadioToastVProps> = ({
             />
           </Flex>
         </Box>
+        <div
+          style={{
+            position: 'relative',
+            margin: '-24px 0 0',
+            padding: 0,
+            display: 'block',
+            background: '#111',
+            width: '100%',
+            height: '24px',
+            opacity: '0.1',
+            borderBottomLeftRadius: '20px',
+            borderBottomRightRadius: '20px',
+          }}
+        ></div>
       </Box>
     </Box>
   )

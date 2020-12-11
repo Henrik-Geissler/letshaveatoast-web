@@ -67,61 +67,6 @@ const theme = {
       viewBox: '0 0 3000 3163',
     },
   },
-  components: {
-    Button: {
-      // 1. We can update the base styles
-      baseStyle: {
-        fontWeight: '100', // Normally, it is "semibold"
-        bg: 'red.100',
-        fontSize: ['48px', '72px'],
-      },
-      // 2. We can add a new button size or extend existing
-      sizes: {
-        xl: {
-          h: '56px',
-          fontSize: 'lg',
-          px: '32px',
-        },
-      },
-      // 3. We can add a new visual variant
-      variants: {
-        'with-shadow': {
-          bg: 'red.400',
-          boxShadow: '0 0 2px 2px #efdfde',
-        },
-        // 4. We can override existing variants
-        solid: props => ({
-          bg: props.colorMode === 'dark' ? 'red.300' : 'red.500',
-        }),
-      },
-    },
-    Toast: {
-      // 1. We can update the base styles
-      baseStyle: {
-        fontWeight: '100', // Normally, it is "semibold"
-        backgroundColor: '#ffa',
-      },
-      // 2. We can add a new button size or extend existing
-      sizes: {
-        xl: {
-          h: '56px',
-          fontSize: 'lg',
-          px: '32px',
-        },
-      },
-      // 3. We can add a new visual variant
-      variants: {
-        'with-shadow': {
-          bg: 'red.400',
-          boxShadow: '0 0 2px 2px #efdfde',
-        },
-        // 4. We can override existing variants
-        solid: props => ({
-          bg: props.colorMode === 'dark' ? 'red.300' : 'red.500',
-        }),
-      },
-    },
-  },
 }
 
 export default theme

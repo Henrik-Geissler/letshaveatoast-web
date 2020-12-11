@@ -1,15 +1,18 @@
 import {
-  Box,
-  Button,
   Editable,
   EditablePreview,
   Flex,
   FormControl,
-  Text,
+  Heading,
 } from '@chakra-ui/core'
+import { IconButton, Button, Spacer } from '@chakra-ui/react'
 import { Center } from '@chakra-ui/react'
 import { Field } from 'formik'
 import React from 'react'
+import { FaChevronDown, FaQuoteLeft } from 'react-icons/fa'
+import { MdEdit } from 'react-icons/md'
+import SentenceTextV from '../SentenceText/SentenceTextV'
+import SentenceUserV from '../SentenceUser/SentenceUserV'
 
 interface SentenceVProps {
   onOpen: any
@@ -29,73 +32,135 @@ const SentenceV: React.FC<SentenceVProps> = ({
   name,
 }) => {
   if (name === '') {
-    return <></>
-  }
-  return (
-    <Box height='0px'>
-      <Center pt={20}>
-        <Flex>
-          <Button onClick={onOpen} mx={2}>
-            <Field name='name'>
-              {({ field, form }) => (
-                <FormControl id='name' isInvalid={false}>
-                  <Editable
-                    {...field}
-                    isPreviewFocusable={false}
-                    submitOnBlur={false}
-                    value={name}
-                    placeholder=''
-                  >
-                    <EditablePreview />
-                  </Editable>
-                </FormControl>
-              )}
-            </Field>
-            {' :'}
-          </Button>
-          <Text fontSize='20px' pt={1}>
-            {" Let's have a "}
-          </Text>
-          <Button onClick={onOpen3} mx={2}>
-            <Field name='amount'>
-              {({ field, form }) => (
-                <FormControl id='amount'>
-                  <Editable
-                    {...field}
-                    isPreviewFocusable={false}
-                    submitOnBlur={false}
-                    value={amount}
-                    placeholder='toast'
-                  >
-                    <EditablePreview />
-                  </Editable>
-                </FormControl>
-              )}
-            </Field>
-          </Button>
-          <Text fontSize='20px' pt={1}>
-            {'on'}
-          </Text>
-          <Button onClick={onOpen2} mx={2}>
-            <Field name='category'>
-              {({ field, form }) => (
-                <FormControl id='category'>
-                  <Editable
-                    {...field}
-                    isPreviewFocusable={false}
-                    submitOnBlur={false}
-                    value={category}
-                    placeholder=''
-                  >
-                    <EditablePreview />
-                  </Editable>
-                </FormControl>
-              )}
-            </Field>
-          </Button>
+    return (
+      <Center>
+        <Flex direction='column'>
+          <SentenceTextV>Share global toast together</SentenceTextV>
         </Flex>
       </Center>
-    </Box>
+    )
+  }
+  if (category === '') {
+    return (
+      <Center>
+        <Flex direction='column'>
+          <Center>
+            <Flex>
+              <SentenceTextV>Welcome</SentenceTextV>
+              <div style={{ width: '10px' }}></div>
+              <SentenceUserV name={name} onOpen={onOpen} />
+              <SentenceTextV>to our community!</SentenceTextV>
+            </Flex>
+          </Center>
+          <Center>
+            <SentenceTextV>What do you want to toast on?</SentenceTextV>
+          </Center>
+        </Flex>
+      </Center>
+    )
+  }
+  if (amount === '') {
+    return (
+      <Center>
+        <Flex direction='column'>
+          <Center>
+            <SentenceTextV>You are ready to toast</SentenceTextV>
+          </Center>
+          <Center>
+            <SentenceTextV>Let's go</SentenceTextV>
+          </Center>
+        </Flex>
+      </Center>
+    )
+  }
+  return (
+    <Center>
+      <Flex direction='column'>
+        <Center>
+          <Heading fontFamily='system-ui,sans-serif' fontSize='lg'>
+            Your Toast:
+          </Heading>
+        </Center>
+        <div style={{ height: '3vh' }}></div>
+        <Flex>
+          <SentenceTextV>
+            <FaQuoteLeft style={{ marginRight: '8px' }} />
+          </SentenceTextV>
+          <SentenceTextV>{" Let's have a "}</SentenceTextV>
+          <Button
+            onClick={onOpen3}
+            mx={2}
+            variant='outline'
+            rightIcon={<FaChevronDown color='#bbbbbb' />}
+            style={{
+              boxShadow: '0 0 1px 1px #bbbbbb',
+              borderRadius: '100px',
+            }}
+            px={3}
+            pb={1}
+          >
+            <SentenceTextV>
+              <Field name='amount'>
+                {({ field, form }) => (
+                  <FormControl id='amount'>
+                    <Editable
+                      {...field}
+                      isPreviewFocusable={false}
+                      submitOnBlur={false}
+                      value={amount}
+                      placeholder='toast'
+                      style={{ pointerEvents: 'none' }}
+                    >
+                      <EditablePreview style={{ pointerEvents: 'none' }} />
+                    </Editable>
+                  </FormControl>
+                )}
+              </Field>
+            </SentenceTextV>
+          </Button>
+          <SentenceTextV>{'on'}</SentenceTextV>
+          <Button
+            onClick={onOpen2}
+            mx={2}
+            rightIcon={<FaChevronDown color='#bbbbbb' />}
+            style={{
+              boxShadow: '0 0 1px 1px #bbbbbb',
+              borderRadius: '100px',
+            }}
+            px={3}
+            pb={1}
+          >
+            <SentenceTextV>
+              <Field name='category'>
+                {({ field, form }) => (
+                  <FormControl id='category'>
+                    <Editable
+                      {...field}
+                      isPreviewFocusable={false}
+                      submitOnBlur={false}
+                      value={category}
+                      placeholder=''
+                      style={{ pointerEvents: 'none' }}
+                    >
+                      <EditablePreview style={{ pointerEvents: 'none' }} />
+                    </Editable>
+                  </FormControl>
+                )}
+              </Field>
+            </SentenceTextV>
+            <SentenceTextV>{'!'}</SentenceTextV>
+          </Button>
+        </Flex>
+        <br />
+        <Flex>
+          <Spacer />
+          <SentenceTextV>{'––'}</SentenceTextV>
+          <div style={{ width: '10px' }}></div>
+          <SentenceUserV name={name} onOpen={onOpen} />
+          <div style={{ width: '30px' }}></div>
+        </Flex>
+      </Flex>
+    </Center>
   )
 }
 
