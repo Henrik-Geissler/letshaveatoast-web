@@ -1,0 +1,50 @@
+.chakra-modal__content-container {
+  z-index: 10000;
+}
+.radioBox:hover + div,
+.radioBox:active + div,
+.radioBox:checked + div {
+  background-position: left center !important;
+}
+.radioBox:checked + div {
+  box-shadow: 0 0px 0px 4px rgba(0, 0, 0, 1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+.chakra-toast,
+.chakra-toast__inner {
+  pointer-events: none !important;
+}
+/*
+@keyframes float {
+  0% {
+    transform: translateZ(20px) translateY(10px);
+  }
+  100% {
+    transform: translateY(-11px) translateX(-13px) translateZ(30px);
+  }
+}
+*/
+
+.text18 {
+  font-size: 18px;
+}
+.text20 {
+  font-size: 20px;
+}
+
+@media (max-width: 400px) {
+  .text18 {
+    font-size: 4vw;
+  }
+  .text20 {
+    font-size: 5vw;
+  }
+}
+
+.textMetal {
+  font-size: 30px;
+}
+@media (max-width: 546px) {
+  .textMetal {
+    font-size: 5vw;
+  }
+}

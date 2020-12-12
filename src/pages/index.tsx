@@ -42,6 +42,7 @@ import ToastV from '../components/Toast/Toast/ToastV'
 const FRESH_TOAST = gql`
   query getToast {
     getToast {
+      #SWITCH
       firstname
       id
       amount
@@ -58,8 +59,9 @@ const PUSH_TOAST = gql`
         message
       }
       toast {
-        firstname
+        #SWITCH
         lastname
+        firstname
         id
         amount
         category
@@ -156,34 +158,60 @@ const Todos: React.FC<StyleVProps> = () => {
   if (data !== undefined)
     if (data.getToast !== undefined)
       if (data.getToast.id !== pushedToast) {
+        const variant = Number.parseInt(data.getToast.amount)
         toast({
-          duration: 50000,
+          duration: 2000 * (variant + 1) ** 1.5,
           isClosable: false,
           position: 'top-right',
           render: () => (
             <ToastV
-              variant={Number.parseInt(amount)}
+              variant={variant}
+              //SWITCH
               name={data.getToast.firstname}
               amount={ToastTable[data.getToast.amount].name}
               category={CardTable[data.getToast.category].name}
+              color={ToastTable[data.getToast.amount].tcolor}
+              color2={ToastTable[data.getToast.amount].tcolor2}
             />
           ),
         })
         setPushedToast(data.getToast.id)
       }
 
+  if (name !== '') {
+    if (category === '') {
+      setTimeout(() => {
+        onOpen2()
+      }, 500)
+    } else if (amount === '') {
+      setTimeout(() => {
+        onOpen3()
+      }, 500)
+    }
+  }
   return (
     <>
-      <style>
-        {
-          '.chakra-modal__content-container {z-index:10000;} .radioBox:hover + div, .radioBox:active + div, .radioBox:checked + div{background-position: left center !important;} .radioBox:checked + div{box-shadow: 0 0px 0px 4px rgba(0,0,0,1), 0 2px 4px -1px rgba(0,0,0,0.06) !important;} .chakra-toast,.chakra-toast__inner {pointer-events: none ! important}'
-        }
-      </style>
+      <link rel='stylesheet' href='css/cheat.css' />
       <PageWrapV>
         <Wrapper>
-          <Center top='20vh' left='50vw' h='0px' pos='absolute'>
-            <Box w='360px' h='34px' mt='-18px' ml='-180px' p={0}>
-              <Image src='/img/logo.png' alt="Let's have a toast" m={0} p={0} />
+          <Center
+            top='10vh'
+            h='0px'
+            pos='absolute'
+            w='100vw'
+            p={0}
+            m={0}
+            left={0}
+          >
+            <Box maxW='100vw'>
+              <Image
+                src='/img/logo.png'
+                alt="Let's have a toast"
+                m={0}
+                p={5}
+                maxW='400px'
+                w='100%'
+              />
             </Box>
           </Center>
           <Formik
@@ -193,6 +221,7 @@ const Todos: React.FC<StyleVProps> = () => {
               pushToast({
                 variables: {
                   options: {
+                    //SWITCH
                     lastname: 'ok',
                     firstname: name,
                     amount: valueFromToast(amount),
@@ -207,7 +236,7 @@ const Todos: React.FC<StyleVProps> = () => {
           >
             {props => (
               <Form>
-                <Center top='30vh' w='100vw' m={0} pos='absolute' left='0px'>
+                <Center top='20vh' w='100vw' m={0} pos='absolute' left='0px'>
                   <SentenceV
                     onOpen={onOpen}
                     onOpen2={onOpen2}
@@ -273,23 +302,25 @@ const Todos: React.FC<StyleVProps> = () => {
           <Center
             top='95vh'
             w='100vw'
-            h='0px'
+            h='1px'
+            bg='red'
             pos='absolute'
             m={0}
             p={0}
             left={0}
           >
-            <Link
-              href='/pdf/terms_and_conditions.pdf'
-              isExternal
-              mx='auto'
-              my={0}
-              p={0}
-            >
-              <Text as='u' fontSize='12px'>
-                Terms and Conditions
-              </Text>
-            </Link>
+            <Box maxW='100vw' mx='auto'>
+              <Link
+                href='/pdf/terms_and_conditions.pdf'
+                isExternal
+                my={0}
+                p={0}
+              >
+                <Text as='u' fontSize='12px'>
+                  Terms and Conditions
+                </Text>
+              </Link>
+            </Box>
           </Center>
           {/** 
           <Center w='200px' h='200px'>
@@ -438,7 +469,7 @@ const Todos: React.FC<StyleVProps> = () => {
                                   }}
                                 />
                                 <SimpleGrid
-                                  columns={[2, null, 3]}
+                                  columns={[1, 2, 3]}
                                   spacing='40px'
                                   pb={10}
                                 >

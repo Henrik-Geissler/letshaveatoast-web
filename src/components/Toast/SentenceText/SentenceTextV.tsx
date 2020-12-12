@@ -7,7 +7,7 @@ interface SentenceTextVProps {
 
 const SentenceTextV: React.FC<SentenceTextVProps> = ({ children }) => {
   return (
-    <Text fontSize='20px' pt={1}>
+    <Text pt={1} className='text20'>
       {children}
     </Text>
   )

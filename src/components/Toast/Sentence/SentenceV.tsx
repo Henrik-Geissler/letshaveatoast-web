@@ -74,7 +74,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
     )
   }
   return (
-    <Center>
+    <Center px={3}>
       <Flex direction='column'>
         <Center>
           <Heading fontFamily='system-ui,sans-serif' fontSize='lg'>
@@ -82,7 +82,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
           </Heading>
         </Center>
         <div style={{ height: '3vh' }}></div>
-        <Flex>
+        <Flex wrap='wrap'>
           <SentenceTextV>
             <FaQuoteLeft style={{ marginRight: '8px' }} />
           </SentenceTextV>

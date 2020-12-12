@@ -13,6 +13,9 @@ const PageWrapV: React.FC<PageWrapVProps> = props => {
       p={0}
       border='none'
       overflow='hidden'
+      position='absolute'
+      top='0px'
+      left='0px'
     >
       {props.children}
     </Box>

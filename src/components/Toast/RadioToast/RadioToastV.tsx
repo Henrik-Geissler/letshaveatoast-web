@@ -55,9 +55,9 @@ const RadioToastV: React.FC<RadioToastVProps> = ({
               style={{
                 color: `${color}cc`,
                 textShadow: '1px 1px 1px rgba(255,255,255,1)',
-                fontSize: '30px',
                 fontWeight: 700,
               }}
+              className='textMetal'
             >
               {name}
             </Text>

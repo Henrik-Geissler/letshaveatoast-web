@@ -1,0 +1,11 @@
+cancel_return=https://letshaveatoast.app/canceled
+return=https://letshaveatoast.app/payed
+
+Master Card
+4111 1111 1111 1111
+Any valid looking expiry date / start date / CV2 code
+Enter 12345 to pass the card verification step
+
+PayPal
+Username : paypalsandboxapi@justgiving.com
+Password : letmeinplease
