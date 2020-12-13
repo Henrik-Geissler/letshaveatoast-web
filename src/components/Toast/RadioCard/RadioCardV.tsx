@@ -1,6 +1,7 @@
 import { Box, Flex, Text, Image } from '@chakra-ui/core'
 import { Spacer, Square, useRadio } from '@chakra-ui/react'
 import React, { HTMLProps } from 'react'
+import ImageV from '../../General/Image/ImageV'
 
 interface RadioCardVProps {
   color: string
@@ -34,7 +35,6 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
           boxShadow='md'
           px={5}
           py={3}
-          bg='rgba(255,255,255,0.9)'
           height='160px'
           width='160px'
           border='none'
@@ -43,12 +43,9 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
           <Flex direction='column' height='100%' width='100%'>
             <Flex width='100%'>
               <Spacer />
-              <Image
-                alt={name}
-                src={`img/category/${name}.png`}
-                width='60px'
-                height='60px'
-              />
+              <Box width='60px' height='60px'>
+                <ImageV src={`category/${name}`} />
+              </Box>
             </Flex>
           </Flex>
           <Flex direction='column' height='100%' mt={'-136px'}>

@@ -41,37 +41,10 @@ const SentenceV: React.FC<SentenceVProps> = ({
     )
   }
   if (category === '') {
-    return (
-      <Center>
-        <Flex direction='column'>
-          <Center>
-            <Flex>
-              <SentenceTextV>Welcome</SentenceTextV>
-              <div style={{ width: '10px' }}></div>
-              <SentenceUserV name={name} onOpen={onOpen} />
-              <SentenceTextV>to our community!</SentenceTextV>
-            </Flex>
-          </Center>
-          <Center>
-            <SentenceTextV>What do you want to toast on?</SentenceTextV>
-          </Center>
-        </Flex>
-      </Center>
-    )
+    return <></>
   }
   if (amount === '') {
-    return (
-      <Center>
-        <Flex direction='column'>
-          <Center>
-            <SentenceTextV>You are ready to toast</SentenceTextV>
-          </Center>
-          <Center>
-            <SentenceTextV>Let's go</SentenceTextV>
-          </Center>
-        </Flex>
-      </Center>
-    )
+    return <></>
   }
   return (
     <Center px={3}>
@@ -157,7 +130,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
           <SentenceTextV>{'––'}</SentenceTextV>
           <div style={{ width: '10px' }}></div>
           <SentenceUserV name={name} onOpen={onOpen} />
-          <div style={{ width: '30px' }}></div>
+          <div style={{ width: '5vw' }}></div>
         </Flex>
       </Flex>
     </Center>

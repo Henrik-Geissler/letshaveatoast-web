@@ -3,6 +3,7 @@ import { Center, ScaleFade, Spacer } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { FaQuoteLeft } from 'react-icons/fa'
 import { GiFireworkRocket } from 'react-icons/gi'
+import GifV from '../../General/Gif/GifV'
 import ToastTextV from '../ToastText/ToastTextV'
 
 interface ToastVProps {
@@ -56,29 +57,16 @@ const ToastV: React.FC<ToastVProps> = ({
         style={{ pointerEvents: 'none' }}
       >
         <Flex style={{ pointerEvents: 'none' }}>
-          <Center mt={10} mr={24} style={{ pointerEvents: 'none' }}>
-            <Text
-              fontSize='30px'
-              style={{
-                pointerEvents: 'none',
-                animation:
-                  'float 4s cubic-bezier(0.390, 0.575, 0.565, 1.000) infinite alternate',
-              }}
-            >
-              <Image
-                style={{
-                  transformOrigin: 'top right',
-                  transition:
-                    'transform 300ms cubic-bezier(0.390, 0.575, 0.565, 1.000)',
-                  transitionDelay: '100ms',
-                  transform: 'translateX(21%) rotateZ(13deg) skewX(3deg)',
-                }}
-                src={`img/toast/${amount}.png`}
-                alt='Toast'
-                maxH='80px'
-                maxW='80px'
-              />
-            </Text>
+          <Center
+            my={0}
+            ml={'2%'}
+            mr={'4%'}
+            p={0}
+            style={{ pointerEvents: 'none' }}
+          >
+            <Box maxH='80px' maxW='80px' h='80px' w='80px'>
+              <GifV src={amount} />
+            </Box>
           </Center>
           <Flex
             wrap='wrap'

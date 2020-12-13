@@ -7,7 +7,7 @@ interface SentenceTextVProps {
 
 const SentenceTextV: React.FC<SentenceTextVProps> = ({ children }) => {
   return (
-    <Text pt={1} className='text20'>
+    <Text pt={1} className='text20' style={{ whiteSpace: 'nowrap' }}>
       {children}
     </Text>
   )

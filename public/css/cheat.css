@@ -24,27 +24,44 @@
 }
 */
 
+.text12 {
+  font-size: 2.5vw;
+}
 .text18 {
-  font-size: 18px;
+  font-size: 4vw;
 }
 .text20 {
-  font-size: 20px;
+  font-size: 5vw;
 }
 
-@media (max-width: 400px) {
+@media (min-width: 400px) {
+  .text12 {
+    font-size: 11px;
+  }
   .text18 {
-    font-size: 4vw;
+    font-size: 18px;
   }
   .text20 {
-    font-size: 5vw;
+    font-size: 20px;
   }
 }
 
 .textMetal {
-  font-size: 30px;
+  font-size: 5vw;
 }
-@media (max-width: 546px) {
+@media (min-width: 546px) {
   .textMetal {
-    font-size: 5vw;
+    font-size: 30px;
+  }
+}
+
+.theButton {
+  height: 30vh;
+  width: 30vh;
+}
+@media (min-height: 680px) {
+  .theButton {
+    width: 200px;
+    height: 200px;
   }
 }

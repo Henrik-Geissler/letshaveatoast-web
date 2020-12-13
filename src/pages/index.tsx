@@ -6,22 +6,17 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
-  Image,
   Input,
   Link,
   RadioGroup,
-  Select,
   SimpleGrid,
   Text,
 } from '@chakra-ui/core'
 import {
   Modal,
-  ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
   useDisclosure,
   useRadioGroup,
 } from '@chakra-ui/react'
@@ -31,19 +26,20 @@ import { Wrapper } from '../components/Wrapper'
 import OkV from '../components/Toast/Ok/OkV'
 import RadioCardC from '../components/Toast/RadioCard/RadioCardC'
 import RadioToastC from '../components/Toast/RadioToast/RadioToastC'
-import { Container } from 'next/app'
 import SentenceV from '../components/Toast/Sentence/SentenceV'
 import CardTable from '../components/Toast/CardTable/CardTable'
 import ToastTable from '../components/Toast/ToastTable/ToastTable'
 import PageWrapV from '../components/Toast/PageWrap/PageWrapV'
 import ModalBackgroundV from '../components/Toast/ModalBackground/ModalBackgroundV'
 import ToastV from '../components/Toast/Toast/ToastV'
-//backdrop-filter: blur(5px);
+import ImageV from '../components/General/Image/ImageV'
+import SentenceTextV from '../components/Toast/SentenceText/SentenceTextV'
+
 const FRESH_TOAST = gql`
   query getToast {
     getToast {
       #SWITCH
-      firstname
+      name
       id
       amount
       category
@@ -60,8 +56,8 @@ const PUSH_TOAST = gql`
       }
       toast {
         #SWITCH
-        lastname
-        firstname
+        #lastname
+        name
         id
         amount
         category
@@ -97,6 +93,7 @@ const valueFromToast = cat => {
 }
 const Todos: React.FC<StyleVProps> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
   const {
     isOpen: isOpen2,
     onOpen: onOpen2,
@@ -152,7 +149,7 @@ const Todos: React.FC<StyleVProps> = () => {
   const finalRef2 = useRef()
   const initialRef3 = useRef()
   const finalRef3 = useRef()
-  console.log(data)
+  //console.log(data)
   const toast = useToast()
   if (res.loading) return <>Loading up ...</>
   if (data !== undefined)
@@ -160,14 +157,14 @@ const Todos: React.FC<StyleVProps> = () => {
       if (data.getToast.id !== pushedToast) {
         const variant = Number.parseInt(data.getToast.amount)
         toast({
-          duration: 2000 * (variant + 1) ** 1.5,
+          duration: 2000 * (variant + 1) ** 1.5 * 100,
           isClosable: false,
           position: 'top-right',
           render: () => (
             <ToastV
               variant={variant}
               //SWITCH
-              name={data.getToast.firstname}
+              name={data.getToast.name}
               amount={ToastTable[data.getToast.amount].name}
               category={CardTable[data.getToast.category].name}
               color={ToastTable[data.getToast.amount].tcolor}
@@ -195,7 +192,7 @@ const Todos: React.FC<StyleVProps> = () => {
       <PageWrapV>
         <Wrapper>
           <Center
-            top='10vh'
+            top='40vh'
             h='0px'
             pos='absolute'
             w='100vw'
@@ -204,14 +201,9 @@ const Todos: React.FC<StyleVProps> = () => {
             left={0}
           >
             <Box maxW='100vw'>
-              <Image
-                src='/img/logo.png'
-                alt="Let's have a toast"
-                m={0}
-                p={5}
-                maxW='400px'
-                w='100%'
-              />
+              <Box m={0} p={5} maxW='400px' w='100%'>
+                <ImageV src='logo' />
+              </Box>
             </Box>
           </Center>
           <Formik
@@ -222,8 +214,8 @@ const Todos: React.FC<StyleVProps> = () => {
                 variables: {
                   options: {
                     //SWITCH
-                    lastname: 'ok',
-                    firstname: name,
+                    //lastname: 'ok',
+                    name: name,
                     amount: valueFromToast(amount),
                     category: valueFromCategory(category),
                   }!,
@@ -236,7 +228,7 @@ const Todos: React.FC<StyleVProps> = () => {
           >
             {props => (
               <Form>
-                <Center top='20vh' w='100vw' m={0} pos='absolute' left='0px'>
+                <Center top='45vh' w='100vw' m={0} pos='absolute' left='0px'>
                   <SentenceV
                     onOpen={onOpen}
                     onOpen2={onOpen2}
@@ -247,24 +239,26 @@ const Todos: React.FC<StyleVProps> = () => {
                   />
                 </Center>
                 <Center
-                  top='71.8vh'
-                  left='50vw'
+                  top='85vh'
+                  left='0px'
+                  w='100vw'
                   h='0px'
                   pos='absolute'
                   pt='0px'
                   bg='rgba(0,0,0,0)'
                 >
                   <Box
-                    w='200px'
-                    h='200px'
-                    top='-100px'
-                    ml='-100px'
-                    pt='0px'
+                    className='theButton'
+                    mx='auto'
+                    p='auto'
                     bg='rgba(0,0,0,0)'
                   >
+                    <Center m={0} p={0} h='0px'>
+                      <Box mt='-5vh' mb={0} mx='auto' p={0}>
+                        <SentenceTextV>Push to send</SentenceTextV>
+                      </Box>
+                    </Center>
                     <Button
-                      w='200px'
-                      h='200px'
                       type='submit'
                       onClick={() => {
                         setPressed(true)
@@ -286,12 +280,10 @@ const Todos: React.FC<StyleVProps> = () => {
                       _focus={{ bg: 'rgba(0,0,0,0)' }}
                       _active={{ bg: 'rgba(0,0,0,0)' }}
                     >
-                      <Image
-                        id='theButton'
-                        src={`/img/button${
+                      <ImageV
+                        src={`button${
                           props.isSubmitting || pressed ? '-pressed' : ''
-                        }.png`}
-                        alt='Push'
+                        }`}
                       />
                     </Button>
                   </Box>
@@ -300,10 +292,9 @@ const Todos: React.FC<StyleVProps> = () => {
             )}
           </Formik>
           <Center
-            top='95vh'
+            top='98vh'
             w='100vw'
-            h='1px'
-            bg='red'
+            h='0px'
             pos='absolute'
             m={0}
             p={0}
@@ -316,29 +307,26 @@ const Todos: React.FC<StyleVProps> = () => {
                 my={0}
                 p={0}
               >
-                <Text as='u' fontSize='12px'>
+                <Text as='u' className='text12'>
                   Terms and Conditions
                 </Text>
               </Link>
             </Box>
           </Center>
-          {/** 
           <Center w='200px' h='200px'>
             <form
-              action='https://www.paypal.com/donate'
+              action='https://www.sandbox.paypal.com/donate'
               method='post'
               target='_top'
             >
               <input
                 type='hidden'
                 name='hosted_button_id'
-                value='VRZX59ABT28UJ'
+                value='8TA326Y7HDGFS'
               />
               <input
-                width='200px'
-                height='200px'
                 type='image'
-                src='img/button.png'
+                src='https://letshaveatoast.app/img/button.png'
                 border='0'
                 name='submit'
                 title='PayPal - The safer, easier way to pay online!'
@@ -351,9 +339,28 @@ const Todos: React.FC<StyleVProps> = () => {
                 width='1'
                 height='1'
               />
+              <input type='hidden' value='USD' name='currency_code' />
             </form>
+            {/**<form method="post" action="https://www.sandbox.paypal.com/cgi-bin/webscr">
+  <input type="hidden" value="_xclick" name="cmd">
+  <input type="hidden" value="onlinestore@thegreekmerchant.com" name="business">
+  <!-- <input type="hidden" name="undefined_quantity" value="1" /> -->
+  <input type="hidden" value="Order at The Greek Merchant:&lt;Br /&gt;Goldfish Flock BLG&lt;br /&gt;" name="item_name">
+  <input type="hidden" value="NA" name="item_number">
+  <input type="hidden" value="22.16" name="amount">
+  <input type="hidden" value="5.17" name="shipping">
+  <input type="hidden" value="0" name="discount_amount">        
+  <input type="hidden" value="0" name="no_shipping">
+  <input type="hidden" value="No comments" name="cn">
+  <input type="hidden" value="USD" name="currency_code">
+  <input type="hidden" value="http://XXX/XXX/XXX/paypal/return" name="return">
+  <input type="hidden" value="2" name="rm">      
+  <input type="hidden" value="11255XXX" name="invoice">
+  <input type="hidden" value="US" name="lc">
+  <input type="hidden" value="PP-BuyNowBF" name="bn">
+  <input type="submit" value="Place Order!" name="finalizeOrder" id="finalizeOrder" class="submitButton">
+</form> */}
           </Center>
-          */}
 
           <Modal
             initialFocusRef={initialRef}

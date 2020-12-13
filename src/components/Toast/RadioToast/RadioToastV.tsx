@@ -1,6 +1,7 @@
-import { Box, Flex, Text, Image, Button } from '@chakra-ui/core'
-import { Spacer, Square, useRadio } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/core'
+import { Spacer } from '@chakra-ui/react'
 import React, { HTMLProps } from 'react'
+import GifV from '../../General/Gif/GifV'
 
 interface RadioToastVProps {
   amount: string
@@ -75,13 +76,9 @@ const RadioToastV: React.FC<RadioToastVProps> = ({
             >
               {amount}€
             </Text>
-            <Image
-              my='auto'
-              alt={name}
-              src={`img/toast/${name}.png`}
-              width='60px'
-              height='60px'
-            />
+            <Box my='auto' width='60px' height='60px'>
+              <GifV src={name} />
+            </Box>
           </Flex>
         </Box>
         <div
