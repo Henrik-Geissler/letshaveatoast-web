@@ -34,12 +34,13 @@ import ModalBackgroundV from '../components/Toast/ModalBackground/ModalBackgroun
 import ToastV from '../components/Toast/Toast/ToastV'
 import ImageV from '../components/General/Image/ImageV'
 import SentenceTextV from '../components/Toast/SentenceText/SentenceTextV'
+import PaypalV from '../components/Toast/Paypal/PaypalV'
 
 const FRESH_TOAST = gql`
   query getToast {
     getToast {
       #SWITCH
-      name
+      firstname
       id
       amount
       category
@@ -56,8 +57,8 @@ const PUSH_TOAST = gql`
       }
       toast {
         #SWITCH
-        #lastname
-        name
+        lastname
+        firstname
         id
         amount
         category
@@ -68,6 +69,11 @@ const PUSH_TOAST = gql`
 
 interface StyleVProps {}
 
+const product = {
+  price: 777.77,
+  name: 'comfy chair',
+  description: 'fancy chair, like new',
+}
 function validateName(value) {
   let error
   if (!value) {
@@ -81,7 +87,7 @@ const valueFromCategory = cat => {
       return each.value
     }
   }
-  return 'SORRY'
+  return 0
 }
 const valueFromToast = cat => {
   for (let each of ToastTable) {
@@ -89,11 +95,10 @@ const valueFromToast = cat => {
       return each.value
     }
   }
-  return 'SORRY'
+  return 0
 }
 const Todos: React.FC<StyleVProps> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
   const {
     isOpen: isOpen2,
     onOpen: onOpen2,
@@ -164,7 +169,7 @@ const Todos: React.FC<StyleVProps> = () => {
             <ToastV
               variant={variant}
               //SWITCH
-              name={data.getToast.name}
+              name={data.getToast.firstname}
               amount={ToastTable[data.getToast.amount].name}
               category={CardTable[data.getToast.category].name}
               color={ToastTable[data.getToast.amount].tcolor}
@@ -214,8 +219,8 @@ const Todos: React.FC<StyleVProps> = () => {
                 variables: {
                   options: {
                     //SWITCH
-                    //lastname: 'ok',
-                    name: name,
+                    lastname: 'ok',
+                    firstname: name,
                     amount: valueFromToast(amount),
                     category: valueFromCategory(category),
                   }!,
@@ -313,54 +318,7 @@ const Todos: React.FC<StyleVProps> = () => {
               </Link>
             </Box>
           </Center>
-          <Center w='200px' h='200px'>
-            <form
-              action='https://www.sandbox.paypal.com/donate'
-              method='post'
-              target='_top'
-            >
-              <input
-                type='hidden'
-                name='hosted_button_id'
-                value='8TA326Y7HDGFS'
-              />
-              <input
-                type='image'
-                src='https://letshaveatoast.app/img/button.png'
-                border='0'
-                name='submit'
-                title='PayPal - The safer, easier way to pay online!'
-                alt='Donate with PayPal button'
-              />
-              <img
-                alt=''
-                border='0'
-                src='https://www.paypal.com/en_DE/i/scr/pixel.gif'
-                width='1'
-                height='1'
-              />
-              <input type='hidden' value='USD' name='currency_code' />
-            </form>
-            {/**<form method="post" action="https://www.sandbox.paypal.com/cgi-bin/webscr">
-  <input type="hidden" value="_xclick" name="cmd">
-  <input type="hidden" value="onlinestore@thegreekmerchant.com" name="business">
-  <!-- <input type="hidden" name="undefined_quantity" value="1" /> -->
-  <input type="hidden" value="Order at The Greek Merchant:&lt;Br /&gt;Goldfish Flock BLG&lt;br /&gt;" name="item_name">
-  <input type="hidden" value="NA" name="item_number">
-  <input type="hidden" value="22.16" name="amount">
-  <input type="hidden" value="5.17" name="shipping">
-  <input type="hidden" value="0" name="discount_amount">        
-  <input type="hidden" value="0" name="no_shipping">
-  <input type="hidden" value="No comments" name="cn">
-  <input type="hidden" value="USD" name="currency_code">
-  <input type="hidden" value="http://XXX/XXX/XXX/paypal/return" name="return">
-  <input type="hidden" value="2" name="rm">      
-  <input type="hidden" value="11255XXX" name="invoice">
-  <input type="hidden" value="US" name="lc">
-  <input type="hidden" value="PP-BuyNowBF" name="bn">
-  <input type="submit" value="Place Order!" name="finalizeOrder" id="finalizeOrder" class="submitButton">
-</form> */}
-          </Center>
+          <Center w='200px' h='200px'></Center>
 
           <Modal
             initialFocusRef={initialRef}

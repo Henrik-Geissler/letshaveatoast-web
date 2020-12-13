@@ -16,6 +16,7 @@ const PageWrapV: React.FC<PageWrapVProps> = props => {
       position='absolute'
       top='0px'
       left='0px'
+      bg='#f8e3db'
     >
       {props.children}
     </Box>
