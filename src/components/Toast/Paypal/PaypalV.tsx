@@ -30,9 +30,10 @@ const PaypalV: React.FC<PaypalVProps> = ({
       <input type='hidden' name='business' value={target} />
       <input
         type='image'
-        src='https://letshaveatoast.app/img/button.png'
+        src='https://letshaveatoast.app/img/empty.png'
         name='submit'
         alt='PayPal — The safer, easier way to pay online.'
+        id='paypalRun'
       />
       <img
         alt=''

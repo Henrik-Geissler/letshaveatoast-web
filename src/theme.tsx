@@ -9,10 +9,11 @@ const theme = {
   colors: {
     ...chakraTheme.colors,
     black: '#16161D',
+    rose: '#f8e3db',
   },
   fonts: {
     body: 'system-ui, sans-serif',
-    heading: 'Georgia, serif',
+    heading: 'Caviar Dreams',
     mono: 'Menlo, monospace',
     sharp: 'Menlo, monospace',
   },

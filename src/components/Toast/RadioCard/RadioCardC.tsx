@@ -9,7 +9,7 @@ interface RadioCardCProps {
 }
 const RadioCardC: React.FC<RadioCardCProps> = ({ radio, setCategory }) => {
   const { getInputProps, getCheckboxProps } = useRadio(radio)
-  const { name, color } = CardTable[Number.parseInt(radio.value)]
+  const { name, color, value } = CardTable[Number.parseInt(radio.value)]
 
   return (
     <RadioCardV
@@ -18,6 +18,7 @@ const RadioCardC: React.FC<RadioCardCProps> = ({ radio, setCategory }) => {
       color={color}
       name={name}
       setCategory={setCategory}
+      num={(value + 1).toString()}
     />
   )
 }

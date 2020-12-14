@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Caviar Dreams';
+  src: url('/fonts/caviar_dreams/CaviarDreams.ttf');
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
 .chakra-modal__content-container {
   z-index: 10000;
 }
@@ -56,12 +64,26 @@
 }
 
 .theButton {
-  height: 30vh;
-  width: 30vh;
+  height: 20vh;
+  width: 20vh;
 }
 @media (min-height: 680px) {
   .theButton {
-    width: 200px;
-    height: 200px;
+    width: 140px;
+    height: 140px;
+  }
+}
+
+#chakra-toast-manager-top-right li:nth-child(1) div div {
+  visibility: visible !important;
+}
+@media (min-height: 666px) {
+  #chakra-toast-manager-top-right li:nth-child(2) div div {
+    visibility: visible !important;
+  }
+}
+@media (min-height: 911px) {
+  #chakra-toast-manager-top-right li:nth-child(3) div div {
+    visibility: visible !important;
   }
 }

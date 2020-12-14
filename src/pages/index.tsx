@@ -4,11 +4,14 @@ import { useState, useEffect, useRef } from 'react'
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   FormErrorMessage,
+  Heading,
   Input,
   Link,
   RadioGroup,
+  Select,
   SimpleGrid,
   Text,
 } from '@chakra-ui/core'
@@ -19,6 +22,7 @@ import {
   ModalBody,
   useDisclosure,
   useRadioGroup,
+  Spacer,
 } from '@chakra-ui/react'
 import { Center, useToast } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
@@ -35,6 +39,10 @@ import ToastV from '../components/Toast/Toast/ToastV'
 import ImageV from '../components/General/Image/ImageV'
 import SentenceTextV from '../components/Toast/SentenceText/SentenceTextV'
 import PaypalV from '../components/Toast/Paypal/PaypalV'
+import AboutV from '../components/Toast/About/AboutV'
+import LearnMoreV from '../components/Toast/LearnMore/LearnMoreV'
+import ButtonV from '../components/Toast/Button/ButtonV'
+import BackV from '../components/Toast/Back/BackV'
 
 const FRESH_TOAST = gql`
   query getToast {
@@ -98,6 +106,11 @@ const valueFromToast = cat => {
   return 0
 }
 const Todos: React.FC<StyleVProps> = () => {
+  const [payMode, setPayMode] = useState(0)
+  const [audio, setAudio] = useState(null)
+  useEffect(() => {
+    setAudio(new Audio('sounds/notification.mp3'))
+  }, [])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
     isOpen: isOpen2,
@@ -109,26 +122,15 @@ const Todos: React.FC<StyleVProps> = () => {
     onOpen: onOpen3,
     onClose: onClose3,
   } = useDisclosure()
+  const {
+    isOpen: isOpen4,
+    onOpen: onOpen4,
+    onClose: onClose4,
+  } = useDisclosure()
   const { loading, error, data } = useQuery(FRESH_TOAST, {
     pollInterval: 500,
   })
-
-  const options = [
-    '0',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
-    '13',
-  ]
+  const options = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
   const toastOptions = ['0', '1', '2', '3', '4']
 
   const { getRadioProps } = useRadioGroup({
@@ -154,33 +156,38 @@ const Todos: React.FC<StyleVProps> = () => {
   const finalRef2 = useRef()
   const initialRef3 = useRef()
   const finalRef3 = useRef()
+  const initialRef4 = useRef()
+  const finalRef4 = useRef()
   //console.log(data)
   const toast = useToast()
   if (res.loading) return <>Loading up ...</>
   if (data !== undefined)
     if (data.getToast !== undefined)
       if (data.getToast.id !== pushedToast) {
-        const variant = Number.parseInt(data.getToast.amount)
-        toast({
-          duration: 2000 * (variant + 1) ** 1.5 * 100,
-          isClosable: false,
-          position: 'top-right',
-          render: () => (
-            <ToastV
-              variant={variant}
-              //SWITCH
-              name={data.getToast.firstname}
-              amount={ToastTable[data.getToast.amount].name}
-              category={CardTable[data.getToast.category].name}
-              color={ToastTable[data.getToast.amount].tcolor}
-              color2={ToastTable[data.getToast.amount].tcolor2}
-            />
-          ),
-        })
         setPushedToast(data.getToast.id)
+        if (pushedToast !== null) {
+          const variant = Number.parseInt(data.getToast.amount)
+          toast({
+            duration: 2000 * (variant + 1) ** 1.5,
+            isClosable: false,
+            position: 'top-right',
+            render: () => (
+              <ToastV
+                variant={variant}
+                //SWITCH
+                name={data.getToast.firstname}
+                amount={ToastTable[data.getToast.amount].name}
+                category={CardTable[data.getToast.category].name}
+                color={ToastTable[data.getToast.amount].tcolor}
+                color2={ToastTable[data.getToast.amount].tcolor2}
+              />
+            ),
+          })
+          if (audio !== null) audio.play()
+        }
       }
 
-  if (name !== '') {
+  if (name !== '' && !isOpen && !isOpen2 && !isOpen3 && !isOpen4) {
     if (category === '') {
       setTimeout(() => {
         onOpen2()
@@ -206,11 +213,54 @@ const Todos: React.FC<StyleVProps> = () => {
             left={0}
           >
             <Box maxW='100vw'>
-              <Box m={0} p={5} maxW='400px' w='100%'>
+              <Box m={0} p={5} maxW='400px' w={category === '' ? '100%' : '0%'}>
                 <ImageV src='logo' />
               </Box>
             </Box>
           </Center>
+          <Box top='90vh' h='0px' pos='absolute' p={0} m={0} left={0}>
+            <Formik
+              initialValues={{ payMode: payMode }}
+              onSubmit={(values: any, actions) => {
+                setTimeout(() => {
+                  console.log('hi')
+                  //setPayMode(values.payMode)
+                }, 100)
+              }}
+            >
+              {props => (
+                <Form>
+                  {payMode == 0
+                    ? ''
+                    : payMode == 1
+                    ? 'Sandbox Mode (Dev Only)'
+                    : 'Free Mode (Dev Only)'}
+                  <Field name='payMode'>
+                    {({ field, form }) => (
+                      <FormControl id='payMode'>
+                        <Select
+                          size='sm'
+                          {...field}
+                          style={{ type: 'submit' }}
+                          onChange={e => {
+                            setPayMode(Number.parseInt(e.currentTarget.value))
+                          }}
+                        >
+                          <option disabled value='0'>
+                            DevMode:
+                          </option>
+                          <option disabled value='1'>
+                            Sandbox
+                          </option>
+                          <option value='2'>Free</option>
+                        </Select>
+                      </FormControl>
+                    )}
+                  </Field>
+                </Form>
+              )}
+            </Formik>
+          </Box>
           <Formik
             initialValues={{}}
             onSubmit={(values: any, actions) => {
@@ -260,37 +310,22 @@ const Todos: React.FC<StyleVProps> = () => {
                   >
                     <Center m={0} p={0} h='0px'>
                       <Box mt='-5vh' mb={0} mx='auto' p={0}>
-                        <SentenceTextV>Push to send</SentenceTextV>
+                        <Text fontFamily='Caviar Dreams' className='text20'>
+                          Push the button!
+                        </Text>
                       </Box>
                     </Center>
-                    <Button
-                      type='submit'
-                      onClick={() => {
-                        setPressed(true)
-                        setTimeout(() => {
-                          if (name === '') {
-                            onOpen()
-                          } else if (category === '') {
-                            onOpen2()
-                          } else if (amount === '') {
-                            onOpen3()
-                          }
-                        }, 100)
-                        setTimeout(() => {
-                          setPressed(false)
-                        }, 500)
-                      }}
-                      bg='rgba(0,0,0,0)'
-                      _hover={{ bg: 'rgba(0,0,0,0)' }}
-                      _focus={{ bg: 'rgba(0,0,0,0)' }}
-                      _active={{ bg: 'rgba(0,0,0,0)' }}
-                    >
-                      <ImageV
-                        src={`button${
-                          props.isSubmitting || pressed ? '-pressed' : ''
-                        }`}
-                      />
-                    </Button>
+                    <ButtonV
+                      onOpen={onOpen}
+                      onOpen2={onOpen2}
+                      onOpen3={onOpen3}
+                      setPressed={setPressed}
+                      name={name}
+                      category={category}
+                      amount={amount}
+                      pressed={props.isSubmitting || pressed}
+                      payMode={payMode}
+                    />
                   </Box>
                 </Center>
               </Form>
@@ -318,7 +353,6 @@ const Todos: React.FC<StyleVProps> = () => {
               </Link>
             </Box>
           </Center>
-          <Center w='200px' h='200px'></Center>
 
           <Modal
             initialFocusRef={initialRef}
@@ -338,7 +372,7 @@ const Todos: React.FC<StyleVProps> = () => {
               my='auto'
             >
               <ModalHeader pt={10} fontSize='18px'>
-                What's your name?
+                <ImageV src='labels/u1'></ImageV>
               </ModalHeader>
               <Formik
                 initialValues={{ name2: name }}
@@ -382,7 +416,7 @@ const Todos: React.FC<StyleVProps> = () => {
             finalFocusRef={finalRef2}
             isOpen={isOpen2}
             onClose={onClose2}
-            closeOnOverlayClick={false}
+            closeOnOverlayClick={true}
             isCentered
             size='sm'
             scrollBehavior='inside'
@@ -402,7 +436,7 @@ const Todos: React.FC<StyleVProps> = () => {
             >
               <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                 <ModalHeader pt={10} fontSize='18px'>
-                  Who are you toasting to?
+                  <ImageV src='labels/u2'></ImageV>
                 </ModalHeader>
                 <Formik
                   initialValues={{
@@ -433,10 +467,10 @@ const Todos: React.FC<StyleVProps> = () => {
                                     padding: '0px',
                                   }}
                                 />
-                                <SimpleGrid
-                                  columns={[1, 2, 3]}
-                                  spacing='40px'
-                                  pb={10}
+                                <Flex
+                                  wrap='wrap'
+                                  alignContent='space-evenly'
+                                  justifyContent='center'
                                 >
                                   {options.map(value => {
                                     const radio = getRadioProps({ value })
@@ -448,7 +482,13 @@ const Todos: React.FC<StyleVProps> = () => {
                                       />
                                     )
                                   })}
-                                </SimpleGrid>
+                                  <LearnMoreV
+                                    onOpen={() => {
+                                      onClose2()
+                                      onOpen4()
+                                    }}
+                                  />
+                                </Flex>
                               </RadioGroup>
                             </FormControl>
                           )}
@@ -465,7 +505,7 @@ const Todos: React.FC<StyleVProps> = () => {
             finalFocusRef={finalRef3}
             isOpen={isOpen3}
             onClose={onClose3}
-            closeOnOverlayClick={false}
+            closeOnOverlayClick={true}
             isCentered
             size='sm'
             scrollBehavior='inside'
@@ -485,7 +525,7 @@ const Todos: React.FC<StyleVProps> = () => {
             >
               <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                 <ModalHeader pt={10} fontSize='18px'>
-                  Choose your Toast:
+                  <ImageV src='labels/u3'></ImageV>
                 </ModalHeader>
                 <Formik
                   initialValues={{
@@ -539,8 +579,53 @@ const Todos: React.FC<StyleVProps> = () => {
               </div>
             </ModalContent>
           </Modal>
+          <Modal
+            initialFocusRef={initialRef4}
+            finalFocusRef={finalRef4}
+            isOpen={isOpen4}
+            onClose={onClose4}
+            closeOnOverlayClick={true}
+            isCentered
+            size='sm'
+            scrollBehavior='inside'
+          >
+            <ModalBackgroundV />
+            <ModalContent
+              style={{
+                zIndex: 10000,
+                maxWidth: '588px',
+                overflowY: 'scroll',
+                overflowX: 'visible',
+              }}
+              w='95vw'
+              h='100vh'
+              mx='auto'
+              my='auto'
+            >
+              <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
+                <BackV onClose={onClose4} />
+                <ModalHeader pt={10} fontSize='18px'>
+                  <ImageV src='labels/u4'></ImageV>
+                </ModalHeader>
+                <ModalBody>
+                  <AboutV />
+                </ModalBody>
+              </div>
+            </ModalContent>
+          </Modal>
         </Wrapper>
       </PageWrapV>
+      <PaypalV
+        target={CardTable[valueFromCategory(category)].paypal}
+        pass={`${valueFromCategory(category)}-${valueFromToast(
+          amount
+        )}-${name}`}
+        amount={Number.parseInt(ToastTable[valueFromToast(amount)].amount)}
+        purpose={`Let's have a toast on ${category}`}
+        sandbox={payMode === 1}
+        buy={payMode === 1}
+        image='lets'
+      />
     </>
   )
 }

@@ -2,7 +2,7 @@ const CardTable = [
   {
     value: 0,
     name: 'BETTER CLIMATE',
-    color: '#388E3C',
+    color: '#8BC34A',
     paypal: 'henrik.geissler@googlemail.com',
   },
   {
@@ -14,7 +14,7 @@ const CardTable = [
   {
     value: 2,
     name: 'ZERO HUNGER',
-    color: '#7C4DFF',
+    color: '#448AFF',
     paypal: 'henrik.geissler@googlemail.com',
   },
   {
@@ -26,61 +26,31 @@ const CardTable = [
   {
     value: 4,
     name: 'OUR CHILDREN',
-    color: '#8BC34A',
+    color: '#0097A7',
     paypal: 'henrik.geissler@googlemail.com',
   },
   {
     value: 5,
     name: 'HUMAN RIGHTS',
-    color: '#448AFF',
+    color: '#FFC107',
     paypal: 'henrik.geissler@googlemail.com',
   },
   {
     value: 6,
     name: 'FRIDAYS FOR FUTURE',
-    color: '#00796B',
+    color: '#438b49',
     paypal: 'henrik.geissler@googlemail.com',
   },
   {
     value: 7,
-    name: 'BLACK LIFES MATTER',
-    color: '#FFC107',
-    paypal: 'henrik.geissler@googlemail.com',
-  },
-  {
-    value: 8,
-    name: 'bla bla bla',
-    color: '#E040FB',
-    paypal: 'henrik.geissler@googlemail.com',
-  },
-  {
-    value: 9,
-    name: 'The very very very long name',
-    color: '#FF4081',
-    paypal: 'henrik.geissler@googlemail.com',
-  },
-  {
-    value: 10,
-    name: 'Tierschutzverein',
-    color: '#5D4037',
-    paypal: 'henrik.geissler@googlemail.com',
-  },
-  {
-    value: 11,
-    name: 'out of ideas',
-    color: '#CDDC39',
-    paypal: 'henrik.geissler@googlemail.com',
-  },
-  {
-    value: 12,
-    name: 'test test test',
-    color: '#455A64',
+    name: 'BLACK LIVES MATTER',
+    color: '#000000',
     paypal: 'henrik.geissler@googlemail.com',
   },
   {
     value: 8,
     name: 'THE CREATORS',
-    color: '#0097A7',
+    color: '#FF4081',
     paypal: 'henrik.geissler@googlemail.com',
   },
 ]

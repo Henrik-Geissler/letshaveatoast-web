@@ -9,6 +9,7 @@ interface RadioCardVProps {
   input: any
   checkbox: Pick<HTMLProps<any>, any>
   setCategory: any
+  num: string
 }
 
 const RadioCardV: React.FC<RadioCardVProps> = ({
@@ -17,9 +18,10 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
   input,
   checkbox,
   setCategory,
+  num,
 }) => {
   return (
-    <Square bg={color} height='160px' width='160px' m={1}>
+    <Square bg={color} height='160px' width='160px' m={4}>
       <Box as='label'>
         <input
           {...input}
@@ -33,7 +35,7 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
           borderWidth='1px'
           borderRadius='md'
           boxShadow='md'
-          px={5}
+          px={2}
           py={3}
           height='160px'
           width='160px'
@@ -41,16 +43,31 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
           style={{ borderRadius: '0px' }}
         >
           <Flex direction='column' height='100%' width='100%'>
-            <Flex width='100%'>
-              <Spacer />
-              <Box width='60px' height='60px'>
-                <ImageV src={`category/${name}`} />
-              </Box>
+            <Flex direction='row' height='100%' width='100%'>
+              <Text
+                fontSize='36px'
+                color='white'
+                fontFamily='Arial Narrow, sans serif'
+                fontWeight='bold'
+                lineHeight='1'
+                pr={2}
+              >
+                {num}
+              </Text>
+              <Text
+                fontSize='16px'
+                color='white'
+                fontFamily='Arial Narrow, sans serif'
+                fontWeight='bold'
+                lineHeight='1'
+                my={'auto'}
+              >
+                {name}
+              </Text>
             </Flex>
-          </Flex>
-          <Flex direction='column' height='100%' mt={'-136px'}>
-            <Spacer />
-            <Text fontSize='22px'>{name}</Text>
+            <Box px={8} pt={4} pb={18}>
+              <ImageV src={`category/${name}`} />
+            </Box>
           </Flex>
         </Box>
       </Box>

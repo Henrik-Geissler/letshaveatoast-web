@@ -32,13 +32,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
   name,
 }) => {
   if (name === '') {
-    return (
-      <Center>
-        <Flex direction='column'>
-          <SentenceTextV>Share global toast together</SentenceTextV>
-        </Flex>
-      </Center>
-    )
+    return <></>
   }
   if (category === '') {
     return <></>

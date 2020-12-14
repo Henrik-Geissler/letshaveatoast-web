@@ -32,6 +32,23 @@ const ToastV: React.FC<ToastVProps> = ({
 
     return () => clearTimeout(interval)
   }, [intro])
+
+  const snippets = [
+    <FaQuoteLeft
+      style={{
+        marginRight: '4px',
+        marginTop: '0px',
+        marginBottom: '0px',
+      }}
+    />,
+    "Let's",
+    'have',
+    'a',
+    ...amount.split(' '),
+    'on',
+    ...category.split(' '),
+    '!',
+  ]
   const runAnim = intro % 2 !== 0
   return (
     <Box
@@ -41,12 +58,16 @@ const ToastV: React.FC<ToastVProps> = ({
       bg={`${color}`}
       borderRadius='18px'
       style={{
+        visibility: 'hidden',
         pointerEvents: 'none',
-        transition: runAnim ? '2.0s' : '0s',
+        transition: `background-position ${
+          runAnim ? '2.0s' : '0s'
+        }, visibility 0s`,
         backgroundSize: '400% auto',
         backgroundPosition: runAnim ? 'left center' : 'right center',
         backgroundImage: `linear-gradient(to left, ${color} 0%, ${color} 25%, ${color2} 50%, ${color} 75%, ${color} 100%)`,
       }}
+      className='hi'
     >
       <Box
         color='white'
@@ -78,77 +99,21 @@ const ToastV: React.FC<ToastVProps> = ({
             }}
             my='auto'
           >
-            <ToastTextV>
-              <FaQuoteLeft
-                style={{
-                  marginRight: '4px',
-                  marginTop: '0px',
-                  marginBottom: '0px',
-                }}
-              />
-            </ToastTextV>
-            <div
-              style={{
-                width: '4px',
-                height: '4px',
-                marginTop: '0px',
-                marginBottom: '0px',
-              }}
-            ></div>
-            <ToastTextV>{`Let's`}</ToastTextV>
-            <div
-              style={{
-                width: '4px',
-                height: '4px',
-                marginTop: '0px',
-                marginBottom: '0px',
-              }}
-            ></div>
-            <ToastTextV>{`have`}</ToastTextV>
-            <div
-              style={{
-                width: '4px',
-                height: '4px',
-                marginTop: '0px',
-                marginBottom: '0px',
-              }}
-            ></div>
-            <ToastTextV>{`a`}</ToastTextV>
-            <div
-              style={{
-                width: '4px',
-                height: '4px',
-                marginTop: '0px',
-                marginBottom: '0px',
-              }}
-            ></div>
-            <ToastTextV>{`${amount}`}</ToastTextV>
-            <div
-              style={{
-                width: '4px',
-                height: '4px',
-                marginTop: '0px',
-                marginBottom: '0px',
-              }}
-            ></div>
-            <ToastTextV>{`on`}</ToastTextV>
-            <div
-              style={{
-                width: '4px',
-                height: '4px',
-                marginTop: '0px',
-                marginBottom: '0px',
-              }}
-            ></div>
-            <ToastTextV>{`${category}!`}</ToastTextV>
-            <div
-              style={{
-                width: '4px',
-                height: '4px',
-                marginTop: '0px',
-                marginBottom: '0px',
-              }}
-            ></div>
+            {snippets.map(item => {
+              return (
+                <>
+                  <ToastTextV>{item}</ToastTextV>
+                  <div
+                    style={{
+                      width: '4px',
+                      height: '4px',
+                      marginTop: '0px',
+                      marginBottom: '0px',
+                    }}
+                  ></div>
+                </>
+              )
+            })}
             <div style={{ marginLeft: 'auto' }}>
               <ToastTextV>{`– ${name}`}</ToastTextV>
             </div>
