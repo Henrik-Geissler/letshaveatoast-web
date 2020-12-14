@@ -164,7 +164,6 @@ const Todos: React.FC<StyleVProps> = () => {
   if (data !== undefined)
     if (data.getToast !== undefined)
       if (data.getToast.id !== pushedToast) {
-        setPushedToast(data.getToast.id)
         if (pushedToast !== null) {
           const variant = Number.parseInt(data.getToast.amount)
           toast({
@@ -185,6 +184,7 @@ const Todos: React.FC<StyleVProps> = () => {
           })
           if (audio !== null) audio.play()
         }
+        setPushedToast(data.getToast.id)
       }
 
   if (name !== '' && !isOpen && !isOpen2 && !isOpen3 && !isOpen4) {
