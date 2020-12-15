@@ -12,6 +12,7 @@ const SentenceTextV: React.FC<SentenceTextVProps> = ({ children }) => {
       className='text20'
       style={{ whiteSpace: 'nowrap' }}
       color='#35363f'
+      my={'auto'}
     >
       {children}
     </Text>

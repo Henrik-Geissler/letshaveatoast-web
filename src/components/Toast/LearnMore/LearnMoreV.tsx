@@ -8,7 +8,7 @@ interface LearnMoreVProps {
 
 const LearnMoreV: React.FC<LearnMoreVProps> = ({ onOpen }) => {
   return (
-    <Center height='160px' width='160px'>
+    <Center height='160px' width='160px' m={4}>
       <Button
         bg='#fff700'
         m='auto'

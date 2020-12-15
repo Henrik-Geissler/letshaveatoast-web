@@ -65,6 +65,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
             }}
             px={3}
             pb={1}
+            my={1}
           >
             <SentenceTextV>
               <Field name='amount'>
@@ -96,6 +97,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
             }}
             px={3}
             pb={1}
+            my={1}
           >
             <SentenceTextV>
               <Field name='category'>
@@ -118,7 +120,6 @@ const SentenceV: React.FC<SentenceVProps> = ({
             <SentenceTextV>{'!'}</SentenceTextV>
           </Button>
         </Flex>
-        <br />
         <Flex>
           <Spacer />
           <SentenceTextV>{'––'}</SentenceTextV>

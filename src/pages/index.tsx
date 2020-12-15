@@ -148,7 +148,7 @@ const Todos: React.FC<StyleVProps> = () => {
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
   const [amount, setAmount] = useState('')
-  const [pushedToast, setPushedToast] = useState(0)
+  const [pushedToast, setPushedToast] = useState(null)
 
   const initialRef = useRef()
   const finalRef = useRef()
@@ -167,7 +167,7 @@ const Todos: React.FC<StyleVProps> = () => {
         if (pushedToast !== null) {
           const variant = Number.parseInt(data.getToast.amount)
           toast({
-            duration: 2000 * (variant + 1) ** 1.5,
+            duration: 2000 * (variant + 1) ** 1.7,
             isClosable: false,
             position: 'top-right',
             render: () => (

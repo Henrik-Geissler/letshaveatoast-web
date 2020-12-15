@@ -19,7 +19,7 @@ const CardTable = [
   },
   {
     value: 3,
-    name: 'GOOD HEALTH AND WELLBEING',
+    name: 'GOOD HEALTH',
     color: '#303F9F',
     paypal: 'henrik.geissler@googlemail.com',
   },

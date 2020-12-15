@@ -51,7 +51,6 @@ const RadioToastV: React.FC<RadioToastVProps> = ({
         >
           <Flex>
             <Text
-              fontSize='26px'
               my='auto'
               style={{
                 color: `${color}cc`,
@@ -65,14 +64,13 @@ const RadioToastV: React.FC<RadioToastVProps> = ({
             <Spacer />
             <Text
               mr={2}
-              fontSize='22px'
               my='auto'
               style={{
                 color: `${color}cc`,
                 textShadow: '1px 1px 1px rgba(255,255,255,1)',
-                fontSize: '30px',
                 fontWeight: 400,
               }}
+              className='textMetal2'
             >
               {amount}€
             </Text>

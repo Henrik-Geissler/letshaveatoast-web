@@ -1,7 +1,7 @@
 const ToastTable = [
   {
     value: 0,
-    name: 'toast',
+    name: 'tiny toast',
     amount: '1',
     color: '#bec7c7',
     tcolor: '#00000077',

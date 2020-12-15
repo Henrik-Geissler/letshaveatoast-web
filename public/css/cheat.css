@@ -33,16 +33,50 @@
 */
 
 .text12 {
-  font-size: 2.5vw;
+  font-size: 5px;
 }
 .text18 {
-  font-size: 4vw;
+  font-size: 9px;
 }
 .text20 {
-  font-size: 5vw;
+  font-size: 10px;
 }
 
 @media (min-width: 400px) {
+  .text12 {
+    font-size: 5px;
+  }
+  .text18 {
+    font-size: 11px;
+  }
+  .text20 {
+    font-size: 12px;
+  }
+}
+@media (min-width: 500px) {
+  .text12 {
+    font-size: 6px;
+  }
+  .text18 {
+    font-size: 13px;
+  }
+  .text20 {
+    font-size: 14px;
+  }
+}
+@media (min-width: 600px) {
+  .text12 {
+    font-size: 8px;
+  }
+  .text18 {
+    font-size: 15px;
+  }
+  .text20 {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 800px) {
   .text12 {
     font-size: 11px;
   }
@@ -57,8 +91,14 @@
 .textMetal {
   font-size: 5vw;
 }
+.textMetal2 {
+  font-size: 5.5vw;
+}
 @media (min-width: 546px) {
   .textMetal {
+    font-size: 30px;
+  }
+  .textMetal2 {
     font-size: 30px;
   }
 }
