@@ -106,7 +106,7 @@ const valueFromToast = cat => {
   return 0
 }
 const Todos: React.FC<StyleVProps> = () => {
-  const [payMode, setPayMode] = useState(0)
+  const [payMode, setPayMode] = useState(2) //TODO: 0 for production
   const [audio, setAudio] = useState(null)
   useEffect(() => {
     setAudio(new Audio('sounds/notification.mp3'))
@@ -218,6 +218,7 @@ const Todos: React.FC<StyleVProps> = () => {
               </Box>
             </Box>
           </Center>
+          {/**
           <Box top='90vh' h='0px' pos='absolute' p={0} m={0} left={0}>
             <Formik
               initialValues={{ payMode: payMode }}
@@ -261,6 +262,7 @@ const Todos: React.FC<StyleVProps> = () => {
               )}
             </Formik>
           </Box>
+           */}
           <Formik
             initialValues={{}}
             onSubmit={(values: any, actions) => {
@@ -310,7 +312,7 @@ const Todos: React.FC<StyleVProps> = () => {
                   >
                     <Center m={0} p={0} h='0px'>
                       <Box mt='-5vh' mb={0} mx='auto' p={0}>
-                        <Text fontFamily='Caviar Dreams' className='text20'>
+                        <Text fontFamily='Caviar Dreams' className='text22'>
                           Push the button!
                         </Text>
                       </Box>

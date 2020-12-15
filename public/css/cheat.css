@@ -42,6 +42,10 @@
   font-size: 10px;
 }
 
+.text22 {
+  font-size: 13px;
+}
+
 @media (min-width: 400px) {
   .text12 {
     font-size: 5px;
@@ -51,6 +55,9 @@
   }
   .text20 {
     font-size: 12px;
+  }
+  .text22 {
+    font-size: 15px;
   }
 }
 @media (min-width: 500px) {
@@ -63,6 +70,9 @@
   .text20 {
     font-size: 14px;
   }
+  .text22 {
+    font-size: 17px;
+  }
 }
 @media (min-width: 600px) {
   .text12 {
@@ -73,6 +83,9 @@
   }
   .text20 {
     font-size: 17px;
+  }
+  .text22 {
+    font-size: 20px;
   }
 }
 
@@ -85,6 +98,10 @@
   }
   .text20 {
     font-size: 20px;
+  }
+
+  .text22 {
+    font-size: 23px;
   }
 }
 
