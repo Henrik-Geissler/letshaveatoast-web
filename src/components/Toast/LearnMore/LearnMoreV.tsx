@@ -1,14 +1,15 @@
 import { Button, Center } from '@chakra-ui/react'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { FaArrowRight } from 'react-icons/fa'
 
 interface LearnMoreVProps {
   onOpen: any
+  children: ReactNode
 }
 
-const LearnMoreV: React.FC<LearnMoreVProps> = ({ onOpen }) => {
+const LearnMoreV: React.FC<LearnMoreVProps> = ({ onOpen, children }) => {
   return (
-    <Center height='160px' width='160px' m={4}>
+    <Center className='kachel1 kachel2'>
       <Button
         bg='#fff700'
         m='auto'
@@ -23,9 +24,9 @@ const LearnMoreV: React.FC<LearnMoreVProps> = ({ onOpen }) => {
         rightIcon={<FaArrowRight />}
         py={3}
         px={5}
+        className='textButton'
       >
-        {' '}
-        LEARN MORE{' '}
+        {children}
       </Button>
     </Center>
   )

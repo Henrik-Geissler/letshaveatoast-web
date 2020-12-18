@@ -13,7 +13,7 @@ const ToastTextV: React.FC<ToastTextVProps> = ({ children }) => {
       fontWeight={0.1}
       my={0}
       py={0}
-      className='text18'
+      className='textToast'
     >
       {children}
     </Text>

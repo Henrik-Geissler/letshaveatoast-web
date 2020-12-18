@@ -1,5 +1,10 @@
 import { withApollo } from '../utils/withApollo'
-import { gql, useLazyQuery, useQuery } from '@apollo/client'
+import {
+  gql,
+  selectHttpOptionsAndBody,
+  useLazyQuery,
+  useQuery,
+} from '@apollo/client'
 import { useState, useEffect, useRef } from 'react'
 import {
   Box,
@@ -41,14 +46,27 @@ import SentenceTextV from '../components/Toast/SentenceText/SentenceTextV'
 import PaypalV from '../components/Toast/Paypal/PaypalV'
 import AboutV from '../components/Toast/About/AboutV'
 import LearnMoreV from '../components/Toast/LearnMore/LearnMoreV'
-import ButtonV from '../components/Toast/Button/ButtonV'
+import ButtonGroupV from '../components/Toast/ButtonGroup/ButtonGroupV'
 import BackV from '../components/Toast/Back/BackV'
+import FooterV from '../components/Toast/Footer/FooterV'
+import MainV from '../components/Toast/Main/MainV'
+import BotTable from '../components/Toast/BotTable/BotTable'
+import Head from 'next/head'
+import AboutTheOthersV from '../components/Toast/AboutTheOthers/AboutTheOthersV'
+import ToastContent from '../components/Toast/ToastContent/ToastContentV'
+import ToastContentV from '../components/Toast/ToastContent/ToastContentV'
+
+const LOCAL = true //TODO: false for production
+const PAY_MODE = 0 //TODO: 0 for production
+const IDLE_DELAY = 10 //TODO: 10 for production
+const TIMES_TOAST_STAY = 1000 //TODO: 1 for production
+const POLL_INTERVAL = 500 //TODO: 500 for production
 
 const FRESH_TOAST = gql`
   query getToast {
     getToast {
       #SWITCH
-      firstname
+      name
       id
       amount
       category
@@ -65,8 +83,8 @@ const PUSH_TOAST = gql`
       }
       toast {
         #SWITCH
-        lastname
-        firstname
+        #lastname
+        name
         id
         amount
         category
@@ -86,6 +104,16 @@ function validateName(value) {
   let error
   if (!value) {
     error = 'Name is required'
+  } else if (value.length > 40) {
+    error = 'Name is to long'
+  } else if (
+    value.includes('?') ||
+    value.includes('=') ||
+    value.includes('/') ||
+    value.includes('\\') ||
+    value.includes('&')
+  ) {
+    error = 'Only letters are allowed'
   }
   return error
 }
@@ -105,12 +133,112 @@ const valueFromToast = cat => {
   }
   return 0
 }
+const updateUrl = (name, category, amount) => {
+  const a = valueFromToast(amount)
+  const c = valueFromCategory(category)
+  window.history.replaceState(
+    {},
+    document.title,
+    `${name !== '' ? '?n=' : ''}${name}${category !== '' ? `&c=${c}` : ''}${
+      amount !== '' ? `&a=${a}` : ''
+    }`
+  )
+}
+const packToast = (toast, name, category, amount, audio, fake) => {
+  if (audio !== null) {
+    const promise = audio.play()
+
+    if (promise !== undefined) {
+      promise.then(() => {}).catch(error => console.error)
+    }
+  }
+  return toast({
+    duration:
+      (fake ? 2000 : 6000) + +2000 * (amount + 1) ** 1.7 * TIMES_TOAST_STAY,
+    isClosable: false,
+    position: 'top-right',
+    render: () => (
+      <ToastV
+        //SWITCH
+        amount={ToastTable[amount].name}
+        color={ToastTable[amount].tcolor}
+        color2={ToastTable[amount].tcolor2}
+        hidden={true}
+      >
+        <ToastContentV
+          category={CardTable[category].name}
+          name={name}
+          amount={ToastTable[amount].name}
+          colorCard={CardTable[category].colorLight}
+        />
+      </ToastV>
+    ),
+  })
+}
+const idleToast = (newToast, setNewToast, toast, audio) => {
+  if (newToast) return
+  setNewToast(false)
+  const seconds = Date.now() / 1000
+  const period = (seconds - (seconds % IDLE_DELAY)) / IDLE_DELAY
+  const name = BotTable[period % BotTable.length]
+  const rndNumber = name.length + period
+  const amount = rndNumber % 3
+  const category = rndNumber % CardTable.length
+  const delay = 1000 * (rndNumber % (IDLE_DELAY + 2))
+  if ((rndNumber * (rndNumber / 10) * (rndNumber / 3)) % 2 == 0) {
+    return setTimeout(() => {
+      packToast(toast, name, category, amount, audio, true)
+    }, delay)
+  }
+}
+
+function unlockAudio() {
+  const sound = new Audio('sounds/notification.mp3')
+
+  sound.play()
+  sound.pause()
+  sound.currentTime = 0
+
+  document.body.removeEventListener('click', unlockAudio)
+  document.body.removeEventListener('touchstart', unlockAudio)
+}
 const Todos: React.FC<StyleVProps> = () => {
-  const [payMode, setPayMode] = useState(2) //TODO: 0 for production
-  const [audio, setAudio] = useState(null)
+  const [buttonLoaded, setButtonLoaded] = useState(false)
+  const [payMode, setPayMode] = useState(PAY_MODE)
+  const [payState, setPayState] = useState(null)
+  const [audioToast, setAudioToast] = useState(null)
+  const [newToast, setNewToast] = useState(false)
+  const [pending, setPending] = useState(-2)
+
+  const { called: pushLoads, refetch } = useQuery(PUSH_TOAST, { skip: true })
   useEffect(() => {
-    setAudio(new Audio('sounds/notification.mp3'))
-  }, [])
+    window.location.search
+      .substr(1)
+      .split('&')
+      .forEach(item => {
+        const tmp = item.split('=')
+        if (tmp[0] === 'n') setName(decodeURIComponent(tmp[1]))
+        else if (tmp[0] === 'c')
+          setCategory(CardTable[decodeURIComponent(tmp[1])].name)
+        else if (tmp[0] === 'a')
+          setAmount(ToastTable[decodeURIComponent(tmp[1])].name)
+        else if (tmp[0] === 's') setPayState(decodeURIComponent(tmp[1]))
+      })
+    updateUrl(name, category, amount)
+    document.body.addEventListener('click', unlockAudio)
+    document.body.addEventListener('touchstart', unlockAudio)
+    if (audioToast === null) {
+      setAudioToast(new Audio('sounds/notification.mp3'))
+    }
+    const interval = setInterval(() => {
+      idleToast(newToast, setNewToast, toast, audioToast)
+    }, 1000 * IDLE_DELAY)
+    const timeout = idleToast(newToast, setNewToast, toast, audioToast)
+    return () => {
+      clearInterval(interval)
+      clearTimeout(timeout)
+    }
+  }, [audioToast])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
     isOpen: isOpen2,
@@ -127,28 +255,30 @@ const Todos: React.FC<StyleVProps> = () => {
     onOpen: onOpen4,
     onClose: onClose4,
   } = useDisclosure()
+  const {
+    isOpen: isOpen5,
+    onOpen: onOpen5,
+    onClose: onClose5,
+  } = useDisclosure()
   const { loading, error, data } = useQuery(FRESH_TOAST, {
-    pollInterval: 500,
+    pollInterval: POLL_INTERVAL,
   })
   const options = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
-  const toastOptions = ['0', '1', '2', '3', '4']
+  const toastOptions = ['0', '1', '2', '3', '4', '5']
 
   const { getRadioProps } = useRadioGroup({
     name: 'category2',
     defaultValue: 'react',
     onChange: console.log,
   })
-  const { getRadioProps: getRadioProps2 } = useRadioGroup({
-    name: 'amount2',
-    defaultValue: 'react',
-    onChange: console.log,
-  })
-  const [pushToast, res] = useLazyQuery(PUSH_TOAST, { fetchPolicy: 'no-cache' })
   const [pressed, setPressed] = useState(false)
+  const [freeToast, setFreeToast] = useState(1)
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
   const [amount, setAmount] = useState('')
   const [pushedToast, setPushedToast] = useState(null)
+
+  const [reRoll, setReRoll] = useState(false)
 
   const initialRef = useRef()
   const finalRef = useRef()
@@ -158,36 +288,37 @@ const Todos: React.FC<StyleVProps> = () => {
   const finalRef3 = useRef()
   const initialRef4 = useRef()
   const finalRef4 = useRef()
-  //console.log(data)
+  const initialRef5 = useRef()
+  const finalRef5 = useRef()
+
   const toast = useToast()
-  if (res.loading) return <>Loading up ...</>
+  if (payState === '1') {
+    setPayState(null)
+    setButtonLoaded(true)
+  }
   if (data !== undefined)
     if (data.getToast !== undefined)
       if (data.getToast.id !== pushedToast) {
         if (pushedToast !== null) {
-          const variant = Number.parseInt(data.getToast.amount)
-          toast({
-            duration: 2000 * (variant + 1) ** 1.7,
-            isClosable: false,
-            position: 'top-right',
-            render: () => (
-              <ToastV
-                variant={variant}
-                //SWITCH
-                name={data.getToast.firstname}
-                amount={ToastTable[data.getToast.amount].name}
-                category={CardTable[data.getToast.category].name}
-                color={ToastTable[data.getToast.amount].tcolor}
-                color2={ToastTable[data.getToast.amount].tcolor2}
-              />
-            ),
-          })
-          if (audio !== null) audio.play()
+          setNewToast(true)
+          if (pending === data.getToast.id) {
+            setPending(-2)
+          }
+          packToast(
+            toast,
+            //SWITCH
+            data.getToast.name,
+            Number.parseInt(data.getToast.category),
+            Number.parseInt(data.getToast.amount),
+            audioToast,
+            false
+          )
         }
         setPushedToast(data.getToast.id)
       }
 
-  if (name !== '' && !isOpen && !isOpen2 && !isOpen3 && !isOpen4) {
+  if (name !== '' && !isOpen && !isOpen2 && !isOpen3 && !isOpen4 && !isOpen5) {
+    updateUrl(name, category, amount)
     if (category === '') {
       setTimeout(() => {
         onOpen2()
@@ -200,84 +331,20 @@ const Todos: React.FC<StyleVProps> = () => {
   }
   return (
     <>
-      <link rel='stylesheet' href='css/cheat.css' />
+      <Head>
+        <title>Let's have a toast</title>
+        <link rel='shortcut icon' href='/static/favicon.ico' />
+        <link rel='stylesheet' href='css/cheat.css' />
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+        />
+      </Head>
       <PageWrapV>
         <Wrapper>
-          <Center
-            top='40vh'
-            h='0px'
-            pos='absolute'
-            w='100vw'
-            p={0}
-            m={0}
-            left={0}
-          >
-            <Box maxW='100vw'>
-              <Box m={0} p={5} maxW='400px' w={category === '' ? '100%' : '0%'}>
-                <ImageV src='logo' />
-              </Box>
-            </Box>
-          </Center>
-          {/**
-          <Box top='90vh' h='0px' pos='absolute' p={0} m={0} left={0}>
-            <Formik
-              initialValues={{ payMode: payMode }}
-              onSubmit={(values: any, actions) => {
-                setTimeout(() => {
-                  console.log('hi')
-                  //setPayMode(values.payMode)
-                }, 100)
-              }}
-            >
-              {props => (
-                <Form>
-                  {payMode == 0
-                    ? ''
-                    : payMode == 1
-                    ? 'Sandbox Mode (Dev Only)'
-                    : 'Free Mode (Dev Only)'}
-                  <Field name='payMode'>
-                    {({ field, form }) => (
-                      <FormControl id='payMode'>
-                        <Select
-                          size='sm'
-                          {...field}
-                          style={{ type: 'submit' }}
-                          onChange={e => {
-                            setPayMode(Number.parseInt(e.currentTarget.value))
-                          }}
-                        >
-                          <option disabled value='0'>
-                            DevMode:
-                          </option>
-                          <option disabled value='1'>
-                            Sandbox
-                          </option>
-                          <option value='2'>Free</option>
-                        </Select>
-                      </FormControl>
-                    )}
-                  </Field>
-                </Form>
-              )}
-            </Formik>
-          </Box>
-           */}
           <Formik
             initialValues={{}}
             onSubmit={(values: any, actions) => {
-              console.log('PUSH: ' + name + ' ' + amount + ' ' + category)
-              pushToast({
-                variables: {
-                  options: {
-                    //SWITCH
-                    lastname: 'ok',
-                    firstname: name,
-                    amount: valueFromToast(amount),
-                    category: valueFromCategory(category),
-                  }!,
-                },
-              })
               setTimeout(() => {
                 actions.setSubmitting(false)
               }, 1000)
@@ -285,77 +352,61 @@ const Todos: React.FC<StyleVProps> = () => {
           >
             {props => (
               <Form>
-                <Center top='45vh' w='100vw' m={0} pos='absolute' left='0px'>
-                  <SentenceV
-                    onOpen={onOpen}
-                    onOpen2={onOpen2}
-                    onOpen3={onOpen3}
-                    amount={amount}
-                    category={category}
-                    name={name}
-                  />
-                </Center>
-                <Center
-                  top='85vh'
-                  left='0px'
-                  w='100vw'
-                  h='0px'
-                  pos='absolute'
-                  pt='0px'
-                  bg='rgba(0,0,0,0)'
-                >
-                  <Box
-                    className='theButton'
-                    mx='auto'
-                    p='auto'
-                    bg='rgba(0,0,0,0)'
-                  >
-                    <Center m={0} p={0} h='0px'>
-                      <Box mt='-5vh' mb={0} mx='auto' p={0}>
-                        <Text fontFamily='Caviar Dreams' className='text22'>
-                          Push the button!
-                        </Text>
-                      </Box>
-                    </Center>
-                    <ButtonV
-                      onOpen={onOpen}
-                      onOpen2={onOpen2}
-                      onOpen3={onOpen3}
-                      setPressed={setPressed}
-                      name={name}
-                      category={category}
-                      amount={amount}
-                      pressed={props.isSubmitting || pressed}
-                      payMode={payMode}
-                    />
-                  </Box>
-                </Center>
+                <MainV
+                  category={category}
+                  onOpen={onOpen}
+                  onOpen2={onOpen2}
+                  onOpen3={onOpen3}
+                  amount={amount}
+                  name={name}
+                  reRoll={reRoll && pending === -2}
+                  setReRoll={() => {
+                    setReRoll(false)
+                    setAmount('')
+                    setCategory('')
+                    setName('')
+                    updateUrl('', '', '')
+                  }}
+                  color={ToastTable[valueFromToast(amount)].tcolor}
+                  color2={ToastTable[valueFromToast(amount)].tcolor2}
+                  colorCard={CardTable[valueFromCategory(category)].colorLight}
+                  payState={payState}
+                />
+                <ButtonGroupV
+                  onOpen={onOpen}
+                  onOpen2={onOpen2}
+                  onOpen3={onOpen3}
+                  onPush={() => {
+                    refetch({
+                      options: {
+                        //SWITCH
+                        //lastname: 'ok',
+                        name: name,
+                        amount: valueFromToast(amount),
+                        category: valueFromCategory(category),
+                      }!,
+                    }).then(value => {
+                      setPending(value.data.newToast.toast.id)
+                    })
+                    setPending(-1)
+                    setButtonLoaded(false)
+                  }}
+                  setPressed={setPressed}
+                  name={name}
+                  category={category}
+                  amount={amount}
+                  pressed={props.isSubmitting || pressed}
+                  payMode={payMode}
+                  buttonLoaded={buttonLoaded}
+                  payState={payState}
+                  reRoll={reRoll && pending === -2}
+                  setReRoll={setReRoll}
+                  pending={pending !== -2}
+                />
               </Form>
             )}
           </Formik>
-          <Center
-            top='98vh'
-            w='100vw'
-            h='0px'
-            pos='absolute'
-            m={0}
-            p={0}
-            left={0}
-          >
-            <Box maxW='100vw' mx='auto'>
-              <Link
-                href='/pdf/terms_and_conditions.pdf'
-                isExternal
-                my={0}
-                p={0}
-              >
-                <Text as='u' className='text12'>
-                  Terms and Conditions
-                </Text>
-              </Link>
-            </Box>
-          </Center>
-
+          <FooterV />
           <Modal
             initialFocusRef={initialRef}
             finalFocusRef={finalRef}
@@ -473,6 +524,7 @@ const Todos: React.FC<StyleVProps> = () => {
                                   wrap='wrap'
                                   alignContent='space-evenly'
                                   justifyContent='center'
+                                  mb={50}
                                 >
                                   {options.map(value => {
                                     const radio = getRadioProps({ value })
@@ -489,7 +541,12 @@ const Todos: React.FC<StyleVProps> = () => {
                                       onClose2()
                                       onOpen4()
                                     }}
-                                  />
+                                  >
+                                    {' '}
+                                    LEARN
+                                    <br />
+                                    MORE{' '}
+                                  </LearnMoreV>
                                 </Flex>
                               </RadioGroup>
                             </FormControl>
@@ -536,7 +593,6 @@ const Todos: React.FC<StyleVProps> = () => {
                   onSubmit={(values: any, actions) => {
                     setTimeout(() => {
                       actions.setSubmitting(false)
-                      onClose3()
                     }, 100)
                   }}
                 >
@@ -566,6 +622,10 @@ const Todos: React.FC<StyleVProps> = () => {
                                         key={value}
                                         radio={radio}
                                         setAmount={setAmount}
+                                        setButtonLoaded={setButtonLoaded}
+                                        setFreeToast={setFreeToast}
+                                        freeToast={freeToast}
+                                        onClose={onClose3}
                                       />
                                     )
                                   })}
@@ -603,6 +663,8 @@ const Todos: React.FC<StyleVProps> = () => {
               h='100vh'
               mx='auto'
               my='auto'
+              backgroundColor='rgba(255,255,255,0.4)'
+              boxShadow='0 0 5px 5px rgba(255,255,255,0.4)'
             >
               <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                 <BackV onClose={onClose4} />
@@ -610,7 +672,53 @@ const Todos: React.FC<StyleVProps> = () => {
                   <ImageV src='labels/u4'></ImageV>
                 </ModalHeader>
                 <ModalBody>
-                  <AboutV />
+                  <AboutV
+                    onMore={() => {
+                      onClose4()
+                      onOpen5()
+                    }}
+                  />
+                </ModalBody>
+              </div>
+            </ModalContent>
+          </Modal>
+          <Modal
+            initialFocusRef={initialRef5}
+            finalFocusRef={finalRef5}
+            isOpen={isOpen5}
+            onClose={onClose5}
+            closeOnOverlayClick={true}
+            isCentered
+            size='sm'
+            scrollBehavior='inside'
+          >
+            <ModalBackgroundV />
+            <ModalContent
+              style={{
+                zIndex: 10000,
+                maxWidth: '588px',
+                overflowY: 'scroll',
+                overflowX: 'visible',
+              }}
+              w='95vw'
+              h='100vh'
+              mx='auto'
+              my='auto'
+              backgroundColor='rgba(255,255,255,0.4)'
+              boxShadow='0 0 5px 5px rgba(255,255,255,0.4)'
+            >
+              <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
+                <BackV onClose={onClose5} />
+                <ModalHeader pt={10} fontSize='18px'>
+                  <ImageV src='labels/u5'></ImageV>
+                </ModalHeader>
+                <ModalBody>
+                  <AboutTheOthersV
+                    onMore={() => {
+                      onClose5()
+                      onOpen4()
+                    }}
+                  />
                 </ModalBody>
               </div>
             </ModalContent>
@@ -619,14 +727,15 @@ const Todos: React.FC<StyleVProps> = () => {
       </PageWrapV>
       <PaypalV
         target={CardTable[valueFromCategory(category)].paypal}
-        pass={`${valueFromCategory(category)}-${valueFromToast(
-          amount
-        )}-${name}`}
+        name={name}
         amount={Number.parseInt(ToastTable[valueFromToast(amount)].amount)}
+        amountT={valueFromToast(amount)}
+        category={valueFromCategory(category)}
         purpose={`Let's have a toast on ${category}`}
         sandbox={payMode === 1}
         buy={payMode === 1}
         image='lets'
+        local={LOCAL}
       />
     </>
   )

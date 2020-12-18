@@ -21,7 +21,7 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
   num,
 }) => {
   return (
-    <Square bg={color} height='160px' width='160px' m={4}>
+    <Square bg={color} className='kachel1 kachel2'>
       <Box as='label'>
         <input
           {...input}
@@ -31,14 +31,13 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
         />
         <Box
           {...checkbox}
+          className='kachel1'
           cursor='pointer'
           borderWidth='1px'
           borderRadius='md'
           boxShadow='md'
           px={2}
           py={3}
-          height='160px'
-          width='160px'
           border='none'
           style={{ borderRadius: '0px' }}
         >
@@ -47,7 +46,7 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
               <Text
                 fontSize='36px'
                 color='white'
-                fontFamily='Arial Narrow, sans serif'
+                fontFamily='Caviar Dreams Bold'
                 fontWeight='bold'
                 lineHeight='1'
                 pr={2}
@@ -57,8 +56,7 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
               <Text
                 fontSize='16px'
                 color='white'
-                fontFamily='Arial Narrow, sans serif'
-                fontWeight='bold'
+                fontFamily='Caviar Dreams Bold'
                 lineHeight='1'
                 my={'auto'}
               >

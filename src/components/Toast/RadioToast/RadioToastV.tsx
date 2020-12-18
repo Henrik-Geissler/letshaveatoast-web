@@ -2,82 +2,121 @@ import { Box, Flex, Text } from '@chakra-ui/core'
 import { Spacer } from '@chakra-ui/react'
 import React, { HTMLProps } from 'react'
 import GifV from '../../General/Gif/GifV'
+import ToastV from '../Toast/ToastV'
 
 interface RadioToastVProps {
   amount: string
   color: string
+  color2: string
   name: string
   input: any
   checkbox: Pick<HTMLProps<any>, any>
   setAmount: any
+  setButtonLoaded: any
+  freeToast: any
+  setFreeToast: any
+  onClose: any
 }
 
 const RadioToastV: React.FC<RadioToastVProps> = ({
   amount,
   color,
+  color2,
   name,
   input,
   checkbox,
   setAmount,
+  setButtonLoaded,
+  freeToast,
+  setFreeToast,
+  onClose,
 }) => {
+  const disabled = freeToast < 1 && amount === '0'
   return (
-    <Box bg={color} m={1} style={{ borderRadius: '20px' }}>
+    <Box my={1} mx={5} borderRadius='10px' id={disabled ? 'firstToast' : ''}>
       <Box as='label'>
         <input
           {...input}
           className='radioBox'
           type='submit'
-          onClick={() => setAmount(name)}
+          onClick={() => {
+            setAmount(name)
+            if (amount === '0') {
+              if (disabled) {
+                document.getElementById('firstToast').className += ' shaking'
+                setTimeout(function () {
+                  const str = document.getElementById('firstToast').className
+                  document.getElementById(
+                    'firstToast'
+                  ).className = str.replaceAll(' shaking', '')
+                }, 600)
+              } else {
+                setButtonLoaded(true)
+                setFreeToast(freeToast - 1)
+                onClose()
+              }
+            } else {
+              setTimeout(() => {
+                document.getElementById('paypalRun').click()
+              }, 500)
+            }
+          }}
         />
 
         <Box
           {...checkbox}
           cursor='pointer'
           borderWidth='1px'
-          borderRadius='md'
           boxShadow='md'
-          px={5}
+          borderRadius='20px'
           py={3}
           height='100%'
           width='100%'
           border='none'
-          style={{
-            transition: '0.5s',
-            backgroundSize: '200% auto',
-            backgroundPosition: 'right center',
-            borderRadius: '20px',
-            backgroundImage: `linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 51%, rgba(0,0,0,0.7) 100%)`,
-          }}
         >
-          <Flex>
-            <Text
-              my='auto'
-              style={{
-                color: `${color}cc`,
-                textShadow: '1px 1px 1px rgba(255,255,255,1)',
-                fontWeight: 700,
-              }}
-              className='textMetal'
-            >
-              {name}
-            </Text>
-            <Spacer />
-            <Text
-              mr={2}
-              my='auto'
-              style={{
-                color: `${color}cc`,
-                textShadow: '1px 1px 1px rgba(255,255,255,1)',
-                fontWeight: 400,
-              }}
-              className='textMetal2'
-            >
-              {amount}€
-            </Text>
-            <Box my='auto' width='60px' height='60px'>
-              <GifV src={name} />
-            </Box>
-          </Flex>
+          <ToastV amount={name} color={color} color2={color2} hidden={false}>
+            <Flex w='100%'>
+              <Flex direction='column'>
+                <Text
+                  ml={2}
+                  my='auto'
+                  style={{
+                    color: `${disabled ? '#777' : '#fff'}`,
+                    fontWeight: 700,
+                  }}
+                  className='textMetal'
+                >
+                  {name}
+                </Text>
+                <Text
+                  ml={2}
+                  my='auto'
+                  className='text18'
+                  style={{
+                    color: '#fff',
+                  }}
+                >
+                  {disabled
+                    ? '(You already had your free toast)'
+                    : amount === '0'
+                    ? `(${freeToast} remaining)`
+                    : ''}
+                </Text>
+              </Flex>
+              <Spacer />
+              <Text
+                my='auto'
+                ml='4vw'
+                style={{
+                  fontWeight: 400,
+                  color: `${disabled ? '#777' : '#fff'}`,
+                }}
+                className='textMetal2'
+              >
+                {Number.parseInt(amount) > 0 ? amount + '€' : 'FREE'}
+              </Text>
+            </Flex>
+          </ToastV>
         </Box>
         <div
           style={{

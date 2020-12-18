@@ -1,9 +1,95 @@
+@import 'compass/css3';
 @font-face {
   font-family: 'Caviar Dreams';
   src: url('/fonts/caviar_dreams/CaviarDreams.ttf');
   font-style: normal;
   font-weight: 800;
   font-display: swap;
+}
+@font-face {
+  font-family: 'Caviar Dreams Bold';
+  src: url('/fonts/caviar_dreams/CaviarDreams_Bold.ttf');
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+.modalBg {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.pulse-button {
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 #b4302677;
+  animation: pulse 0.5s infinite;
+}
+.pulse-button:hover {
+  animation: none;
+}
+
+@keyframes pulse {
+  0% {
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  70% {
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 0 0 0 50px rgba(90, 153, 212, 0);
+  }
+  100% {
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(90, 153, 212, 0);
+  }
+}
+
+.floating {
+  -webkit-transform: translatey(0px);
+  transform: translatey(0px);
+  -webkit-animation: float 6s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
+}
+@-webkit-keyframes float {
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    -webkit-transform: translatey(0px);
+    transform: translatey(0px);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    -webkit-transform: translatey(-20px);
+    transform: translatey(-20px);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    -webkit-transform: translatey(0px);
+    transform: translatey(0px);
+  }
+}
+
+@keyframes float {
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    -webkit-transform: translatey(0px);
+    transform: translatey(0px);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    -webkit-transform: translatey(-20px);
+    transform: translatey(-20px);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    -webkit-transform: translatey(0px);
+    transform: translatey(0px);
+  }
 }
 
 .chakra-modal__content-container {
@@ -21,17 +107,9 @@
 .chakra-toast__inner {
   pointer-events: none !important;
 }
-/*
-@keyframes float {
-  0% {
-    transform: translateZ(20px) translateY(10px);
-  }
-  100% {
-    transform: translateY(-11px) translateX(-13px) translateZ(30px);
-  }
+.textToast {
+  font-size: 12px;
 }
-*/
-
 .text12 {
   font-size: 5px;
 }
@@ -41,11 +119,22 @@
 .text20 {
   font-size: 10px;
 }
-
 .text22 {
   font-size: 13px;
 }
+.img20 {
+  width: 13px;
+  height: 13px;
+  padding: 2px;
+}
 
+.textBack {
+  font-size: 18px;
+}
+
+.textButton {
+  font-size: 13px;
+}
 @media (min-width: 400px) {
   .text12 {
     font-size: 5px;
@@ -89,6 +178,46 @@
   }
 }
 
+@media (min-width: 412px) {
+  .textToast {
+    font-size: 16px;
+  }
+  .img20 {
+    width: 18.2px;
+    height: 18.2px;
+    padding: 2px;
+  }
+  .textButton {
+    font-size: 16px;
+  }
+}
+@media (min-width: 494px) {
+  .textToast {
+    font-size: 17px;
+  }
+  .img20 {
+    width: 22.1px;
+    height: 22.1px;
+    padding: 3px;
+  }
+  .textButton {
+    font-size: 19px;
+  }
+}
+@media (min-width: 576px) {
+  .textToast {
+    font-size: 18px;
+  }
+  .img20 {
+    width: 26px;
+    height: 26px;
+    padding: 4px;
+  }
+  .textButton {
+    font-size: 20px;
+  }
+}
+
 @media (min-width: 800px) {
   .text12 {
     font-size: 11px;
@@ -99,21 +228,26 @@
   .text20 {
     font-size: 20px;
   }
-
+  .textBack {
+    font-size: 20px;
+  }
   .text22 {
     font-size: 23px;
+  }
+  .textButton {
+    font-size: 20px;
   }
 }
 
 .textMetal {
-  font-size: 5vw;
+  font-size: 4.5vw;
 }
 .textMetal2 {
   font-size: 5.5vw;
 }
 @media (min-width: 546px) {
   .textMetal {
-    font-size: 30px;
+    font-size: 27px;
   }
   .textMetal2 {
     font-size: 30px;
@@ -134,13 +268,52 @@
 #chakra-toast-manager-top-right li:nth-child(1) div div {
   visibility: visible !important;
 }
-@media (min-height: 666px) {
+@media (min-height: 490px) {
   #chakra-toast-manager-top-right li:nth-child(2) div div {
     visibility: visible !important;
   }
 }
-@media (min-height: 911px) {
+@media (min-height: 740px) {
   #chakra-toast-manager-top-right li:nth-child(3) div div {
     visibility: visible !important;
+  }
+}
+
+.kachel2 {
+  margin: 0.25rem;
+}
+
+.kachel1 {
+  width: 140px;
+  height: 140px;
+}
+
+@media (min-width: 405px) {
+  .kachel2 {
+    margin: 1rem;
+  }
+
+  .kachel1 {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+.shaking {
+  animation: shake 200ms 2 linear;
+}
+
+@keyframes shake {
+  0% {
+    -webkit-transform: translate(6px, 0);
+    transform: translate(6px, 0);
+  }
+  50% {
+    -webkit-transform: translate(-6px, 0);
+    transform: translate(-6px, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
   }
 }

@@ -1,7 +1,9 @@
-import { Button, Center } from '@chakra-ui/react'
-import React, { ReactNode } from 'react'
+import { Image } from '@chakra-ui/core'
+import { Button, Center, Box, Text, Spinner } from '@chakra-ui/react'
+import React, { ReactNode, useState } from 'react'
 import ImageV from '../../General/Image/ImageV'
 import PaypalV from '../Paypal/PaypalV'
+import SocialButtonsV from '../SocialButtons/SocialButtonsV'
 
 interface ButtonVProps {
   onOpen: any
@@ -13,6 +15,12 @@ interface ButtonVProps {
   payMode: any
   name: string
   pressed: boolean
+  buttonLoaded: boolean
+  onPush: any
+  payState: string | null
+  reRoll: boolean
+  setReRoll: any
+  pending: boolean
 }
 
 const ButtonV: React.FC<ButtonVProps> = ({
@@ -25,36 +33,67 @@ const ButtonV: React.FC<ButtonVProps> = ({
   payMode,
   name,
   pressed,
+  buttonLoaded,
+  onPush,
+  payState,
+  reRoll,
+  setReRoll,
+  pending,
 }) => {
-  console.log('a' + payMode)
+  if (reRoll) {
+    return <></>
+  }
   return (
-    <Button
-      type={payMode === 2 ? 'submit' : 'button'}
-      onClick={() => {
-        setPressed(true)
-        setTimeout(() => {
-          if (name === '') {
-            onOpen()
-          } else if (category === '') {
-            onOpen2()
-          } else if (amount === '') {
-            onOpen3()
-          } else if (payMode !== 2) {
-            console.log('hiii')
-            document.getElementById('paypalRun').click()
-          }
-        }, 100)
-        setTimeout(() => {
-          setPressed(false)
-        }, 500)
-      }}
-      bg='rgba(0,0,0,0)'
-      _hover={{ bg: 'rgba(0,0,0,0)' }}
-      _focus={{ bg: 'rgba(0,0,0,0)' }}
-      _active={{ bg: 'rgba(0,0,0,0)' }}
-    >
-      <ImageV src={`button${pressed ? '-pressed' : ''}`} />
-    </Button>
+    <div>
+      <Button
+        type={payMode === 2 ? 'submit' : 'button'}
+        onClick={() => {
+          setPressed(true)
+          setTimeout(() => {
+            if (buttonLoaded) {
+              onPush()
+              setReRoll(true)
+            } else if (name === '') {
+              onOpen()
+            } else if (category === '') {
+              onOpen2()
+            } else if (amount === '' || amount === 'first toast') {
+              onOpen3()
+            } else if (payMode !== 2) {
+              document.getElementById('paypalRun').click()
+            }
+          }, 100)
+          setTimeout(() => {
+            setPressed(false)
+          }, 500)
+        }}
+        bg='rgba(0,0,0,0)'
+        _hover={{ bg: 'rgba(0,0,0,0)' }}
+        _focus={{ bg: 'rgba(0,0,0,0)' }}
+        _active={{ bg: 'rgba(0,0,0,0)' }}
+        className={buttonLoaded ? 'pulse-button' : ''}
+      >
+        <ImageV src={`button2${pressed ? '-pressed' : ''}`} />
+        <Image
+          src={`button2-pressed`}
+          style={{ visibility: 'hidden' }}
+          alt=''
+        />
+
+        <Box height='0px' width='0px' overflow='visible' position='absolute'>
+          <Spinner
+            width='50px'
+            height='50px'
+            marginTop='-25px'
+            marginLeft='-25px'
+            thickness='4px'
+            size='xl'
+            visibility={pending ? 'visible' : 'hidden'}
+            pointerEvents='none'
+          />
+        </Box>
+      </Button>
+    </div>
   )
 }
 

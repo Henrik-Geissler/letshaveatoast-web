@@ -3,22 +3,32 @@ import React from 'react'
 interface PaypalVProps {
   purpose: string
   amount: number
+  amountT: number
+  category: number
   target: string
   sandbox: boolean
-  pass: string
+  name: string
   image: string
   buy: boolean
+  local: boolean
 }
 
 const PaypalV: React.FC<PaypalVProps> = ({
   purpose,
+  category,
   amount,
+  amountT,
   target,
   sandbox,
-  pass,
+  name,
   image,
   buy,
+  local,
 }) => {
+  console.log(amount)
+  const backlink = `http://${
+    local ? 'localhost:3000/' : 'letshaveatoast.app/'
+  }?n=${name}&c=${category}&a=${amountT}&s=`
   return (
     <form
       action={`https://www${
@@ -57,18 +67,10 @@ const PaypalV: React.FC<PaypalVProps> = ({
       />
       <input type='hidden' value='US' name='lc' />
       <input type='hidden' value='EUR' name='currency_code' />
-      <input
-        type='hidden'
-        value='https://letshaveatoast.app/paypal/return'
-        name='return'
-      />
-      <input
-        type='hidden'
-        value='https://letshaveatoast.app/'
-        name='cancel_return'
-      />
-      <input type='hidden' value='2' name='rm' />
-      <input type='hidden' value={pass} name='custom' />
+      <input type='hidden' value={`${backlink}1`} name='return' />
+      <input type='hidden' value={`${backlink}0`} name='cancel_return' />
+      <input type='hidden' value='0' name='rm' />
+      <input type='hidden' value="Let's have a toast" name='cbt' />
       {/**
       <input
         type='hidden'

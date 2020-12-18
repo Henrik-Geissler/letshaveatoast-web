@@ -1,17 +1,16 @@
-import { Flex, Heading, Text } from '@chakra-ui/core'
+import { Box, Flex, Heading, Text } from '@chakra-ui/core'
+import { Center } from '@chakra-ui/react'
 import React from 'react'
-import SentenceTextV from '../SentenceText/SentenceTextV'
+import LearnMoreV from '../LearnMore/LearnMoreV'
+import SocialButtonsV from '../SocialButtons/SocialButtonsV'
 
-interface AboutVProps {}
+interface AboutVProps {
+  onMore: any
+}
 
-const AboutV: React.FC<AboutVProps> = ({}) => {
+const AboutV: React.FC<AboutVProps> = ({ onMore }) => {
   return (
-    <Flex
-      mt='5vh'
-      direction='column'
-      p={6}
-      backgroundColor='rgba(255,255,255,0.4)'
-    >
+    <Flex mt='5vh' direction='column' p={6}>
       <Text mb='10vh' fontWeight='bold' textAlign='justify'>
         We are Yanik, Henrik and Nils and our mission is to offer people the
         opportunity to feel a little bit less alone during the festive season by
@@ -47,7 +46,7 @@ const AboutV: React.FC<AboutVProps> = ({}) => {
         01/01/21 8pm. It would help us enormously if you could share our link.
       </Text>
       <Heading>Who we support:</Heading>
-      <Text mt='5vh' mb='10vh' textAlign='justify'>
+      <Text mt='5vh' textAlign='justify'>
         We have selected 8 Big topics we want to support, honour and toast to.
         All of them are doing astonishing work to build a better future and
         planet. All of your donations will go without detours to the
@@ -55,27 +54,15 @@ const AboutV: React.FC<AboutVProps> = ({}) => {
         following we present you our Choice and tell you why we have chosen
         them.
       </Text>
-      <Text mt='5vh' mb='10vh'>
-        Better climate: Every Toast to Climate Change will go without detours to
-        Greenpeace. Greenpeace is the largest environmental organization in the
-        world, with countless successes since 1978. They were founded as a
-        result of a campaign against nuclear energy with Audacity and
-        willingness to change things. They are a role model for so many
-        organizations and are a true hero for climate change. That's why we have
-        chosen them. Animals on earth: @Yanik bitte analog wie oben. Kannst auf
-        deutsch machen und ich übersetze Zero Hunger: @Yanik bitte analog wie
-        oben. Kannst auf deutsch machen und ich übersetze Good Health and
-        Wellbeing: @Yanik bitte analog wie oben. Kannst auf deutsch machen und
-        ich übersetze Our Children: @Yanik bitte analog wie oben. Kannst auf
-        deutsch machen und ich übersetze Human Rights: @Yanik bitte analog wie
-        oben. Kannst auf deutsch machen und ich übersetze Fridays for Futures:
-        @Yanik bitte analog wie oben. Kannst auf deutsch machen und ich
-        übersetze BlackLives matther:@Yanik bitte analog wie oben. Kannst auf
-        deutsch machen und ich übersetze To the creators of letshaveatoast: If
-        you like the idea of let’s have a toast, you can also support us to
-        create more such ideas. But we ask you to prioritize us against all the
-        other initiatives
-      </Text>
+      <Center mb='10vh'>
+        <LearnMoreV onOpen={onMore}>
+          LEARN MORE ABOUT OUR INITIATIVES
+        </LearnMoreV>
+      </Center>
+      <Heading>Support us by sharing:</Heading>
+      <Box mt='5vh' mb='10vh'>
+        <SocialButtonsV />
+      </Box>
     </Flex>
   )
 }

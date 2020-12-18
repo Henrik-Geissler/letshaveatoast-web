@@ -16,7 +16,7 @@ const BackV: React.FC<BackVProps> = ({ onClose }) => {
       borderRadius='20px'
       size='lg'
       fontFamily='Caviar Dreams'
-      className='text20'
+      className='textBack'
       leftIcon={<FiArrowLeft />}
       py={3}
       px={5}
