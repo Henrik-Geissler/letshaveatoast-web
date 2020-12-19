@@ -56,17 +56,17 @@ import AboutTheOthersV from '../components/Toast/AboutTheOthers/AboutTheOthersV'
 import ToastContent from '../components/Toast/ToastContent/ToastContentV'
 import ToastContentV from '../components/Toast/ToastContent/ToastContentV'
 
-const LOCAL = true //TODO: false for production
+const LOCAL = false //TODO: false for production
 const PAY_MODE = 0 //TODO: 0 for production
-const IDLE_DELAY = 10 //TODO: 10 for production
-const TIMES_TOAST_STAY = 1000 //TODO: 1 for production
+const IDLE_DELAY = 12 //TODO: 10 for production
+const TIMES_TOAST_STAY = 1 //TODO: 1 for production
 const POLL_INTERVAL = 500 //TODO: 500 for production
 
 const FRESH_TOAST = gql`
   query getToast {
     getToast {
       #SWITCH
-      name
+      firstname
       id
       amount
       category
@@ -83,8 +83,8 @@ const PUSH_TOAST = gql`
       }
       toast {
         #SWITCH
-        #lastname
-        name
+        lastname
+        firstname
         id
         amount
         category
@@ -111,7 +111,13 @@ function validateName(value) {
     value.includes('=') ||
     value.includes('/') ||
     value.includes('\\') ||
-    value.includes('&')
+    value.includes('&') ||
+    value.includes('.') ||
+    value.includes(':') ||
+    value.includes('(') ||
+    value.includes(')') ||
+    value.includes('{') ||
+    value.includes('}')
   ) {
     error = 'Only letters are allowed'
   }
@@ -154,12 +160,11 @@ const packToast = (toast, name, category, amount, audio, fake) => {
   }
   return toast({
     duration:
-      (fake ? 2000 : 6000) + +2000 * (amount + 1) ** 1.7 * TIMES_TOAST_STAY,
+      (fake ? 2000 : 10000) + 2000 * (amount + 1) ** 1.7 * TIMES_TOAST_STAY,
     isClosable: false,
     position: 'top-right',
     render: () => (
       <ToastV
-        //SWITCH
         amount={ToastTable[amount].name}
         color={ToastTable[amount].tcolor}
         color2={ToastTable[amount].tcolor2}
@@ -175,16 +180,17 @@ const packToast = (toast, name, category, amount, audio, fake) => {
     ),
   })
 }
-const idleToast = (newToast, setNewToast, toast, audio) => {
+const idleToast = (newToast, setNewToast, toast, audio, first) => {
   if (newToast) return
   setNewToast(false)
   const seconds = Date.now() / 1000
-  const period = (seconds - (seconds % IDLE_DELAY)) / IDLE_DELAY
+  const period =
+    (seconds - (seconds % IDLE_DELAY)) / IDLE_DELAY - (first ? 3 : 0)
   const name = BotTable[period % BotTable.length]
   const rndNumber = name.length + period
   const amount = rndNumber % 3
   const category = rndNumber % CardTable.length
-  const delay = 1000 * (rndNumber % (IDLE_DELAY + 2))
+  const delay = first ? 2000 : 1000 * (rndNumber % (IDLE_DELAY + 2))
   if ((rndNumber * (rndNumber / 10) * (rndNumber / 3)) % 2 == 0) {
     return setTimeout(() => {
       packToast(toast, name, category, amount, audio, true)
@@ -212,6 +218,10 @@ const Todos: React.FC<StyleVProps> = () => {
 
   const { called: pushLoads, refetch } = useQuery(PUSH_TOAST, { skip: true })
   useEffect(() => {
+    window.addEventListener('resize', () => {
+      let vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    })
     window.location.search
       .substr(1)
       .split('&')
@@ -231,14 +241,34 @@ const Todos: React.FC<StyleVProps> = () => {
       setAudioToast(new Audio('sounds/notification.mp3'))
     }
     const interval = setInterval(() => {
-      idleToast(newToast, setNewToast, toast, audioToast)
+      idleToast(
+        newToast || pending !== -2,
+        setNewToast,
+        toast,
+        audioToast,
+        false
+      )
     }, 1000 * IDLE_DELAY)
-    const timeout = idleToast(newToast, setNewToast, toast, audioToast)
+    const timeout = idleToast(
+      newToast || pending !== -2,
+      setNewToast,
+      toast,
+      audioToast,
+      true
+    )
+    const timeout2 = idleToast(
+      newToast || pending !== -2,
+      setNewToast,
+      toast,
+      audioToast,
+      false
+    )
     return () => {
       clearInterval(interval)
       clearTimeout(timeout)
+      clearTimeout(timeout2)
     }
-  }, [audioToast])
+  }, [])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
     isOpen: isOpen2,
@@ -307,7 +337,7 @@ const Todos: React.FC<StyleVProps> = () => {
           packToast(
             toast,
             //SWITCH
-            data.getToast.name,
+            data.getToast.firstname,
             Number.parseInt(data.getToast.category),
             Number.parseInt(data.getToast.amount),
             audioToast,
@@ -329,6 +359,7 @@ const Todos: React.FC<StyleVProps> = () => {
       }, 500)
     }
   }
+  const timestamp = Date.now()
   return (
     <>
       <Head>
@@ -380,8 +411,8 @@ const Todos: React.FC<StyleVProps> = () => {
                     refetch({
                       options: {
                         //SWITCH
-                        //lastname: 'ok',
-                        name: name,
+                        lastname: 'ok',
+                        firstname: name,
                         amount: valueFromToast(amount),
                         category: valueFromCategory(category),
                       }!,
@@ -431,7 +462,7 @@ const Todos: React.FC<StyleVProps> = () => {
                 initialValues={{ name2: name }}
                 onSubmit={(values: any, actions) => {
                   setTimeout(() => {
-                    setName(values.name2)
+                    setName(values['name' + timestamp])
                     actions.setSubmitting(false)
                     onClose()
                   }, 100)
@@ -440,7 +471,7 @@ const Todos: React.FC<StyleVProps> = () => {
                 {props => (
                   <Form>
                     <ModalBody pb={6} pt={6}>
-                      <Field name='name2' validate={validateName}>
+                      <Field name={'name' + timestamp} validate={validateName}>
                         {({ field, form }) => (
                           <FormControl
                             id='name2'
@@ -476,6 +507,7 @@ const Todos: React.FC<StyleVProps> = () => {
           >
             <ModalBackgroundV />
             <ModalContent
+              className='h100'
               style={{
                 zIndex: 10000,
                 maxWidth: '588px',
@@ -483,7 +515,6 @@ const Todos: React.FC<StyleVProps> = () => {
                 overflowX: 'visible',
               }}
               w='95vw'
-              h='100vh'
               mx='auto'
               my='auto'
             >
@@ -571,6 +602,7 @@ const Todos: React.FC<StyleVProps> = () => {
           >
             <ModalBackgroundV />
             <ModalContent
+              className='h100'
               style={{
                 zIndex: 10000,
                 maxWidth: '588px',
@@ -578,7 +610,6 @@ const Todos: React.FC<StyleVProps> = () => {
                 overflowX: 'visible',
               }}
               w='95vw'
-              h='100vh'
               mx='auto'
               my='auto'
             >
@@ -653,6 +684,7 @@ const Todos: React.FC<StyleVProps> = () => {
           >
             <ModalBackgroundV />
             <ModalContent
+              className='h100'
               style={{
                 zIndex: 10000,
                 maxWidth: '588px',
@@ -660,7 +692,6 @@ const Todos: React.FC<StyleVProps> = () => {
                 overflowX: 'visible',
               }}
               w='95vw'
-              h='100vh'
               mx='auto'
               my='auto'
               backgroundColor='rgba(255,255,255,0.4)'
@@ -694,6 +725,7 @@ const Todos: React.FC<StyleVProps> = () => {
           >
             <ModalBackgroundV />
             <ModalContent
+              className='h100'
               style={{
                 zIndex: 10000,
                 maxWidth: '588px',
@@ -701,7 +733,6 @@ const Todos: React.FC<StyleVProps> = () => {
                 overflowX: 'visible',
               }}
               w='95vw'
-              h='100vh'
               mx='auto'
               my='auto'
               backgroundColor='rgba(255,255,255,0.4)'

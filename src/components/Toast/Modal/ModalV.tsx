@@ -25,6 +25,7 @@ const ModalV: React.FC<ModalVProps> = ({
     >
       <ModalBackgroundV />
       <ModalContent
+        className='h100'
         style={{
           zIndex: 10000,
           maxWidth: '588px',
@@ -32,7 +33,6 @@ const ModalV: React.FC<ModalVProps> = ({
           overflowX: 'visible',
         }}
         w='95vw'
-        h='100vh'
         mx='auto'
         my='auto'
       >

@@ -1,4 +1,10 @@
-@import 'compass/css3';
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 @font-face {
   font-family: 'Caviar Dreams';
   src: url('/fonts/caviar_dreams/CaviarDreams.ttf');
@@ -316,4 +322,33 @@
     -webkit-transform: translate(0, 0);
     transform: translate(0, 0);
   }
+}
+
+.h100 {
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+.t98 {
+  top: 98vh;
+  top: calc(var(--vh, 1vh) * 98);
+}
+.t85 {
+  top: 85vh;
+  top: calc(var(--vh, 1vh) * 85);
+}
+.t77 {
+  top: 77vh;
+  top: calc(var(--vh, 1vh) * 77);
+}
+.t50 {
+  top: 50vh;
+  top: calc(var(--vh, 1vh) * 50);
+}
+.t40 {
+  top: 40vh;
+  top: calc(var(--vh, 1vh) * 40);
+}
+.t20 {
+  top: 20vh;
+  top: calc(var(--vh, 1vh) * 20);
 }

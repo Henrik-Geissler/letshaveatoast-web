@@ -6,9 +6,8 @@ interface PageWrapVProps {}
 const PageWrapV: React.FC<PageWrapVProps> = props => {
   return (
     <Box
-      className='test'
+      className='h100'
       w='100vw'
-      h='100vh'
       m={0}
       p={0}
       border='none'

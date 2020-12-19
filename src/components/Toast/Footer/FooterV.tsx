@@ -6,7 +6,15 @@ interface FooterVProps {}
 
 const FooterV: React.FC<FooterVProps> = ({}) => {
   return (
-    <Center top='98vh' w='100vw' h='0px' pos='absolute' m={0} p={0} left={0}>
+    <Center
+      className='t98'
+      w='100vw'
+      h='0px'
+      pos='absolute'
+      m={0}
+      p={0}
+      left={0}
+    >
       <Box maxW='100vw' mx='auto'>
         <Flex alignContent='center'>
           <Link

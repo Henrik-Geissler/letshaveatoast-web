@@ -40,7 +40,7 @@ const MainV: React.FC<MainVProps> = ({
   return (
     <>
       <Center
-        top={edit ? '20vh' : '40vh'}
+        className={edit ? 't20' : 't40'}
         h='0px'
         pos='absolute'
         w='100vw'

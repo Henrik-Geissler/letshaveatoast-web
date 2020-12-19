@@ -19,7 +19,15 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setThanks(true)
-    }, 3000)
+    }, 2300)
+    const audio = new Audio('sounds/firework.mp3')
+    if (audio !== null) {
+      const promise = audio.play()
+
+      if (promise !== undefined) {
+        promise.then(() => {}).catch(error => console.error)
+      }
+    }
     return () => {
       clearTimeout(timeout)
     }
@@ -186,7 +194,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
 
     // First Frame
     frame()
-    let interval
+
     const timeout = setTimeout(() => {
       // First particle explosion
       initParticles(
@@ -194,16 +202,27 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
         window.innerWidth / 2,
         window.innerHeight / 2
       )
+    }, 2300)
 
-      interval = setInterval(() => {
-        // First particle explosion
+    const interval = setInterval(() => {
+      // First particle explosion
+      const timeout = setTimeout(() => {
         initParticles(
           config.particleNumber,
           window.innerWidth * Math.random(),
-          window.innerHeight * Math.random()
+          (window.innerHeight * Math.random()) / 1.5
         )
-      }, 7000)
-    }, 3000)
+      }, 2300)
+
+      const audio = new Audio('sounds/firework.mp3')
+      if (audio !== null) {
+        const promise = audio.play()
+
+        if (promise !== undefined) {
+          promise.then(() => {}).catch(error => console.error)
+        }
+      }
+    }, 12000)
 
     return () => {
       clearTimeout(timeout)
@@ -217,7 +236,15 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
         id='canvas'
         style={{ position: 'absolute', left: '0pc', top: '0px' }}
       ></canvas>
-      <Center top='20vh' h='0px' pos='absolute' w='100vw' p={0} m={0} left={0}>
+      <Center
+        className='t20'
+        h='0px'
+        pos='absolute'
+        w='100vw'
+        p={0}
+        m={0}
+        left={0}
+      >
         <Box maxW='100vw'>
           <Box my={0} p={5} maxW='400px' w='90%' mx='auto'>
             <Image src='img/logo.png' alt='' />
@@ -225,18 +252,18 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
         </Box>
       </Center>
       <Fade in={thanks}>
-        <Center top='40vh' w='100vw' m={0} pos='absolute' left='0px'>
+        <Center className='t40' w='100vw' m={0} pos='absolute' left='0px'>
           <Box mx='auto'>
             <ImageV src='labels/thanks'></ImageV>
           </Box>
         </Center>
-        <Center top='50vh' w='100vw' m={0} pos='absolute' left='0px'>
+        <Center className='t50' w='100vw' m={0} pos='absolute' left='0px'>
           <Flex direction='column'>
             <HeadingV>Tell the world:</HeadingV>
             <SocialButtonsV />
           </Flex>
         </Center>
-        <Center top='77vh' w='100vw' m={0} pos='absolute' left='0px'>
+        <Center className='t77' w='100vw' m={0} pos='absolute' left='0px'>
           <Flex direction='column'>
             <HeadingV>Toast again</HeadingV>
             <Box mx='auto'>

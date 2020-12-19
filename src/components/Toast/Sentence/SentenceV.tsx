@@ -56,7 +56,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
   if (payState === '0') {
     return (
       <>
-        <Center top='50vh' w='100vw' m={0} pos='absolute' left='0px'>
+        <Center className='t50' w='100vw' m={0} pos='absolute' left='0px'>
           <Flex direction='column'>
             <HeadingV>Ooops</HeadingV>
             <SentenceTextV>
@@ -71,7 +71,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
     return <ThankYouV setReRoll={setReRoll} />
   }
   return (
-    <Center top='50vh' w='100vw' m={0} pos='absolute' left='0px'>
+    <Center className='t50' w='100vw' m={0} pos='absolute' left='0px'>
       <Center mx={2} className='floating' borderRadius='18px'>
         <Flex direction='column'>
           <Box height='0px' overflow='visible'>
