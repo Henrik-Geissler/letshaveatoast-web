@@ -254,7 +254,6 @@ const impressum: React.FC<impressumProps> = ({}) => {
           sonst in einer Weise verletzt worden sind, können Sie sich an die{' '}
           <a
             className='adsimple-321241781'
-            className='321241781'
             href='https://www.bfdi.bund.de'
             target='_blank'
             rel='noopener'
