@@ -2,7 +2,7 @@ const CardTable = [
   {
     value: 0,
     name: 'EDUCATION',
-    color: '#379978',
+    color: '#007b4f',
     colorLight: '#5cffc9',
     paypal: 'donate@wikimedia.org',
     orga: 'Wikimedia Foundation',
@@ -12,8 +12,8 @@ const CardTable = [
   {
     value: 1,
     name: 'ANIMALS ON EARTH',
-    color: '#373e99',
-    colorLight: '#5c67ff',
+    color: '#6631af',
+    colorLight: '#c263ff',
     paypal: 'mail@prowildlife.de',
     orga: 'Pro Wildlife',
     description:
@@ -22,8 +22,8 @@ const CardTable = [
   {
     value: 2,
     name: 'WATER FOR ALL',
-    color: '#997337',
-    colorLight: '#ffc05c',
+    color: '#008fc3',
+    colorLight: '#5cbbff',
     paypal: 'kontakt@vivaconagua.org',
     orga: 'Viva Con Agua',
     description:
@@ -32,8 +32,8 @@ const CardTable = [
   {
     value: 3,
     name: 'GOOD HEALTH',
-    color: '#377199',
-    colorLight: '#5cbbff',
+    color: '#c98308',
+    colorLight: '#ffa200',
     paypal: 'paypal@berlin.msf.org',
     orga: 'Doctors Without Borders',
     description:
@@ -42,8 +42,8 @@ const CardTable = [
   {
     value: 4,
     name: 'OUR CHILDREN',
-    color: '#999237',
-    colorLight: '#fff55c',
+    color: '#0071cd',
+    colorLight: '#00a2ff',
     paypal: 'spendenbuchhaltung@plan.de',
     orga: 'Plan International',
     description:
@@ -52,8 +52,8 @@ const CardTable = [
   {
     value: 5,
     name: 'HUMAN RIGHTS',
-    color: '#1565C0',
-    colorLight: '#FFC107',
+    color: '#6d8608',
+    colorLight: '#ccff00',
     paypal: 'info@amnesty.de',
     orga: 'Amnesty International',
     description:
@@ -62,7 +62,7 @@ const CardTable = [
   {
     value: 6,
     name: 'BETTER CLIMATE',
-    color: '#419937',
+    color: '#00924b',
     colorLight: '#6bff5c',
     paypal: 'lukas.kunert@elinor.network',
     orga: '#FridaysForFuture',
