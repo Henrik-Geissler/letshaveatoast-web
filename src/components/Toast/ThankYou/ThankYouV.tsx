@@ -16,22 +16,6 @@ declare global {
 }
 const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
   const [thanks, setThanks] = useState(false)
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setThanks(true)
-    }, 2300)
-    const audio = new Audio('sounds/firework.mp3')
-    if (audio !== null) {
-      const promise = audio.play()
-
-      if (promise !== undefined) {
-        promise.then(() => {}).catch(error => console.error)
-      }
-    }
-    return () => {
-      clearTimeout(timeout)
-    }
-  }, [])
 
   useEffect(() => {
     // Little Canvas things
@@ -202,7 +186,18 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
         window.innerWidth / 2,
         window.innerHeight / 2
       )
+
+      setThanks(true)
     }, 2300)
+
+    const audio = new Audio('sounds/firework.mp3')
+    if (audio !== null) {
+      const promise = audio.play()
+
+      if (promise !== undefined) {
+        promise.then(() => {}).catch(error => console.error)
+      }
+    }
 
     const interval = setInterval(() => {
       // First particle explosion

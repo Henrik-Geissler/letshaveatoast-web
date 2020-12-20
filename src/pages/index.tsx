@@ -366,6 +366,8 @@ const Todos: React.FC<StyleVProps> = () => {
         <title>Let's have a toast</title>
         <link rel='shortcut icon' href='/static/favicon.ico' />
         <link rel='stylesheet' href='css/cheat.css' />
+
+        <meta name='description' content='Raise a toast to the good' />
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
