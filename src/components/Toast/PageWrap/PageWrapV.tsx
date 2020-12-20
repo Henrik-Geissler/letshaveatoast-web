@@ -15,7 +15,7 @@ const PageWrapV: React.FC<PageWrapVProps> = props => {
       position='absolute'
       top='0px'
       left='0px'
-      bg='#ffffff'
+      background='radial-gradient(circle, #ffffff, #dddddd)'
     >
       {props.children}
     </Box>

@@ -1,8 +1,4 @@
-input,
-textarea,
-button,
-select,
-a {
+* {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 @font-face {
@@ -105,9 +101,6 @@ a {
 .radioBox:active + div,
 .radioBox:checked + div {
   background-position: left center !important;
-}
-.radioBox:checked + div {
-  box-shadow: 0 0px 0px 4px rgba(0, 0, 0, 1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
 }
 .chakra-toast,
 .chakra-toast__inner {
@@ -260,6 +253,16 @@ a {
   }
 }
 
+@media (min-width: 375px) {
+  .textHeading {
+    font-size: 20px !important;
+  }
+}
+@media (min-width: 472px) {
+  .textHeading {
+    font-size: 28px !important;
+  }
+}
 .theButton {
   height: 20vh;
   width: 20vh;
@@ -287,11 +290,17 @@ a {
 
 .kachel2 {
   margin: 0.25rem;
+  transition: 0.5s;
 }
 
 .kachel1 {
   width: 140px;
   height: 140px;
+}
+
+.kachel2.flipped {
+  margin-left: 70px;
+  margin-right: -70px;
 }
 
 @media (min-width: 405px) {
@@ -303,6 +312,14 @@ a {
     width: 160px;
     height: 160px;
   }
+
+  .kachel2.flipped {
+    margin-left: 80px;
+    margin-right: -80px;
+  }
+}
+.kachel2.flipped {
+  z-index: 1;
 }
 
 .shaking {
@@ -327,6 +344,7 @@ a {
 .h100 {
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
+  /*height: -webkit-fill-available;*/
 }
 .t98 {
   top: 98vh;
@@ -344,6 +362,10 @@ a {
   top: 50vh;
   top: calc(var(--vh, 1vh) * 50);
 }
+.t45 {
+  top: 45vh;
+  top: calc(var(--vh, 1vh) * 45);
+}
 .t40 {
   top: 40vh;
   top: calc(var(--vh, 1vh) * 40);
@@ -351,4 +373,82 @@ a {
 .t20 {
   top: 20vh;
   top: calc(var(--vh, 1vh) * 20);
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin: 0px;
+  -webkit-perspective: 800px;
+  -moz-perspective: 800px;
+  -o-perspective: 800px;
+  perspective: 800px;
+  background: #ffffff33;
+  transition: 0.5s;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-transition: -webkit-transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  transition: transform 0.5s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: right center;
+  -o-transform-origin: right center;
+  transform-origin: left center;
+}
+
+.kachel2.flipped .container .card {
+  -webkit-transform: translateY(00%) rotateY(-180deg);
+  -moz-transform: translateY(00%) rotateY(-180deg);
+  -ms-transform: translateY(00%) rotateY(-180deg);
+  -o-transform: translateY(00%) rotateY(-180deg);
+  transform: translateY(00%) rotateY(-180deg);
+}
+.card figure {
+  display: block;
+  height: 100%;
+  width: 100%;
+  line-height: 260px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 140px;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.card .front {
+  margin: 0;
+}
+
+.card .back {
+  background: #ffffff33;
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  margin: 0;
+}
+
+.cardOut {
+  /*
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  -o-transform: scale(0.5);
+  transform: scale(0.5);
+  */
+  opacity: 0;
 }

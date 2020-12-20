@@ -19,6 +19,7 @@ const ImageV: React.FC<ImageVProps> = ({ src }) => {
           onLoad={() => {
             setLoaded(true)
           }}
+          m='auto'
         />
       </Fade>
     </div>

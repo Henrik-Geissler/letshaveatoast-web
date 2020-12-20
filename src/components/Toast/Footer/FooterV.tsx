@@ -16,32 +16,21 @@ const FooterV: React.FC<FooterVProps> = ({}) => {
       left={0}
     >
       <Box maxW='100vw' mx='auto'>
-        <Flex alignContent='center'>
+        <Flex>
           <Link
-            href='/pdf/terms_and_conditions.pdf'
+            href='/pdf/Terms and Conditions.pdf'
             isExternal
             my={0}
             mx={1}
             p={0}
           >
             <Text as='u' className='text12'>
-              AGBs
+              Terms and Conditions
             </Text>
           </Link>
-          <Link
-            href='/pdf/terms_and_conditions.pdf'
-            isExternal
-            my={0}
-            mx={1}
-            p={0}
-          >
+          <Link href='/pdf/Data Protection.pdf' isExternal my={0} mx={1} p={0}>
             <Text as='u' className='text12'>
-              Datenschutzrichtlinien
-            </Text>
-          </Link>
-          <Link href='/impressum' isExternal my={0} mx={1} p={0}>
-            <Text as='u' className='text12'>
-              Impressum
+              Data Protection
             </Text>
           </Link>
         </Flex>

@@ -254,7 +254,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
         </Center>
         <Center className='t50' w='100vw' m={0} pos='absolute' left='0px'>
           <Flex direction='column'>
-            <HeadingV>Tell the world:</HeadingV>
+            <HeadingV>Let's have a post</HeadingV>
             <SocialButtonsV />
           </Flex>
         </Center>

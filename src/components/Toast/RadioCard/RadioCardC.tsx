@@ -6,19 +6,25 @@ import RadioCardV from './RadioCardV'
 interface RadioCardCProps {
   radio: any
   setCategory: any
+  onClose: any
+  fake: boolean
 }
-const RadioCardC: React.FC<RadioCardCProps> = ({ radio, setCategory }) => {
-  const { getInputProps, getCheckboxProps } = useRadio(radio)
+const RadioCardC: React.FC<RadioCardCProps> = ({
+  radio,
+  setCategory,
+  onClose,
+  fake,
+}) => {
   const { name, color, value } = CardTable[Number.parseInt(radio.value)]
 
   return (
     <RadioCardV
-      input={getInputProps()}
-      checkbox={getCheckboxProps()}
       color={color}
       name={name}
       setCategory={setCategory}
       num={(value + 1).toString()}
+      onClose={onClose}
+      fake={fake}
     />
   )
 }

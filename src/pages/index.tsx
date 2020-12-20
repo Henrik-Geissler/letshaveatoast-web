@@ -55,6 +55,8 @@ import Head from 'next/head'
 import AboutTheOthersV from '../components/Toast/AboutTheOthers/AboutTheOthersV'
 import ToastContent from '../components/Toast/ToastContent/ToastContentV'
 import ToastContentV from '../components/Toast/ToastContent/ToastContentV'
+import CardDetail from '../components/Toast/CardDetail/CardDetail'
+import SpaceV from '../components/General/Space/SpaceV'
 
 const LOCAL = false //TODO: false for production
 const PAY_MODE = 0 //TODO: 0 for production
@@ -218,6 +220,8 @@ const Todos: React.FC<StyleVProps> = () => {
 
   const { called: pushLoads, refetch } = useQuery(PUSH_TOAST, { skip: true })
   useEffect(() => {
+    let vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
     window.addEventListener('resize', () => {
       let vh = window.innerHeight * 0.01
       document.documentElement.style.setProperty('--vh', `${vh}px`)
@@ -290,6 +294,11 @@ const Todos: React.FC<StyleVProps> = () => {
     onOpen: onOpen5,
     onClose: onClose5,
   } = useDisclosure()
+  const {
+    isOpen: isOpen6,
+    onOpen: onOpen6,
+    onClose: onClose6,
+  } = useDisclosure()
   const { loading, error, data } = useQuery(FRESH_TOAST, {
     pollInterval: POLL_INTERVAL,
   })
@@ -305,6 +314,7 @@ const Todos: React.FC<StyleVProps> = () => {
   const [freeToast, setFreeToast] = useState(1)
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
+  const [categoryPreset, setCategoryPreset] = useState('')
   const [amount, setAmount] = useState('')
   const [pushedToast, setPushedToast] = useState(null)
 
@@ -320,6 +330,8 @@ const Todos: React.FC<StyleVProps> = () => {
   const finalRef4 = useRef()
   const initialRef5 = useRef()
   const finalRef5 = useRef()
+  const initialRef6 = useRef()
+  const finalRef6 = useRef()
 
   const toast = useToast()
   if (payState === '1') {
@@ -349,9 +361,13 @@ const Todos: React.FC<StyleVProps> = () => {
 
   if (name !== '' && !isOpen && !isOpen2 && !isOpen3 && !isOpen4 && !isOpen5) {
     updateUrl(name, category, amount)
-    if (category === '') {
+    if (categoryPreset === '' && category === '') {
       setTimeout(() => {
         onOpen2()
+      }, 500)
+    } else if (category === '') {
+      setTimeout(() => {
+        onOpen6()
       }, 500)
     } else if (amount === '') {
       setTimeout(() => {
@@ -367,7 +383,39 @@ const Todos: React.FC<StyleVProps> = () => {
         <link rel='shortcut icon' href='/static/favicon.ico' />
         <link rel='stylesheet' href='css/cheat.css' />
 
-        <meta name='description' content='Raise a toast to the good' />
+        <title>LET'S HAVE A TOAST — Raise a toast to the good</title>
+        <meta
+          name='title'
+          content="LET'S HAVE A TOAST — Raise a toast to the good"
+        />
+        <meta
+          name='description'
+          content={`Let's Have A Toast is a web app where people from all over the world can virtually "toast" each other during festive season.`}
+        />
+
+        <meta property='og:type' content='website' />
+        <meta property='og:url' content='https://letshaveatoast.app/' />
+        <meta
+          property='og:title'
+          content="LET'S HAVE A TOAST — Raise a toast to the good"
+        />
+        <meta
+          property='og:description'
+          content={`Let's Have A Toast is a web app where people from all over the world can virtually "toast" each other during festive season.`}
+        />
+        <meta property='og:image' content='meta/meta.png' />
+
+        <meta property='twitter:card' content='summary_large_image' />
+        <meta property='twitter:url' content='https://letshaveatoast.app/' />
+        <meta
+          property='twitter:title'
+          content="LET'S HAVE A TOAST — Raise a toast to the good"
+        />
+        <meta
+          property='twitter:description'
+          content={`Let's Have A Toast is a web app where people from all over the world can virtually "toast" each other during festive season.`}
+        />
+        <meta property='twitter:image' content='meta/meta.png'></meta>
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
@@ -557,7 +605,7 @@ const Todos: React.FC<StyleVProps> = () => {
                                   wrap='wrap'
                                   alignContent='space-evenly'
                                   justifyContent='center'
-                                  mb={50}
+                                  pb='100px'
                                 >
                                   {options.map(value => {
                                     const radio = getRadioProps({ value })
@@ -565,7 +613,12 @@ const Todos: React.FC<StyleVProps> = () => {
                                       <RadioCardC
                                         key={value}
                                         radio={radio}
-                                        setCategory={setCategory}
+                                        setCategory={setCategoryPreset}
+                                        onClose={() => {
+                                          onClose2()
+                                          onOpen6()
+                                        }}
+                                        fake={false}
                                       />
                                     )
                                   })}
@@ -647,7 +700,7 @@ const Todos: React.FC<StyleVProps> = () => {
                                     padding: '0px',
                                   }}
                                 />
-                                <Box pb={10}>
+                                <Box pb='100px'>
                                   {toastOptions.map(value => {
                                     const radio = getRadioProps({ value })
                                     return (
@@ -751,9 +804,84 @@ const Todos: React.FC<StyleVProps> = () => {
                       onClose5()
                       onOpen4()
                     }}
+                    orgas={CardTable}
                   />
                 </ModalBody>
               </div>
+            </ModalContent>
+          </Modal>
+          <Modal
+            initialFocusRef={initialRef6}
+            finalFocusRef={finalRef6}
+            isOpen={isOpen6}
+            onClose={() => {
+              setCategoryPreset('')
+              onClose6()
+            }}
+            closeOnOverlayClick={true}
+            isCentered
+            size='sm'
+            scrollBehavior='inside'
+          >
+            <ModalBackgroundV />
+            <ModalContent
+              className='h100'
+              style={{
+                zIndex: 10000,
+                maxWidth: '588px',
+                overflowY: 'scroll',
+                overflowX: 'visible',
+              }}
+              w='95vw'
+              mx='auto'
+              my='auto'
+              backgroundColor='rgba(255,255,255,0.4)'
+              boxShadow='0 0 5px 5px rgba(255,255,255,0.4)'
+            >
+              <ModalHeader pt={10} fontSize='18px'>
+                <ImageV src='labels/u2'></ImageV>
+              </ModalHeader>
+              <Formik
+                initialValues={{ category3: categoryPreset }}
+                onSubmit={(values: any, actions) => {
+                  setTimeout(() => {
+                    setCategory(values['category3'])
+                    actions.setSubmitting(false)
+                    onClose6()
+                  }, 100)
+                }}
+              >
+                {props => (
+                  <Form>
+                    <ModalBody pb={6} pt={6}>
+                      <Field name='category3'>
+                        {({ field, form }) => (
+                          <FormControl id='category3'>
+                            <Input {...field} ref={initialRef6} type='hidden' />
+                            <CardDetail
+                              card={
+                                CardTable[valueFromCategory(categoryPreset)]
+                              }
+                            />
+                          </FormControl>
+                        )}
+                      </Field>
+                    </ModalBody>
+                    <Flex justifyContent='space-between'>
+                      <Box marginTop='-2.5rem'>
+                        <BackV
+                          onClose={() => {
+                            setCategoryPreset('')
+                            onClose6()
+                          }}
+                        />
+                      </Box>
+                      <OkV />
+                    </Flex>
+                    <SpaceV x={20} y={100} />
+                  </Form>
+                )}
+              </Formik>
             </ModalContent>
           </Modal>
         </Wrapper>
@@ -767,7 +895,7 @@ const Todos: React.FC<StyleVProps> = () => {
         purpose={`Let's have a toast on ${category}`}
         sandbox={payMode === 1}
         buy={payMode === 1}
-        image='lets'
+        image={CardTable[valueFromCategory(category)].orga.replace('#', '')}
         local={LOCAL}
       />
     </>

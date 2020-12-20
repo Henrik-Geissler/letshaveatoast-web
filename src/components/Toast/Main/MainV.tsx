@@ -55,7 +55,7 @@ const MainV: React.FC<MainVProps> = ({
         </Box>
       </Center>
       <SentenceV
-        visible={edit}
+        visible={edit && amount !== ''}
         onOpen={onOpen}
         onOpen2={onOpen2}
         onOpen3={onOpen3}

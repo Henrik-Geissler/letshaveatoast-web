@@ -40,7 +40,7 @@ const PaypalV: React.FC<PaypalVProps> = ({
       <input type='hidden' name='business' value={target} />
       <input
         type='image'
-        src='https://letshaveatoast.app/img/empty.png'
+        src='img/empty.png'
         name='submit'
         alt='PayPal — The safer, easier way to pay online.'
         id='paypalRun'
@@ -62,7 +62,7 @@ const PaypalV: React.FC<PaypalVProps> = ({
       <input type='hidden' name='amount' value={`${amount}.00`} />
       <input
         type='hidden'
-        value={`https://letshaveatoast.app/img/logo/${image}.png`}
+        value={`https://letshaveatoast.app/img/category/${image}.png`}
         name='image_url'
       />
       <input type='hidden' value='US' name='lc' />

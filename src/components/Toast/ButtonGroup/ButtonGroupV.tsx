@@ -1,5 +1,6 @@
 import { Center, Box, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import ImageV from '../../General/Image/ImageV'
 import ButtonV from '../Button/ButtonV'
 import HeadingV from '../Heading/HeadingV'
 
@@ -53,22 +54,23 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
     >
       <Box className='theButton' mx='auto' p={0} bg='rgba(0,0,0,0)'>
         <Center m={0} p={0} h='1px' w='200%'>
-          <Box mt='-8vh' mb={0} p={0} ml='-50%' width='100%'>
-            <HeadingV>
-              <Box fontFamily='Caviar Dreams Bold'>
-                {buttonLoaded
-                  ? 'Ready to toast!'
-                  : reRoll
-                  ? ''
-                  : payState === '0'
-                  ? 'Push to retry !'
-                  : pending
-                  ? 'Toasting ...'
-                  : category !== ''
-                  ? 'Push to toast!'
-                  : 'Push the button!'}
-              </Box>
-            </HeadingV>
+          <Box mt='-1vh' mb={0} p={0} ml='-50%' width='100%'>
+            <Box mx='auto' height='100px'>
+              <ImageV
+                src={
+                  'labels/' +
+                  (buttonLoaded
+                    ? 'p4'
+                    : reRoll
+                    ? 'empty'
+                    : payState === '0'
+                    ? 'p2'
+                    : pending
+                    ? 'p3'
+                    : 'p1')
+                }
+              />
+            </Box>
           </Box>
         </Center>
 

@@ -2,6 +2,7 @@ import { Box, Flex } from '@chakra-ui/core'
 import React from 'react'
 import { FaQuoteLeft } from 'react-icons/fa'
 import ImageV from '../../General/Image/ImageV'
+import SpaceV from '../../General/Space/SpaceV'
 import ToastTextV from '../ToastText/ToastTextV'
 
 interface ToastContentVProps {
@@ -53,14 +54,7 @@ const ToastContentV: React.FC<ToastContentVProps> = ({
         return (
           <>
             <ToastTextV>{item}</ToastTextV>
-            <div
-              style={{
-                width: '4px',
-                height: '4px',
-                marginTop: '0px',
-                marginBottom: '0px',
-              }}
-            ></div>
+            <SpaceV x={4} y={4} />
           </>
         )
       })}

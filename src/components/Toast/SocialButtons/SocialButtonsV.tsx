@@ -3,52 +3,51 @@ import React from 'react'
 import {
   EmailShareButton,
   FacebookShareButton,
-  FacebookMessengerShareButton,
   LinkedinShareButton,
   TelegramShareButton,
-  TumblrShareButton,
   TwitterShareButton,
   WhatsappShareButton,
   FacebookIcon,
   EmailIcon,
-  FacebookMessengerIcon,
   LinkedinIcon,
   TelegramIcon,
-  TumblrIcon,
   TwitterIcon,
   WhatsappIcon,
 } from 'react-share'
 
 interface SocialButtonsVProps {}
 const HASHTAG = 'letshaveatoast'
-const QUOTE = "Let's have a toast on CATEGORY"
 const URL = 'letshaveatoast.app'
-const TITLE = "Let's have a toast"
-const SEPARATOR = '\n\nCheck it out: '
-const BODY =
-  'I just made a donation for the good. ' +
-  '\n' +
-  QUOTE +
-  '\n' +
-  '#' +
-  HASHTAG +
-  SEPARATOR
-const TAGS = ['letshaveatoast', 'donations']
+const TITLE = 'I raise a toast to you'
+const SEPARATOR = " - Let's toast the good together:\n"
 const SocialButtonsV: React.FC<SocialButtonsVProps> = () => {
   const options = [
-    <FacebookShareButton url={URL} hashtag={'#' + HASHTAG} quote={QUOTE}>
+    <FacebookShareButton
+      url={URL}
+      hashtag={'#' + HASHTAG}
+      quote={TITLE + SEPARATOR}
+    >
       <FacebookIcon size={45} round={true} />
     </FacebookShareButton>,
-    <TwitterShareButton url={URL} title={TITLE} hashtags={[HASHTAG]}>
+    <TwitterShareButton
+      url={URL}
+      title={TITLE + SEPARATOR}
+      hashtags={[HASHTAG]}
+    >
       <TwitterIcon size={45} round={true} />
     </TwitterShareButton>,
-    <EmailShareButton url={URL} subject={TITLE} body={BODY}>
+    <EmailShareButton url={URL} subject={TITLE} body={TITLE + SEPARATOR}>
       <EmailIcon size={45} round={true} />
     </EmailShareButton>,
-    <LinkedinShareButton url={URL} source={URL} title={TITLE} summary={BODY}>
+    <LinkedinShareButton
+      url={URL}
+      source={URL}
+      title={TITLE}
+      summary={TITLE + SEPARATOR}
+    >
       <LinkedinIcon size={45} round={true} />
     </LinkedinShareButton>,
-    <TelegramShareButton url={URL} title={TITLE}>
+    <TelegramShareButton url={URL} title={TITLE + SEPARATOR}>
       <TelegramIcon size={45} round={true} />
     </TelegramShareButton>,
     <WhatsappShareButton url={URL} title={TITLE} separator={SEPARATOR}>
