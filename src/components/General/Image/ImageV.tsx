@@ -21,6 +21,7 @@ const ImageV: React.FC<ImageVProps> = ({ src }) => {
           }}
           m='auto'
           className='noClickMe'
+          pointerEvents='none'
         />
       </Fade>
     </div>

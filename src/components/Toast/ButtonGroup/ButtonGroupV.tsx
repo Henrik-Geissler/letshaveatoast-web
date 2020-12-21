@@ -99,9 +99,20 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
           />
         </Box>
       </Center>
-      <Box className='t85' position='absolute' left='0px' w='100vw'>
-        <Flex justifyContent='space-between' w='100vw' mt='-17.5px'>
-          <Spacer />
+      <Box
+        className='t85'
+        position='absolute'
+        left='0px'
+        w='100vw'
+        pointerEvents='none'
+      >
+        <Flex
+          justifyContent='space-between'
+          w='100vw'
+          mt='-17.5px'
+          pointerEvents='none'
+        >
+          <Spacer pointerEvents='none' />
           <SideButtonV left={false} onClick={onOpen5}>
             Learn
             <br />
