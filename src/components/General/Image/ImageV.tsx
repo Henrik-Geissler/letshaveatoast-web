@@ -20,6 +20,7 @@ const ImageV: React.FC<ImageVProps> = ({ src }) => {
             setLoaded(true)
           }}
           m='auto'
+          className='noClickMe'
         />
       </Fade>
     </div>

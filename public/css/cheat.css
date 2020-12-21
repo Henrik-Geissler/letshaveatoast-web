@@ -492,3 +492,7 @@
     font-size: 16px !important;
   }
 }
+.noClickMe {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
