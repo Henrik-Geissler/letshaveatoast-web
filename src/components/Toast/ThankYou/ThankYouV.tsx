@@ -16,7 +16,9 @@ declare global {
 }
 const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
   const [thanks, setThanks] = useState(false)
-  const MAX_PARTICLES = 300
+  const MAX_PARTICLES = 600
+  const maxWidth = window.innerWidth + 10
+  const maxHeight = window.innerHeight + 10
   useEffect(() => {
     // Little Canvas things
     const canvas: HTMLCanvasElement = document.querySelector('#canvas')
@@ -129,7 +131,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
     // Remove particles that aren't on the canvas
     var cleanUpArray = function () {
       particles = particles.filter(p => {
-        return p.x > -100 && p.y > -100 && p.x < 100 && p.y < 100
+        return p.x > -10 && p.y > -10 && p.x < maxWidth && p.y < maxHeight
       })
     }
 
