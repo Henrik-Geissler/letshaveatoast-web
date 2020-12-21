@@ -16,7 +16,7 @@ declare global {
 }
 const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
   const [thanks, setThanks] = useState(false)
-
+  const MAX_PARTICLES = 300
   useEffect(() => {
     // Little Canvas things
     const canvas: HTMLCanvasElement = document.querySelector('#canvas')
@@ -173,7 +173,8 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
       var x = event.clientX,
         y = event.clientY
       cleanUpArray()
-      initParticles(config.particleNumber, x, y)
+      if (particles.length <= MAX_PARTICLES)
+        initParticles(config.particleNumber, x, y)
     })
 
     // First Frame
