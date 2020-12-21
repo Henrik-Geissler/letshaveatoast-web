@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/core'
 import { Center } from '@chakra-ui/react'
 import React from 'react'
+import FollowButtonsV from '../FollowButtons/FollowButtonsV'
 import LearnMoreV from '../LearnMore/LearnMoreV'
 import SocialButtonsV from '../SocialButtons/SocialButtonsV'
 
@@ -54,14 +55,18 @@ const AboutV: React.FC<AboutVProps> = ({ onMore }) => {
         organization as we embedded the paypal donation of each via API key.
         These are the great organization behind each category:
       </Text>
-      <Center mb='10vh'>
+      <Center mb='7vh'>
         <LearnMoreV onOpen={onMore}>
           LEARN MORE ABOUT THE ORGANISATIONS
         </LearnMoreV>
       </Center>
       <Heading>Support us by sharing:</Heading>
-      <Box mt='5vh' mb='10vh'>
+      <Box mt='5vh' mb='5vh'>
         <SocialButtonsV />
+      </Box>
+      <Heading>Follow us:</Heading>
+      <Box mt='5vh' mb='5vh'>
+        <FollowButtonsV />
       </Box>
     </Flex>
   )

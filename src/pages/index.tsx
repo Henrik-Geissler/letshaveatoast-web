@@ -57,6 +57,7 @@ import ToastContent from '../components/Toast/ToastContent/ToastContentV'
 import ToastContentV from '../components/Toast/ToastContent/ToastContentV'
 import CardDetail from '../components/Toast/CardDetail/CardDetail'
 import SpaceV from '../components/General/Space/SpaceV'
+import HeadV from '../components/Toast/Head/HeadV'
 
 const LOCAL = false //TODO: false for production
 const PAY_MODE = 0 //TODO: 0 for production
@@ -375,52 +376,30 @@ const Todos: React.FC<StyleVProps> = () => {
       }, 500)
     }
   }
+  if (typeof window !== 'undefined') {
+    if (document) {
+      useEffect(() => {
+        const doScroll = document.querySelector('.modal2')
+        if (doScroll !== null) {
+          setTimeout(() => {
+            doScroll.scrollTo(0, 0)
+          }, 0)
+        }
+      }, [isOpen2])
+      useEffect(() => {
+        const doScroll = document.querySelector('.modal6')
+        if (doScroll !== null) {
+          setTimeout(() => {
+            doScroll.scrollTo(0, 0)
+          }, 0)
+        }
+      }, [isOpen6])
+    }
+  }
   const timestamp = Date.now()
   return (
     <>
-      <Head>
-        <title>Let's have a toast</title>
-        <link rel='shortcut icon' href='/static/favicon.ico' />
-        <link rel='stylesheet' href='css/cheat.css' />
-
-        <title>LET'S HAVE A TOAST — Raise a toast to the good</title>
-        <meta
-          name='title'
-          content="LET'S HAVE A TOAST — Raise a toast to the good"
-        />
-        <meta
-          name='description'
-          content={`Let's Have A Toast is a web app where people from all over the world can virtually "toast" each other during festive season.`}
-        />
-
-        <meta property='og:type' content='website' />
-        <meta property='og:url' content='https://letshaveatoast.app/' />
-        <meta
-          property='og:title'
-          content="LET'S HAVE A TOAST — Raise a toast to the good"
-        />
-        <meta
-          property='og:description'
-          content={`Let's Have A Toast is a web app where people from all over the world can virtually "toast" each other during festive season.`}
-        />
-        <meta property='og:image' content='meta/meta.png' />
-
-        <meta property='twitter:card' content='summary_large_image' />
-        <meta property='twitter:url' content='https://letshaveatoast.app/' />
-        <meta
-          property='twitter:title'
-          content="LET'S HAVE A TOAST — Raise a toast to the good"
-        />
-        <meta
-          property='twitter:description'
-          content={`Let's Have A Toast is a web app where people from all over the world can virtually "toast" each other during festive season.`}
-        />
-        <meta property='twitter:image' content='meta/meta.png'></meta>
-        <meta
-          name='viewport'
-          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-        />
-      </Head>
+      <HeadV />
       <PageWrapV>
         <Wrapper>
           <Formik
@@ -445,6 +424,7 @@ const Todos: React.FC<StyleVProps> = () => {
                     setReRoll(false)
                     setAmount('')
                     setCategory('')
+                    setCategoryPreset('')
                     setName('')
                     updateUrl('', '', '')
                   }}
@@ -457,6 +437,7 @@ const Todos: React.FC<StyleVProps> = () => {
                   onOpen={onOpen}
                   onOpen2={onOpen2}
                   onOpen3={onOpen3}
+                  onOpen5={onOpen4}
                   onPush={() => {
                     refetch({
                       options: {
@@ -557,7 +538,7 @@ const Todos: React.FC<StyleVProps> = () => {
           >
             <ModalBackgroundV />
             <ModalContent
-              className='h100'
+              className='h100 modal2'
               style={{
                 zIndex: 10000,
                 maxWidth: '588px',
@@ -764,6 +745,8 @@ const Todos: React.FC<StyleVProps> = () => {
                       onOpen5()
                     }}
                   />
+                  <BackV onClose={onClose4} />
+                  <SpaceV x={20} y={100} />
                 </ModalBody>
               </div>
             </ModalContent>
@@ -806,6 +789,8 @@ const Todos: React.FC<StyleVProps> = () => {
                     }}
                     orgas={CardTable}
                   />
+                  <BackV onClose={onClose5} />
+                  <SpaceV x={20} y={100} />
                 </ModalBody>
               </div>
             </ModalContent>
@@ -825,7 +810,7 @@ const Todos: React.FC<StyleVProps> = () => {
           >
             <ModalBackgroundV />
             <ModalContent
-              className='h100'
+              className='h100 modal6'
               style={{
                 zIndex: 10000,
                 maxWidth: '588px',

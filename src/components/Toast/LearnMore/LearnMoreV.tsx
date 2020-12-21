@@ -15,8 +15,6 @@ const LearnMoreV: React.FC<LearnMoreVProps> = ({ onOpen, children }) => {
         m='auto'
         onClick={onOpen}
         _hover={{ bg: '#ffba00' }}
-        _focus={{ bg: '#ffba00' }}
-        _active={{ bg: '#ffba00' }}
         borderRadius='20px'
         size='lg'
         fontWeight='bolder'

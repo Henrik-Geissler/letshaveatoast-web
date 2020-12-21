@@ -50,7 +50,8 @@ const ButtonV: React.FC<ButtonVProps> = ({
         onClick={() => {
           setPressed(true)
           setTimeout(() => {
-            if (buttonLoaded) {
+            if (pending) {
+            } else if (buttonLoaded) {
               onPush()
               setReRoll(true)
             } else if (name === '') {
@@ -72,11 +73,21 @@ const ButtonV: React.FC<ButtonVProps> = ({
         _focus={{ bg: 'rgba(0,0,0,0)' }}
         _active={{ bg: 'rgba(0,0,0,0)' }}
         className={buttonLoaded ? 'pulse-button' : ''}
+        borderRadius='100px'
       >
-        <ImageV src={`button2${pressed ? '-pressed' : ''}`} />
+        <Box
+          borderRadius='100px'
+          boxShadow={
+            buttonLoaded
+              ? '0'
+              : '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.8)'
+          }
+        >
+          <ImageV src={`button2${pressed ? '-pressed' : ''}`} />
+        </Box>
         <Image
-          src={`button2-pressed`}
-          style={{ visibility: 'hidden' }}
+          src={`img/button2-pressed.png`}
+          style={{ visibility: 'hidden', display: 'none' }}
           alt=''
         />
 

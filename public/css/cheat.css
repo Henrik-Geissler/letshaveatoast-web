@@ -328,12 +328,24 @@
 
 @keyframes shake {
   0% {
-    -webkit-transform: translate(6px, 0);
-    transform: translate(6px, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
   }
-  50% {
-    -webkit-transform: translate(-6px, 0);
-    transform: translate(-6px, 0);
+  12.5% {
+    -webkit-transform: translate(10px, 0);
+    transform: translate(10px, 0);
+  }
+  37.5% {
+    -webkit-transform: translate(-10px, 0);
+    transform: translate(-10px, 0);
+  }
+  62.5% {
+    -webkit-transform: translate(10px, 0);
+    transform: translate(10px, 0);
+  }
+  75% {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
   }
   100% {
     -webkit-transform: translate(0, 0);
@@ -451,4 +463,32 @@
   transform: scale(0.5);
   */
   opacity: 0;
+}
+
+.sideButton {
+  height: 35px !important;
+  width: 60px !important;
+  margin-right: 3vw !important;
+  font-size: 12px !important;
+}
+@media (min-width: 420px) {
+  .sideButton {
+    margin-right: 8vw !important;
+  }
+}
+@media (min-width: 520px) {
+  .sideButton {
+    width: 72px !important;
+    height: 42.2px !important;
+    margin-right: 8vw !important;
+    font-size: 14px !important;
+  }
+}
+@media (min-width: 800px) {
+  .sideButton {
+    width: 80px !important;
+    height: 70px !important;
+    margin-right: 13vw !important;
+    font-size: 16px !important;
+  }
 }

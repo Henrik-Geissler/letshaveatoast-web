@@ -11,6 +11,7 @@ interface Card {
   colorLight: string
   paypal: string
   orga: string
+  url: string
   description: string
 }
 interface CardDetailProps {
@@ -18,7 +19,7 @@ interface CardDetailProps {
 }
 
 const CardDetail: React.FC<CardDetailProps> = ({
-  card: { value, name, color, colorLight, orga, description },
+  card: { value, name, color, colorLight, orga, description, url },
 }) => {
   const [w, setW] = useState(false)
   const src = `img/category/${orga.replace('#', '')}.png`
@@ -74,16 +75,20 @@ const CardDetail: React.FC<CardDetailProps> = ({
           If you want to toast to{' '}
           <Text as='mark' backgroundColor={`${colorLight}00`}>
             {' '}
-            {name}{' '}
+            {name}
           </Text>
           , we recommend you stand up for{' '}
           <Text as='mark' backgroundColor={`${colorLight}00`}>
             {' '}
-            {orga}{' '}
+            {orga}
           </Text>
         </Text>
-        <Text textAlign='justify' mx={4} mb={4} mt={2}>
+        <Text textAlign='justify' mx={4} mt={2}>
           {description}
+        </Text>
+        <Text mx={4} mb={4} mt={2}>
+          See their website for more information:{' '}
+          <a href={url}>{url.replace('https://', '')}</a>
         </Text>
       </Box>
     )
@@ -130,11 +135,24 @@ const CardDetail: React.FC<CardDetailProps> = ({
       >
         <HeadingRespoV>{orga}</HeadingRespoV>
       </Box>
-      <Text textAlign='justify' mx={4}>
-        {`If you want to stand up for ${name}, we recommend you toast ${orga}`}
+      <Text fontWeight='bold' mx={4} mt={2} fontSize='18px'>
+        If you want to toast to{' '}
+        <Text as='mark' backgroundColor={`${colorLight}00`}>
+          {' '}
+          {name}
+        </Text>
+        , we recommend you stand up for{' '}
+        <Text as='mark' backgroundColor={`${colorLight}00`}>
+          {' '}
+          {orga}
+        </Text>
       </Text>
-      <Text textAlign='justify' mx={4}>
+      <Text textAlign='justify' mx={4} mt={2}>
         {description}
+      </Text>
+      <Text mx={4} mb={4} mt={2}>
+        See their website for more information:{' '}
+        <a href={url}>{url.replace('https://', '')}</a>
       </Text>
     </Box>
   )

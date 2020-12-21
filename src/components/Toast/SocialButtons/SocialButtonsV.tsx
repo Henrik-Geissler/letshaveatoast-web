@@ -16,8 +16,8 @@ import {
 } from 'react-share'
 
 interface SocialButtonsVProps {}
-const HASHTAG = 'letshaveatoast'
-const URL = 'letshaveatoast.app'
+const HASHTAG = 'LETSHAVEATOAST'
+const URL = 'https://letshaveatoast.app'
 const TITLE = 'I raise a toast to you'
 const SEPARATOR = " - Let's toast the good together:\n"
 const SocialButtonsV: React.FC<SocialButtonsVProps> = () => {
