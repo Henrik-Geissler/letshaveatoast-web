@@ -129,7 +129,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
     // Remove particles that aren't on the canvas
     var cleanUpArray = function () {
       particles = particles.filter(p => {
-        return p.x > -100 && p.y > -100
+        return p.x > -100 && p.y > -100 && p.x < 0 && p.y < 0
       })
     }
 
