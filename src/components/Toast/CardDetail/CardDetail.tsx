@@ -1,7 +1,7 @@
 import { Box, Flex } from '@chakra-ui/core'
 import { Avatar, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import HeadingRespoV from '../HeadingRespo/HeadingRespoV'
+import CardDetailsPartV from '../CardDetailsPart/CardDetailsPartV'
 import RadioCardV from '../RadioCard/RadioCardV'
 
 interface Card {
@@ -16,145 +16,91 @@ interface Card {
 }
 interface CardDetailProps {
   card: Card
+  ctx: boolean
 }
 
 const CardDetail: React.FC<CardDetailProps> = ({
   card: { value, name, color, colorLight, orga, description, url },
+  ctx,
 }) => {
   const [w, setW] = useState(false)
   const src = `img/category/${orga.replace('#', '')}.png`
+  let top = (
+    <Box
+      height='0'
+      overflow='visible'
+      marginBottom='85px'
+      marginLeft={ctx ? '-14px' : '-5px'}
+      marginTop='0'
+    >
+      <RadioCardV
+        color={color}
+        name={name}
+        setCategory={() => {}}
+        num={(value + 1).toString()}
+        onClose={() => {}}
+        fake={true}
+      />
+    </Box>
+  )
+  if (!w) {
+    top = <></>
+  }
   useEffect(() => {
-    setW(window.innerWidth >= 375)
+    setW(window.innerWidth < 405)
     return () => {}
   }, [window.innerWidth])
-  if (w) {
-    return (
-      <Box
-        background={`radial-gradient(circle, #ffffff99, ${colorLight}99)`}
-        boxShadow={`0 0 1.7em 0 ${color}77`}
-        border={`solid 2px ${color}`}
-      >
-        <Flex width='100%'>
-          <RadioCardV
-            color={color}
-            name={name}
-            setCategory={() => {}}
-            num={(value + 1).toString()}
-            onClose={() => {}}
-            fake={true}
-          />
-          <Flex
-            direction='column-reverse'
-            alignItems='flex-start'
-            width='100%'
-            marginRight='10px'
-          >
-            <Box
-              marginTop='auto'
-              marginLeft='auto'
-              marginRight='auto'
-              marginBottom='10px'
-            >
-              <HeadingRespoV>{orga}</HeadingRespoV>
-            </Box>
-            <Avatar
-              marginLeft='auto'
-              marginTop='auto'
-              marginRight='auto'
-              width='100px'
-              height='100px'
-              name={orga}
-              src={src}
-              border={`3px #eee solid`}
-              boxShadow='0 5px 15px 0px rgba(0,0,0,0.6)'
-            />
-          </Flex>
-        </Flex>
-
-        <Text fontWeight='bold' mx={4} mt={2} fontSize='18px'>
-          If you want to toast to{' '}
-          <Text as='mark' backgroundColor={`${colorLight}00`}>
-            {' '}
-            {name}
-          </Text>
-          , we recommend you stand up for{' '}
-          <Text as='mark' backgroundColor={`${colorLight}00`}>
-            {' '}
-            {orga}
-          </Text>
-        </Text>
-        <Text textAlign='justify' mx={4} mt={2}>
-          {description}
-        </Text>
-        <Text mx={4} mb={4} mt={2}>
-          See their website for more information:{' '}
-          <a href={url}>{url.replace('https://', '')}</a>
-        </Text>
-      </Box>
-    )
-  }
   return (
-    <Box
-      background={`radial-gradient(circle, ${colorLight}44, #ffffff44)`}
-      boxShadow={`0 0 1.7em 0 ${color}77`}
-      border={`solid 2px ${color}`}
-    >
-      <Flex width='100%'>
-        <RadioCardV
-          color={color}
-          name={name}
-          setCategory={() => {}}
-          num={(value + 1).toString()}
-          onClose={() => {}}
-          fake={true}
-        />
-        <Flex
-          direction='column-reverse'
-          alignItems='flex-start'
-          width='100%'
-          marginRight='10px'
+    <>
+      {top}
+      <Box
+        background={`#ffffffcc`}
+        p={0}
+        boxShadow=' 0 1px 4px -2px rgba(0,0,0,0.8)'
+        mx={w ? 0 : 4}
+        my={0}
+      >
+        <Box
+          background={`radial-gradient(circle, #ffffff22, ${colorLight}22)`}
+          borderLeft={`solid 10px ${color}`}
+          marginTop={w && ctx ? '-84px' : '0'}
+          mx={0}
+          mb={0}
+          pt={0}
+          pb={1}
         >
-          <Avatar
-            marginLeft='auto'
-            marginTop='auto'
-            marginBottom='auto'
-            marginRight='auto'
-            width='100px'
-            height='100px'
-            name={orga}
+          <CardDetailsPartV
+            name={name}
+            value={value}
+            orga={orga}
+            color={color}
+            small={w}
             src={src}
           />
-        </Flex>
-      </Flex>
-
-      <Box
-        marginTop='10px'
-        marginLeft='auto'
-        marginRight='auto'
-        marginBottom='10px'
-      >
-        <HeadingRespoV>{orga}</HeadingRespoV>
+          <Text fontWeight='500' mx={4} mt={2} fontSize='18px'>
+            If you want to toast to{' '}
+            <Text as='mark' backgroundColor={`${colorLight}00`}>
+              {' '}
+              {name}
+            </Text>
+            , we recommend you stand up for{' '}
+            <Text as='mark' backgroundColor={`${colorLight}00`}>
+              {' '}
+              {orga}
+            </Text>
+          </Text>
+          <Text textAlign='justify' mx={4} mt={2}>
+            {description}
+          </Text>
+          <Text mx={4} mb={8} mt={2}>
+            See their website for more information:{' '}
+            <a href={url} style={{ color: 'blue' }}>
+              <u>{url}</u>
+            </a>
+          </Text>
+        </Box>
       </Box>
-      <Text fontWeight='bold' mx={4} mt={2} fontSize='18px'>
-        If you want to toast to{' '}
-        <Text as='mark' backgroundColor={`${colorLight}00`}>
-          {' '}
-          {name}
-        </Text>
-        , we recommend you stand up for{' '}
-        <Text as='mark' backgroundColor={`${colorLight}00`}>
-          {' '}
-          {orga}
-        </Text>
-      </Text>
-      <Text textAlign='justify' mx={4} mt={2}>
-        {description}
-      </Text>
-      <Text mx={4} mb={4} mt={2}>
-        See their website for more information:{' '}
-        <a href={url}>{url.replace('https://', '')}</a>
-      </Text>
-    </Box>
+    </>
   )
 }
 

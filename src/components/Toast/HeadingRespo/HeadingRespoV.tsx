@@ -1,4 +1,4 @@
-import { Heading } from '@chakra-ui/core'
+import { Box, Heading } from '@chakra-ui/core'
 import React, { ReactNode } from 'react'
 
 interface HeadingRespoVProps {
@@ -7,9 +7,16 @@ interface HeadingRespoVProps {
 
 const HeadingRespoV: React.FC<HeadingRespoVProps> = ({ children }) => {
   return (
-    <Heading textAlign='center' className='textHeading'>
-      {children}
-    </Heading>
+    <Box
+      marginTop='10px'
+      marginLeft='auto'
+      marginRight='auto'
+      marginBottom='10px'
+    >
+      <Heading textAlign='center' className='textHeading'>
+        {children}
+      </Heading>
+    </Box>
   )
 }
 

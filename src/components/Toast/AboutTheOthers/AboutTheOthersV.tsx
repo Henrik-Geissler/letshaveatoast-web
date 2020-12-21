@@ -27,7 +27,7 @@ const AboutTheOthersV: React.FC<AboutTheOthersVProps> = ({ onMore, orgas }) => {
         {orgas.map(item => {
           return (
             <>
-              <CardDetail card={item} />
+              <CardDetail card={item} ctx={true} />
               <SpaceV x={40} y={40} />
             </>
           )

@@ -16,7 +16,7 @@ declare global {
 }
 const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
   const [thanks, setThanks] = useState(false)
-  const MAX_PARTICLES = 600
+  const MAX_PARTICLES = 900
   const maxWidth = window.innerWidth + 10
   const maxHeight = window.innerHeight + 10
   useEffect(() => {
@@ -135,11 +135,6 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
       })
     }
 
-    // Remove particles that aren't on the canvas
-    var clearArray = function () {
-      particles = []
-    }
-
     var initParticles = function (numParticles, x, y) {
       for (let i = 0; i < numParticles; i++) {
         particles.push(new Particle(x, y))
@@ -208,6 +203,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
     }
 
     const interval = setInterval(() => {
+      cleanUpArray()
       if (particles.length <= MAX_PARTICLES) {
         const timeout = setTimeout(() => {
           initParticles(

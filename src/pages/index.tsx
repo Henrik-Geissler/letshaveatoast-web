@@ -847,6 +847,7 @@ const Todos: React.FC<StyleVProps> = () => {
                               card={
                                 CardTable[valueFromCategory(categoryPreset)]
                               }
+                              ctx={false}
                             />
                           </FormControl>
                         )}
