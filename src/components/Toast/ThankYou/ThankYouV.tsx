@@ -129,8 +129,13 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
     // Remove particles that aren't on the canvas
     var cleanUpArray = function () {
       particles = particles.filter(p => {
-        return p.x > -100 && p.y > -100 && p.x < 0 && p.y < 0
+        return p.x > -100 && p.y > -100 && p.x < 100 && p.y < 100
       })
+    }
+
+    // Remove particles that aren't on the canvas
+    var clearArray = function () {
+      particles = []
     }
 
     var initParticles = function (numParticles, x, y) {
@@ -201,21 +206,22 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
     }
 
     const interval = setInterval(() => {
-      // First particle explosion
-      const timeout = setTimeout(() => {
-        initParticles(
-          config.particleNumber,
-          window.innerWidth * Math.random(),
-          (window.innerHeight * Math.random()) / 1.5
-        )
-      }, 2300)
+      if (particles.length <= MAX_PARTICLES) {
+        const timeout = setTimeout(() => {
+          initParticles(
+            config.particleNumber,
+            window.innerWidth * Math.random(),
+            (window.innerHeight * Math.random()) / 1.5
+          )
+        }, 2300)
 
-      const audio = new Audio('sounds/firework.mp3')
-      if (audio !== null) {
-        const promise = audio.play()
+        const audio = new Audio('sounds/firework.mp3')
+        if (audio !== null) {
+          const promise = audio.play()
 
-        if (promise !== undefined) {
-          promise.then(() => {}).catch(error => console.error)
+          if (promise !== undefined) {
+            promise.then(() => {}).catch(error => console.error)
+          }
         }
       }
     }, 12000)
