@@ -24,6 +24,8 @@ interface ButtonGroupVProps {
   reRoll: boolean
   setReRoll: any
   pending: boolean
+  setDataMode: any
+  dataMode: boolean
 }
 
 const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
@@ -44,14 +46,21 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
   reRoll,
   setReRoll,
   pending,
+  setDataMode,
+  dataMode,
 }) => {
-  if (reRoll) {
+  if (reRoll || dataMode) {
     return <></>
   }
   return (
     <>
       <Box className='t85' position='absolute' left='0px' w='100vw'>
         <Flex justifyContent='space-between' w='100vw'>
+          <SideButtonV left={true} onClick={() => setDataMode(true)}>
+            LEARN
+            <br />
+            MORE
+          </SideButtonV>
           <Spacer pointerEvents='none' />
           <SideButtonV left={false} onClick={onOpen5}>
             LEARN

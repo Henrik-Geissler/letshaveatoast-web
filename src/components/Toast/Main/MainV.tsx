@@ -3,6 +3,7 @@ import { Center } from '@chakra-ui/react'
 import React from 'react'
 import { FaBox } from 'react-icons/fa'
 import ImageV from '../../General/Image/ImageV'
+import DataScreenV from '../DataScreenV/DataScreenV'
 import SentenceV from '../Sentence/SentenceV'
 
 interface MainVProps {
@@ -19,6 +20,9 @@ interface MainVProps {
   color2: string
   colorCard: string
   payState: any
+  dataStats: any
+  dataMode: boolean
+  setDataMode: any
 }
 
 const MainV: React.FC<MainVProps> = ({
@@ -30,12 +34,17 @@ const MainV: React.FC<MainVProps> = ({
   name,
   reRoll,
   setReRoll,
-
+  dataStats,
+  dataMode,
+  setDataMode,
   color,
   color2,
   colorCard,
   payState,
 }) => {
+  if (dataMode) {
+    return <DataScreenV setDataMode={setDataMode} dataStats={dataStats} />
+  }
   const edit = category !== ''
   return (
     <>

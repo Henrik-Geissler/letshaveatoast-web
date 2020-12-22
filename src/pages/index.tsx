@@ -64,11 +64,11 @@ const PAY_MODE = 0 //TODO: 0 for production
 const IDLE_DELAY = 12 //TODO: 10 for production
 const TIMES_TOAST_STAY = 1 //TODO: 1 for production
 const POLL_INTERVAL = 500 //TODO: 500 for production
+const POLL_STATS_INTERVAL = 20000 //TODO: 20000 for production
 
 const FRESH_TOAST = gql`
   query getToast {
     getToast {
-      #SWITCH
       name
       id
       amount
@@ -85,7 +85,6 @@ const PUSH_TOAST = gql`
         message
       }
       toast {
-        #SWITCH
         name
         id
         amount
@@ -94,7 +93,52 @@ const PUSH_TOAST = gql`
     }
   }
 `
-
+const FRESH_STATS = gql`
+  query getStats {
+    getStats {
+      id
+      createdAt
+      name1
+      nameSum1
+      name2
+      nameSum2
+      name3
+      nameSum3
+      name4
+      nameSum4
+      name5
+      nameSum5
+      name6
+      nameSum6
+      name7
+      nameSum7
+      name8
+      nameSum8
+      name9
+      nameSum9
+      name10
+      nameSum10
+      category1
+      categorySum1
+      category2
+      categorySum2
+      category3
+      categorySum3
+      category4
+      categorySum4
+      category5
+      categorySum5
+      category6
+      categorySum6
+      category7
+      categorySum7
+      category8
+      categorySum8
+      category9
+      categorySum9
+    }
+  }
+`
 interface StyleVProps {}
 
 const product = {
@@ -217,6 +261,9 @@ const Todos: React.FC<StyleVProps> = () => {
   const [audioToast, setAudioToast] = useState(null)
   const [newToast, setNewToast] = useState(false)
   const [pending, setPending] = useState(-2)
+  const [dataMode, setDataMode] = useState(false)
+  const [dataStats, setDataStats] = useState()
+  const [lastStats, setLastStats] = useState(0)
 
   const { called: pushLoads, refetch } = useQuery(PUSH_TOAST, { skip: true })
   useEffect(() => {
@@ -299,8 +346,11 @@ const Todos: React.FC<StyleVProps> = () => {
     onOpen: onOpen6,
     onClose: onClose6,
   } = useDisclosure()
-  const { loading, error, data } = useQuery(FRESH_TOAST, {
+  const { data } = useQuery(FRESH_TOAST, {
     pollInterval: POLL_INTERVAL,
+  })
+  const { data: dataStatsFresh } = useQuery(FRESH_STATS, {
+    pollInterval: POLL_STATS_INTERVAL,
   })
   const options = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
   const toastOptions = ['0', '1', '2', '3', '4', '5']
@@ -338,6 +388,14 @@ const Todos: React.FC<StyleVProps> = () => {
     setPayState(null)
     setButtonLoaded(true)
   }
+  if (dataStatsFresh !== undefined) {
+    if (dataStatsFresh.getStats !== undefined) {
+      if (dataStatsFresh.getStats.id !== lastStats) {
+        setDataStats(dataStatsFresh.getStats)
+        setLastStats(dataStatsFresh.getStats.id)
+      }
+    }
+  }
   if (data !== undefined)
     if (data.getToast !== undefined)
       if (data.getToast.id !== pushedToast) {
@@ -348,7 +406,6 @@ const Todos: React.FC<StyleVProps> = () => {
           }
           packToast(
             toast,
-            //SWITCH
             data.getToast.name,
             Number.parseInt(data.getToast.category),
             Number.parseInt(data.getToast.amount),
@@ -431,6 +488,9 @@ const Todos: React.FC<StyleVProps> = () => {
                   color2={ToastTable[valueFromToast(amount)].tcolor2}
                   colorCard={CardTable[valueFromCategory(category)].colorLight}
                   payState={payState}
+                  dataStats={dataStats}
+                  dataMode={dataMode}
+                  setDataMode={setDataMode}
                 />
                 <ButtonGroupV
                   onOpen={onOpen}
@@ -440,8 +500,6 @@ const Todos: React.FC<StyleVProps> = () => {
                   onPush={() => {
                     refetch({
                       options: {
-                        //SWITCH
-                        //lastname: 'ok',
                         name: name,
                         amount: valueFromToast(amount),
                         category: valueFromCategory(category),
@@ -463,6 +521,8 @@ const Todos: React.FC<StyleVProps> = () => {
                   reRoll={reRoll && pending === -2}
                   setReRoll={setReRoll}
                   pending={pending !== -2}
+                  dataMode={dataMode}
+                  setDataMode={setDataMode}
                 />
               </Form>
             )}
