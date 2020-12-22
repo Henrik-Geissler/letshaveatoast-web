@@ -28,8 +28,8 @@ const SocialButtonsV: React.FC<SocialButtonsVProps> = ({
 }) => {
   const TITLE =
     category !== '' && amount !== ''
-      ? 'I just raised a toast and i dedicate that toast to you ❤️'
-      : `I just raised a ${amount} to ${category.toLowerCase()} and i dedicate that toast to you ❤️`
+      ? `I just raised a ${amount} to ${category.toLowerCase()} and i dedicate that toast to you ❤️`
+      : 'I just raised a toast and i dedicate that toast to you ❤️'
   const options = [
     <FacebookShareButton
       url={URL}
