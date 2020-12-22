@@ -69,7 +69,7 @@ const FRESH_TOAST = gql`
   query getToast {
     getToast {
       #SWITCH
-      firstname
+      name
       id
       amount
       category
@@ -86,8 +86,7 @@ const PUSH_TOAST = gql`
       }
       toast {
         #SWITCH
-        lastname
-        firstname
+        name
         id
         amount
         category
@@ -350,7 +349,7 @@ const Todos: React.FC<StyleVProps> = () => {
           packToast(
             toast,
             //SWITCH
-            data.getToast.firstname,
+            data.getToast.name,
             Number.parseInt(data.getToast.category),
             Number.parseInt(data.getToast.amount),
             audioToast,
@@ -442,8 +441,8 @@ const Todos: React.FC<StyleVProps> = () => {
                     refetch({
                       options: {
                         //SWITCH
-                        lastname: 'ok',
-                        firstname: name,
+                        //lastname: 'ok',
+                        name: name,
                         amount: valueFromToast(amount),
                         category: valueFromCategory(category),
                       }!,
