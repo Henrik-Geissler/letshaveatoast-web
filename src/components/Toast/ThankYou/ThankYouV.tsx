@@ -8,13 +8,19 @@ import SocialButtonsV from '../SocialButtons/SocialButtonsV'
 
 interface ThankYouVProps {
   setReRoll: any
+  category: string
+  amount: string
 }
 declare global {
   interface Window {
     requestAnimFrame: any
   }
 }
-const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
+const ThankYouV: React.FC<ThankYouVProps> = ({
+  setReRoll,
+  category,
+  amount,
+}) => {
   const [thanks, setThanks] = useState(false)
   const MAX_PARTICLES = 900
   const maxWidth = window.innerWidth + 10
@@ -260,7 +266,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({ setReRoll }) => {
         <Center className='t50' w='100vw' m={0} pos='absolute' left='0px'>
           <Flex direction='column'>
             <HeadingV>Let's have a post</HeadingV>
-            <SocialButtonsV />
+            <SocialButtonsV category={category} amount={amount} />
           </Flex>
         </Center>
         <Center className='t77' w='100vw' m={0} pos='absolute' left='0px'>

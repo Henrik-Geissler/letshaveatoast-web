@@ -1,4 +1,4 @@
-import { Fade, Image } from '@chakra-ui/react'
+import { Fade, Image, Center } from '@chakra-ui/react'
 import React, { useState } from 'react'
 
 interface GifVProps {
@@ -8,7 +8,7 @@ interface GifVProps {
 const GifV: React.FC<GifVProps> = ({ src }) => {
   const [loaded, setLoaded] = useState(false)
   return (
-    <div
+    <Center
       style={{ width: '100%', height: '100%', margin: '0px', padding: '0px' }}
     >
       <Fade in={loaded}>
@@ -19,9 +19,10 @@ const GifV: React.FC<GifVProps> = ({ src }) => {
           onLoad={() => {
             setLoaded(true)
           }}
+          m='auto'
         />
       </Fade>
-    </div>
+    </Center>
   )
 }
 

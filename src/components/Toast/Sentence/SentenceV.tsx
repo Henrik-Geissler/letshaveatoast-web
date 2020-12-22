@@ -68,7 +68,9 @@ const SentenceV: React.FC<SentenceVProps> = ({
     )
   }
   if (reRoll) {
-    return <ThankYouV setReRoll={setReRoll} />
+    return (
+      <ThankYouV setReRoll={setReRoll} category={category} amount={amount} />
+    )
   }
   return (
     <Center className='t45' w='100vw' m={0} pos='absolute' left='0px'>

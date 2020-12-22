@@ -2,8 +2,6 @@ import { Image } from '@chakra-ui/core'
 import { Button, Center, Box, Text, Spinner } from '@chakra-ui/react'
 import React, { ReactNode, useState } from 'react'
 import ImageV from '../../General/Image/ImageV'
-import PaypalV from '../Paypal/PaypalV'
-import SocialButtonsV from '../SocialButtons/SocialButtonsV'
 
 interface ButtonVProps {
   onOpen: any

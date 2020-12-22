@@ -15,12 +15,21 @@ import {
   WhatsappIcon,
 } from 'react-share'
 
-interface SocialButtonsVProps {}
+interface SocialButtonsVProps {
+  category: string
+  amount: string
+}
 const HASHTAG = 'LETSHAVEATOAST'
 const URL = 'https://letshaveatoast.app'
-const TITLE = 'I raise a toast to you'
-const SEPARATOR = " - Let's toast the good together:\n"
-const SocialButtonsV: React.FC<SocialButtonsVProps> = () => {
+const SEPARATOR = "\n\nLet's toast the good together on:\n🥂 "
+const SocialButtonsV: React.FC<SocialButtonsVProps> = ({
+  category,
+  amount,
+}) => {
+  const TITLE =
+    category !== '' && amount !== ''
+      ? 'I just raised a toast and i dedicate that toast to you ❤️'
+      : `I just raised a ${amount} to ${category.toLowerCase()} and i dedicate that toast to you ❤️`
   const options = [
     <FacebookShareButton
       url={URL}
