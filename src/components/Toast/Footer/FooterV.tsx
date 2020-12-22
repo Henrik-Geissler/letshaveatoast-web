@@ -25,7 +25,7 @@ const FooterV: React.FC<FooterVProps> = ({}) => {
             p={0}
           >
             <Text as='u' className='text12'>
-              Terms and Conditions
+              Terms And Conditions
             </Text>
           </Link>
           <Link href='/pdf/Data Protection.pdf' isExternal my={0} mx={1} p={0}>

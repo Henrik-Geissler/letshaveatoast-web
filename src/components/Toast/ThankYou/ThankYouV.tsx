@@ -22,7 +22,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
   amount,
 }) => {
   const [thanks, setThanks] = useState(false)
-  const MAX_PARTICLES = 900
+  const MAX_PARTICLES = 600
   const maxWidth = window.innerWidth + 10
   const maxHeight = window.innerHeight + 10
   useEffect(() => {
