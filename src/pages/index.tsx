@@ -336,7 +336,7 @@ const Todos: React.FC<StyleVProps> = () => {
       true
     )
     const timeout2 = idleToast(
-      newToast || pending !== -2 || toastMode !== 0,
+      newToast || pending !== -2,
       setNewToast,
       toast,
       audioToast,

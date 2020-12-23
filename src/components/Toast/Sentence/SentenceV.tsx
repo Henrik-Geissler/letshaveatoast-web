@@ -88,7 +88,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
     )
   }
   if (toastMode) {
-    if (linkedToast === null) return <>loading...</>
+    if (linkedToast === null) return <></>
     const toast = linkedToast.data.getToastById
     if (toast === undefined) return <>no toast</>
     amount = ToastTable[toast.amount].name
