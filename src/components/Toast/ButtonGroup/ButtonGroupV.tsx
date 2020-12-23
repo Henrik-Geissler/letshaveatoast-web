@@ -27,6 +27,9 @@ interface ButtonGroupVProps {
   pending: boolean
   setDataMode: any
   dataMode: boolean
+  toastMode: boolean
+  linkedToast: any
+  clearLinkedToast: any
 }
 
 const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
@@ -49,6 +52,9 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
   pending,
   setDataMode,
   dataMode,
+  toastMode,
+  linkedToast,
+  clearLinkedToast,
 }) => {
   if (reRoll || dataMode) {
     return <></>
@@ -114,6 +120,7 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
             reRoll={reRoll}
             setReRoll={setReRoll}
             pending={pending}
+            clearLinkedToast={clearLinkedToast}
           />
         </Box>
       </Center>

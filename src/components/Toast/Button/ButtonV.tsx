@@ -19,6 +19,7 @@ interface ButtonVProps {
   reRoll: boolean
   setReRoll: any
   pending: boolean
+  clearLinkedToast: any
 }
 
 const ButtonV: React.FC<ButtonVProps> = ({
@@ -37,6 +38,7 @@ const ButtonV: React.FC<ButtonVProps> = ({
   reRoll,
   setReRoll,
   pending,
+  clearLinkedToast,
 }) => {
   if (reRoll) {
     return <></>
@@ -48,6 +50,7 @@ const ButtonV: React.FC<ButtonVProps> = ({
         onClick={() => {
           setPressed(true)
           setTimeout(() => {
+            clearLinkedToast()
             if (pending) {
             } else if (buttonLoaded) {
               onPush()

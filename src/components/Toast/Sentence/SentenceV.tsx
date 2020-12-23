@@ -12,12 +12,14 @@ import { Field } from 'formik'
 import React from 'react'
 import { FaChevronDown, FaQuoteLeft } from 'react-icons/fa'
 import { MdEdit } from 'react-icons/md'
+import CardTable from '../CardTable/CardTable'
 import HeadingV from '../Heading/HeadingV'
 import SentenceTextV from '../SentenceText/SentenceTextV'
 import SentenceUserV from '../SentenceUser/SentenceUserV'
 import ThankYouV from '../ThankYou/ThankYouV'
 import ToastV from '../Toast/ToastV'
 import ToastContentV from '../ToastContent/ToastContentV'
+import ToastTable from '../ToastTable/ToastTable'
 
 interface SentenceVProps {
   onOpen: any
@@ -33,6 +35,10 @@ interface SentenceVProps {
   color2: string
   colorCard: string
   payState: any
+
+  toastMode: boolean
+  linkedToast: any
+  toastId: number
 }
 
 const SentenceV: React.FC<SentenceVProps> = ({
@@ -49,8 +55,12 @@ const SentenceV: React.FC<SentenceVProps> = ({
   color2,
   colorCard,
   payState,
+
+  toastMode,
+  linkedToast,
+  toastId,
 }) => {
-  if (!visible) {
+  if (!visible && !toastMode) {
     return <></>
   }
   if (payState === '0') {
@@ -69,16 +79,39 @@ const SentenceV: React.FC<SentenceVProps> = ({
   }
   if (reRoll) {
     return (
-      <ThankYouV setReRoll={setReRoll} category={category} amount={amount} />
+      <ThankYouV
+        setReRoll={setReRoll}
+        category={category}
+        amount={amount}
+        toastId={toastId}
+      />
     )
   }
+  if (toastMode) {
+    if (linkedToast === null) return <>loading...</>
+    const toast = linkedToast.data.getToastById
+    if (toast === undefined) return <>no toast</>
+    amount = ToastTable[toast.amount].name
+    category = CardTable[toast.category].name
+    color = ToastTable[toast.amount].tcolor
+    color2 = ToastTable[toast.amount].tcolor2
+    colorCard = CardTable[toast.category].colorLight
+    name = toast.name
+  }
+  const v = toastMode ? (
+    <Box transform='scale(0.6)' overflow='visible'>
+      <HeadingV>A toast is dedicated to you:</HeadingV>
+    </Box>
+  ) : (
+    <HeadingV>Your toast:</HeadingV>
+  )
   return (
     <Center className='t45' w='100vw' m={0} pos='absolute' left='0px'>
       <Center mx={2} className='floating' borderRadius='18px'>
         <Flex direction='column'>
           <Box height='0px' overflow='visible'>
             <Box height='0px' mt='-40px' overflow='visible'>
-              <HeadingV>Your toast:</HeadingV>
+              {v}
             </Box>
           </Box>
           <ToastV amount={amount} color={color} color2={color2} hidden={false}>
@@ -89,98 +122,6 @@ const SentenceV: React.FC<SentenceVProps> = ({
               colorCard={colorCard}
             />
           </ToastV>
-        </Flex>
-      </Center>
-    </Center>
-  )
-  return (
-    <Center top='45vh' w='100vw' m={0} pos='absolute' left='0px'>
-      <Center px={3}>
-        <Flex direction='column'>
-          <Center>
-            <Heading fontFamily='system-ui,sans-serif' fontSize='lg'>
-              Your Toast:
-            </Heading>
-          </Center>
-          <div style={{ height: '3vh' }}></div>
-          <Flex wrap='wrap'>
-            <SentenceTextV>
-              <FaQuoteLeft style={{ marginRight: '8px' }} />
-            </SentenceTextV>
-            <SentenceTextV>{" Let's have a "}</SentenceTextV>
-            <Button
-              onClick={onOpen3}
-              mx={2}
-              variant='outline'
-              rightIcon={<FaChevronDown color='#bbbbbb' />}
-              style={{
-                boxShadow: '0 0 1px 1px #bbbbbb',
-                borderRadius: '100px',
-              }}
-              px={3}
-              pb={1}
-              my={1}
-            >
-              <SentenceTextV>
-                <Field name='amount'>
-                  {({ field, form }) => (
-                    <FormControl id='amount'>
-                      <Editable
-                        {...field}
-                        isPreviewFocusable={false}
-                        submitOnBlur={false}
-                        value={amount}
-                        placeholder='toast'
-                        style={{ pointerEvents: 'none' }}
-                      >
-                        <EditablePreview style={{ pointerEvents: 'none' }} />
-                      </Editable>
-                    </FormControl>
-                  )}
-                </Field>
-              </SentenceTextV>
-            </Button>
-            <SentenceTextV>{'on'}</SentenceTextV>
-            <Button
-              onClick={onOpen2}
-              mx={2}
-              rightIcon={<FaChevronDown color='#bbbbbb' />}
-              style={{
-                boxShadow: '0 0 1px 1px #bbbbbb',
-                borderRadius: '100px',
-              }}
-              px={3}
-              pb={1}
-              my={1}
-            >
-              <SentenceTextV>
-                <Field name='category'>
-                  {({ field, form }) => (
-                    <FormControl id='category'>
-                      <Editable
-                        {...field}
-                        isPreviewFocusable={false}
-                        submitOnBlur={false}
-                        value={category}
-                        placeholder=''
-                        style={{ pointerEvents: 'none' }}
-                      >
-                        <EditablePreview style={{ pointerEvents: 'none' }} />
-                      </Editable>
-                    </FormControl>
-                  )}
-                </Field>
-              </SentenceTextV>
-              <SentenceTextV>{'!'}</SentenceTextV>
-            </Button>
-          </Flex>
-          <Flex>
-            <Spacer />
-            <SentenceTextV>{'––'}</SentenceTextV>
-            <div style={{ width: '10px' }}></div>
-            <SentenceUserV name={name} onOpen={onOpen} />
-            <div style={{ width: '5vw' }}></div>
-          </Flex>
         </Flex>
       </Center>
     </Center>

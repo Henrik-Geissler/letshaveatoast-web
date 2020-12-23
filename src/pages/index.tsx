@@ -77,6 +77,16 @@ const FRESH_TOAST = gql`
     }
   }
 `
+const GET_TOAST = gql`
+  query getToastById($id: Float!) {
+    getToastById(id: $id) {
+      createdAt
+      name
+      category
+      amount
+    }
+  }
+`
 const PUSH_TOAST = gql`
   query newToast($options: ToastInput!) {
     newToast(options: $options) {
@@ -264,8 +274,11 @@ const Todos: React.FC<StyleVProps> = () => {
   const [dataMode, setDataMode] = useState(false)
   const [dataStats, setDataStats] = useState()
   const [lastStats, setLastStats] = useState(0)
+  const [toastMode, setToastMode] = useState(0)
+  const [linkedToast, setLinkedToast] = useState(null)
 
-  const { called: pushLoads, refetch } = useQuery(PUSH_TOAST, { skip: true })
+  const { refetch } = useQuery(PUSH_TOAST, { skip: true })
+  const { refetch: getToast } = useQuery(GET_TOAST, { skip: true })
   useEffect(() => {
     let vh = window.innerHeight * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)
@@ -273,27 +286,42 @@ const Todos: React.FC<StyleVProps> = () => {
       let vh = window.innerHeight * 0.01
       document.documentElement.style.setProperty('--vh', `${vh}px`)
     })
-    window.location.search
-      .substr(1)
-      .split('&')
-      .forEach(item => {
-        const tmp = item.split('=')
-        if (tmp[0] === 'n') setName(decodeURIComponent(tmp[1]))
-        else if (tmp[0] === 'c')
-          setCategory(CardTable[decodeURIComponent(tmp[1])].name)
-        else if (tmp[0] === 'a')
-          setAmount(ToastTable[decodeURIComponent(tmp[1])].name)
-        else if (tmp[0] === 's') setPayState(decodeURIComponent(tmp[1]))
+    console.log(window.location.search)
+    if (window.location.search.includes('=')) {
+      window.location.search
+        .substr(1)
+        .split('&')
+        .forEach(item => {
+          const tmp = item.split('=')
+          if (tmp[0] === 'n') setName(decodeURIComponent(tmp[1]))
+          else if (tmp[0] === 'c')
+            setCategory(CardTable[decodeURIComponent(tmp[1])].name)
+          else if (tmp[0] === 'a')
+            setAmount(ToastTable[decodeURIComponent(tmp[1])].name)
+          else if (tmp[0] === 's') setPayState(decodeURIComponent(tmp[1]))
+        })
+    } else if (window.location.search.includes('?')) {
+      const toastId = Number.parseInt(window.location.search.slice(1))
+      setToastMode(toastId)
+      getToast({
+        id: toastId!,
+      }).then(value => {
+        setLinkedToast(value)
+        console.log(value)
       })
+    }
     updateUrl(name, category, amount)
+
     document.body.addEventListener('click', unlockAudio)
     document.body.addEventListener('touchstart', unlockAudio)
     if (audioToast === null) {
       setAudioToast(new Audio('sounds/notification.mp3'))
     }
+  }, [])
+  useEffect(() => {
     const interval = setInterval(() => {
       idleToast(
-        newToast || pending !== -2,
+        newToast || pending !== -2 || toastMode !== 0,
         setNewToast,
         toast,
         audioToast,
@@ -301,14 +329,14 @@ const Todos: React.FC<StyleVProps> = () => {
       )
     }, 1000 * IDLE_DELAY)
     const timeout = idleToast(
-      newToast || pending !== -2,
+      newToast || pending !== -2 || toastMode !== 0,
       setNewToast,
       toast,
       audioToast,
       true
     )
     const timeout2 = idleToast(
-      newToast || pending !== -2,
+      newToast || pending !== -2 || toastMode !== 0,
       setNewToast,
       toast,
       audioToast,
@@ -319,7 +347,7 @@ const Todos: React.FC<StyleVProps> = () => {
       clearTimeout(timeout)
       clearTimeout(timeout2)
     }
-  }, [])
+  }, [newToast, pending, toastMode])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
     isOpen: isOpen2,
@@ -491,6 +519,9 @@ const Todos: React.FC<StyleVProps> = () => {
                   dataStats={dataStats}
                   dataMode={dataMode}
                   setDataMode={setDataMode}
+                  toastMode={toastMode !== 0}
+                  linkedToast={linkedToast}
+                  toastId={pushedToast ? pushedToast : 0}
                 />
                 <ButtonGroupV
                   onOpen={onOpen}
@@ -523,6 +554,12 @@ const Todos: React.FC<StyleVProps> = () => {
                   pending={pending !== -2}
                   dataMode={dataMode}
                   setDataMode={setDataMode}
+                  toastMode={toastMode !== 0}
+                  linkedToast={linkedToast}
+                  clearLinkedToast={() => {
+                    setToastMode(0)
+                    setLinkedToast(null)
+                  }}
                 />
               </Form>
             )}

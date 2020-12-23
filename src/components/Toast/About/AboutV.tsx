@@ -62,7 +62,7 @@ const AboutV: React.FC<AboutVProps> = ({ onMore }) => {
       </Center>
       <Heading>Support us by sharing:</Heading>
       <Box mt='5vh' mb='5vh'>
-        <SocialButtonsV category='' amount='' />
+        <SocialButtonsV category='' amount='' toastId={0} />
       </Box>
       <Heading>Follow us:</Heading>
       <Box mt='5vh' mb='5vh'>

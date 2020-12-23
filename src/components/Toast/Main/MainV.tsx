@@ -5,6 +5,7 @@ import { FaBox } from 'react-icons/fa'
 import ImageV from '../../General/Image/ImageV'
 import DataScreenV from '../DataScreenV/DataScreenV'
 import SentenceV from '../Sentence/SentenceV'
+import ToastView from '../ToastView/ToastView'
 
 interface MainVProps {
   category: string
@@ -23,6 +24,10 @@ interface MainVProps {
   dataStats: any
   dataMode: boolean
   setDataMode: any
+
+  toastMode: boolean
+  linkedToast: any
+  toastId: number
 }
 
 const MainV: React.FC<MainVProps> = ({
@@ -41,6 +46,9 @@ const MainV: React.FC<MainVProps> = ({
   color2,
   colorCard,
   payState,
+  toastMode,
+  linkedToast,
+  toastId,
 }) => {
   if (dataMode) {
     return <DataScreenV setDataMode={setDataMode} dataStats={dataStats} />
@@ -49,7 +57,7 @@ const MainV: React.FC<MainVProps> = ({
   return (
     <>
       <Center
-        className={edit ? 't20' : 't40'}
+        className={edit || toastMode ? 't20' : 't40'}
         h='0px'
         pos='absolute'
         w='100vw'
@@ -77,6 +85,9 @@ const MainV: React.FC<MainVProps> = ({
         color2={color2}
         colorCard={colorCard}
         payState={payState}
+        toastMode={toastMode}
+        linkedToast={linkedToast}
+        toastId={toastId}
       />
     </>
   )

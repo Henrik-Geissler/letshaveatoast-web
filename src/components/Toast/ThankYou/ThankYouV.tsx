@@ -10,6 +10,7 @@ interface ThankYouVProps {
   setReRoll: any
   category: string
   amount: string
+  toastId: number
 }
 declare global {
   interface Window {
@@ -20,6 +21,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
   setReRoll,
   category,
   amount,
+  toastId,
 }) => {
   const [thanks, setThanks] = useState(false)
   const MAX_PARTICLES = 600
@@ -266,7 +268,11 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
         <Center className='t50' w='100vw' m={0} pos='absolute' left='0px'>
           <Flex direction='column'>
             <HeadingV>Let's have a post</HeadingV>
-            <SocialButtonsV category={category} amount={amount} />
+            <SocialButtonsV
+              category={category}
+              amount={amount}
+              toastId={toastId}
+            />
           </Flex>
         </Center>
         <Center className='t77' w='100vw' m={0} pos='absolute' left='0px'>

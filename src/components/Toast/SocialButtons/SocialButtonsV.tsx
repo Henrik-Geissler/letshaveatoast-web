@@ -18,14 +18,19 @@ import {
 interface SocialButtonsVProps {
   category: string
   amount: string
+  toastId: number
 }
 const HASHTAG = 'LETSHAVEATOAST'
-const URL = 'https://letshaveatoast.app'
 const SEPARATOR = "\n\nLet's toast the good together on:\n "
 const SocialButtonsV: React.FC<SocialButtonsVProps> = ({
   category,
   amount,
+  toastId,
 }) => {
+  const URL =
+    category !== '' && amount !== '' && toastId !== 0
+      ? 'https://letshaveatoast.app/?' + toastId
+      : 'https://letshaveatoast.app'
   const TITLE =
     category !== '' && amount !== ''
       ? `I just raised a ${amount} to ${category.toLowerCase()} and i dedicate that toast to you 🥂❤️`
