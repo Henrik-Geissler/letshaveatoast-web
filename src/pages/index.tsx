@@ -565,15 +565,15 @@ const Todos: React.FC<StyleVProps> = () => {
                         {({ field, form }) => (
                           <FormControl
                             id='name2'
-                            isInvalid={form.errors.name2 && form.touched.name2}
+                            isInvalid={form.errors['name' + timestamp]}
                           >
                             <Input
                               {...field}
                               ref={initialRef}
-                              placeholder='Full name'
+                              placeholder='Enter your name'
                             />
                             <FormErrorMessage>
-                              {form.errors.name2}
+                              {form.errors['name' + timestamp]}
                             </FormErrorMessage>
                           </FormControl>
                         )}
