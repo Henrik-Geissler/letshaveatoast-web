@@ -31,8 +31,8 @@ const ToastContentV: React.FC<ToastContentVProps> = ({
     'a',
     ...amount.split(' '),
     'on',
-    <Box className='img20' bg={`${colorCard}77`}>
-      <ImageV src={`category/${category}`}></ImageV>
+    <Box className='img20' bg={`${colorCard}00`}>
+      <ImageV src={`category/${category} copy`}></ImageV>
     </Box>,
     ...category.split(' ').map(item => {
       return <Box color={colorCard}>{item}</Box>

@@ -1,11 +1,12 @@
 import { Box, Flex } from '@chakra-ui/core'
 import React from 'react'
 import ImageV from '../../General/Image/ImageV'
+import BackV from '../Back/BackV'
 import DataTableV from '../DataTable/DataTableV'
 
 interface DataScreenVProps {
   dataStats: any
-  setDataMode: boolean
+  setDataMode: any
 }
 
 const DataScreenV: React.FC<DataScreenVProps> = ({
@@ -39,6 +40,13 @@ const DataScreenV: React.FC<DataScreenVProps> = ({
       justifyContent='space-around'
       pt='28vh'
     >
+      <Box mt={'-40px'} ml={'2vw'}>
+        <BackV
+          onClose={() => {
+            setDataMode(false)
+          }}
+        />
+      </Box>
       <DataTableV ranking={ranking} />
       <Box maxHeight='50px' mb='3vh'>
         <ImageV src='labels/donators' />

@@ -1,6 +1,7 @@
 import { Button, Flex } from '@chakra-ui/core'
 import { Center, Box, Text, Spacer } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { AiOutlineQuestion, AiOutlineTrophy } from 'react-icons/ai'
 import ImageV from '../../General/Image/ImageV'
 import ButtonV from '../Button/ButtonV'
 import HeadingV from '../Heading/HeadingV'
@@ -57,15 +58,11 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
       <Box className='t85' position='absolute' left='0px' w='100vw'>
         <Flex justifyContent='space-between' w='100vw'>
           <SideButtonV left={true} onClick={() => setDataMode(true)}>
-            LEARN
-            <br />
-            MORE
+            <AiOutlineTrophy />
           </SideButtonV>
           <Spacer pointerEvents='none' />
           <SideButtonV left={false} onClick={onOpen5}>
-            LEARN
-            <br />
-            MORE
+            <AiOutlineQuestion />
           </SideButtonV>
         </Flex>
       </Box>
