@@ -25,14 +25,22 @@ const ToastTable = [
   },
   {
     value: 3,
-    name: 'tremendous toast',
+    name: 'festive toast',
     amount: '10',
+    color: '#000000',
+    tcolor: '#00000088',
+    tcolor2: '#00000088',
+  },
+  {
+    value: 4,
+    name: 'tremendous toast',
+    amount: '20',
     color: '#d6c372',
     tcolor: '#00000088',
     tcolor2: '#6c7a8688',
   },
   {
-    value: 4,
+    value: 5,
     name: 'earth-shattering toast',
     amount: '50',
     color: '#D3AE36',
@@ -40,7 +48,7 @@ const ToastTable = [
     tcolor2: '#75540088',
   },
   {
-    value: 5,
+    value: 6,
     name: 'world healing toast',
     amount: '100',
     color: '#A67B00',

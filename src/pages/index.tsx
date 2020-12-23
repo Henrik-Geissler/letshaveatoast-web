@@ -353,7 +353,7 @@ const Todos: React.FC<StyleVProps> = () => {
     pollInterval: POLL_STATS_INTERVAL,
   })
   const options = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
-  const toastOptions = ['0', '1', '2', '3', '4', '5']
+  const toastOptions = ['0', '1', '2', '3', '4', '5', '6']
 
   const { getRadioProps } = useRadioGroup({
     name: 'category2',

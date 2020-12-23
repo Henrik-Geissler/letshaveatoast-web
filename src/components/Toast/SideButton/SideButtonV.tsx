@@ -22,7 +22,7 @@ const SideButtonV: React.FC<SideButtonVProps> = ({
       onClick={onClick}
       className={'sideButton ' + (left ? 'sideButtonLeft' : 'sideButtonRight')}
       icon={<>{children}</>}
-      aria-label='bla'
+      aria-label='SideButton'
     />
   )
 }
