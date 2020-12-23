@@ -57,9 +57,11 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
     <>
       <Box className='t85' position='absolute' left='0px' w='100vw'>
         <Flex justifyContent='space-between' w='100vw'>
+          {/**
           <SideButtonV left={true} onClick={() => setDataMode(true)}>
             <AiOutlineTrophy />
           </SideButtonV>
+           */}
           <Spacer pointerEvents='none' />
           <SideButtonV left={false} onClick={onOpen5}>
             <AiOutlineQuestion />
