@@ -21,7 +21,7 @@ const SideButtonV: React.FC<SideButtonVProps> = ({
       borderRadius='20px'
       onClick={onClick}
       className={'sideButton ' + (left ? 'sideButtonLeft' : 'sideButtonRight')}
-      icon={children}
+      icon={<>{children}</>}
     />
   )
 }
