@@ -321,7 +321,7 @@ const Todos: React.FC<StyleVProps> = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       idleToast(
-        newToast || pending !== -2 || toastMode !== 0,
+        newToast || pending !== -2,
         setNewToast,
         toast,
         audioToast,
