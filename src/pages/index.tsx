@@ -341,7 +341,6 @@ const Todos: React.FC<StyleVProps> = () => {
         id: toastId!,
       }).then(value => {
         setLinkedToast(value)
-        console.log(value)
       })
     }
     updateUrl(name, message, category, amount)

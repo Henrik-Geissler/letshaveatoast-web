@@ -99,6 +99,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
     color2 = ToastTable[toast.amount].tcolor2
     colorCard = CardTable[toast.category].colorLight
     name = toast.name
+    message = toast.message
   }
   const v = toastMode ? (
     <Box transform='scale(0.6)' overflow='visible'>
