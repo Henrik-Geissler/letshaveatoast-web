@@ -99,6 +99,7 @@ const PUSH_TOAST = gql`
         id
         amount
         category
+        message
       }
     }
   }
@@ -532,7 +533,8 @@ const Todos: React.FC<StyleVProps> = () => {
                   onPush={() => {
                     refetch({
                       options: {
-                        name: name + '*' + dedication,
+                        name: name,
+                        message: '',
                         amount: valueFromToast(amount),
                         category: valueFromCategory(category),
                       }!,
