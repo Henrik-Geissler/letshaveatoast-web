@@ -6,6 +6,7 @@ import {
   useQuery,
 } from '@apollo/client'
 import { useState, useEffect, useRef } from 'react'
+import { FaUser } from 'react-icons/fa'
 import {
   Box,
   Button,
@@ -14,11 +15,13 @@ import {
   FormErrorMessage,
   Heading,
   Input,
+  InputGroup,
   Link,
   RadioGroup,
   Select,
   SimpleGrid,
   Text,
+  Textarea,
 } from '@chakra-ui/core'
 import {
   Modal,
@@ -27,6 +30,7 @@ import {
   ModalBody,
   useDisclosure,
   useRadioGroup,
+  InputLeftElement,
   Spacer,
 } from '@chakra-ui/react'
 import { Center, useToast } from '@chakra-ui/react'
@@ -53,7 +57,6 @@ import MainV from '../components/Toast/Main/MainV'
 import BotTable from '../components/Toast/BotTable/BotTable'
 import Head from 'next/head'
 import AboutTheOthersV from '../components/Toast/AboutTheOthers/AboutTheOthersV'
-import ToastContent from '../components/Toast/ToastContent/ToastContentV'
 import ToastContentV from '../components/Toast/ToastContent/ToastContentV'
 import CardDetail from '../components/Toast/CardDetail/CardDetail'
 import SpaceV from '../components/General/Space/SpaceV'
@@ -61,8 +64,8 @@ import HeadV from '../components/Toast/Head/HeadV'
 
 const LOCAL = false //TODO: false for production
 const PAY_MODE = 0 //TODO: 0 for production
-const IDLE_DELAY = 12 //TODO: 10 for production
-const TIMES_TOAST_STAY = 1 //TODO: 1 for production
+const IDLE_DELAY = 12000 //TODO: 10 for production
+const TIMES_TOAST_STAY = 1000 //TODO: 1 for production
 const POLL_INTERVAL = 500 //TODO: 500 for production
 const POLL_STATS_INTERVAL = 20000 //TODO: 20000 for production
 
@@ -70,18 +73,21 @@ const FRESH_TOAST = gql`
   query getToast {
     getToast {
       name
+      message
       id
       amount
       category
-      createdAt
+      #createdAt
     }
   }
 `
 const GET_TOAST = gql`
   query getToastById($id: Float!) {
     getToastById(id: $id) {
-      createdAt
+      #id
+      #createdAt
       name
+      message
       category
       amount
     }
@@ -95,11 +101,11 @@ const PUSH_TOAST = gql`
         message
       }
       toast {
-        name
+        #name
         id
-        amount
-        category
-        message
+        #amount
+        #category
+        #message
       }
     }
   }
@@ -161,10 +167,11 @@ function validateName(value) {
   let error
   if (!value) {
     error = 'Name is required'
-  } else if (value.length > 40) {
+  } else if (value.length > 16) {
     error = 'Name is to long'
   } else if (
     value.includes('?') ||
+    value.includes('%') ||
     value.includes('=') ||
     value.includes('/') ||
     value.includes('\\') ||
@@ -176,7 +183,31 @@ function validateName(value) {
     value.includes('{') ||
     value.includes('}')
   ) {
-    error = 'Only letters are allowed'
+    error = 'Only letters and numbers are allowed'
+  }
+  return error
+}
+function validateMessage(value) {
+  let error
+  if (!value) {
+    return
+  } else if (value.length > 60) {
+    error = 'Message is to long'
+  } else if (
+    value.includes('?') ||
+    value.includes('%') ||
+    value.includes('=') ||
+    value.includes('/') ||
+    value.includes('\\') ||
+    value.includes('&') ||
+    value.includes('.') ||
+    value.includes(':') ||
+    value.includes('(') ||
+    value.includes(')') ||
+    value.includes('{') ||
+    value.includes('}')
+  ) {
+    error = 'Only letters and numbers are allowed'
   }
   return error
 }
@@ -196,18 +227,18 @@ const valueFromToast = cat => {
   }
   return 0
 }
-const updateUrl = (name, category, amount) => {
+const updateUrl = (name, message, category, amount) => {
   const a = valueFromToast(amount)
   const c = valueFromCategory(category)
   window.history.replaceState(
     {},
     document.title,
-    `${name !== '' ? '?n=' : ''}${name}${category !== '' ? `&c=${c}` : ''}${
-      amount !== '' ? `&a=${a}` : ''
-    }`
+    `${name !== '' ? '?n=' : ''}${name}${
+      message !== 'notset' ? `&m=${message}` : ''
+    }${category !== '' ? `&c=${c}` : ''}${amount !== '' ? `&a=${a}` : ''}`
   )
 }
-const packToast = (toast, name, category, amount, audio, fake) => {
+const packToast = (toast, name, message, category, amount, audio, fake) => {
   if (audio !== null) {
     const promise = audio.play()
 
@@ -230,6 +261,7 @@ const packToast = (toast, name, category, amount, audio, fake) => {
         <ToastContentV
           category={CardTable[category].name}
           name={name}
+          message={message}
           amount={ToastTable[amount].name}
           colorCard={CardTable[category].colorLight}
         />
@@ -250,7 +282,7 @@ const idleToast = (newToast, setNewToast, toast, audio, first) => {
   const delay = first ? 2000 : 1000 * (rndNumber % (IDLE_DELAY + 2))
   if ((rndNumber * (rndNumber / 10) * (rndNumber / 3)) % 2 == 0) {
     return setTimeout(() => {
-      packToast(toast, name, category, amount, audio, true)
+      packToast(toast, name, '', category, amount, audio, true)
     }, delay)
   }
 }
@@ -295,6 +327,7 @@ const Todos: React.FC<StyleVProps> = () => {
         .forEach(item => {
           const tmp = item.split('=')
           if (tmp[0] === 'n') setName(decodeURIComponent(tmp[1]))
+          else if (tmp[0] === 'm') setMessage(decodeURIComponent(tmp[1]))
           else if (tmp[0] === 'c')
             setCategory(CardTable[decodeURIComponent(tmp[1])].name)
           else if (tmp[0] === 'a')
@@ -311,7 +344,7 @@ const Todos: React.FC<StyleVProps> = () => {
         console.log(value)
       })
     }
-    updateUrl(name, category, amount)
+    updateUrl(name, message, category, amount)
 
     document.body.addEventListener('click', unlockAudio)
     document.body.addEventListener('touchstart', unlockAudio)
@@ -375,6 +408,11 @@ const Todos: React.FC<StyleVProps> = () => {
     onOpen: onOpen6,
     onClose: onClose6,
   } = useDisclosure()
+  const {
+    isOpen: isOpen7,
+    onOpen: onOpen7,
+    onClose: onClose7,
+  } = useDisclosure()
   const { data } = useQuery(FRESH_TOAST, {
     pollInterval: POLL_INTERVAL,
   })
@@ -392,7 +430,7 @@ const Todos: React.FC<StyleVProps> = () => {
   const [pressed, setPressed] = useState(false)
   const [freeToast, setFreeToast] = useState(1)
   const [name, setName] = useState('')
-  const [dedication, setDedication] = useState('')
+  const [message, setMessage] = useState('notset')
   const [category, setCategory] = useState('')
   const [categoryPreset, setCategoryPreset] = useState('')
   const [amount, setAmount] = useState('')
@@ -412,6 +450,8 @@ const Todos: React.FC<StyleVProps> = () => {
   const finalRef5 = useRef()
   const initialRef6 = useRef()
   const finalRef6 = useRef()
+  const initialRef7 = useRef()
+  const finalRef7 = useRef()
 
   const toast = useToast()
   if (payState === '1') {
@@ -437,6 +477,7 @@ const Todos: React.FC<StyleVProps> = () => {
           packToast(
             toast,
             data.getToast.name,
+            data.getToast.message,
             Number.parseInt(data.getToast.category),
             Number.parseInt(data.getToast.amount),
             audioToast,
@@ -447,7 +488,7 @@ const Todos: React.FC<StyleVProps> = () => {
       }
 
   if (name !== '' && !isOpen && !isOpen2 && !isOpen3 && !isOpen4 && !isOpen5) {
-    updateUrl(name, category, amount)
+    updateUrl(name, message, category, amount)
     if (categoryPreset === '' && category === '') {
       setTimeout(() => {
         onOpen2()
@@ -455,6 +496,10 @@ const Todos: React.FC<StyleVProps> = () => {
     } else if (category === '') {
       setTimeout(() => {
         onOpen6()
+      }, 500)
+    } else if (message === 'notset') {
+      setTimeout(() => {
+        onOpen7()
       }, 500)
     } else if (amount === '') {
       setTimeout(() => {
@@ -505,6 +550,7 @@ const Todos: React.FC<StyleVProps> = () => {
                   onOpen3={onOpen3}
                   amount={amount}
                   name={name}
+                  message={message}
                   reRoll={reRoll && pending === -2}
                   setReRoll={() => {
                     setReRoll(false)
@@ -512,7 +558,7 @@ const Todos: React.FC<StyleVProps> = () => {
                     setCategory('')
                     setCategoryPreset('')
                     setName('')
-                    updateUrl('', '', '')
+                    updateUrl('', 'notset', '', '')
                   }}
                   color={ToastTable[valueFromToast(amount)].tcolor}
                   color2={ToastTable[valueFromToast(amount)].tcolor2}
@@ -534,7 +580,7 @@ const Todos: React.FC<StyleVProps> = () => {
                     refetch({
                       options: {
                         name: name,
-                        message: '',
+                        message: message,
                         amount: valueFromToast(amount),
                         category: valueFromCategory(category),
                       }!,
@@ -607,6 +653,14 @@ const Todos: React.FC<StyleVProps> = () => {
                             id='name2'
                             isInvalid={form.errors['name' + timestamp]}
                           >
+                            {/**
+                            <InputGroup>
+                              <InputLeftElement
+                                pointerEvents='none'
+                                children={<FaUser color='gray.300' />}
+                              />
+                            </InputGroup>
+                               */}
                             <Input
                               {...field}
                               ref={initialRef}
@@ -964,6 +1018,70 @@ const Todos: React.FC<StyleVProps> = () => {
                       <OkV />
                     </Flex>
                     <SpaceV x={20} y={100} />
+                  </Form>
+                )}
+              </Formik>
+            </ModalContent>
+          </Modal>
+          <Modal
+            initialFocusRef={initialRef7}
+            finalFocusRef={finalRef7}
+            isOpen={isOpen7}
+            onClose={onClose7}
+            closeOnOverlayClick={false}
+            isCentered
+            size='sm'
+            scrollBehavior='inside'
+          >
+            <ModalBackgroundV />
+            <ModalContent
+              style={{ zIndex: 10000 }}
+              w='300px'
+              mx='auto'
+              my='auto'
+            >
+              <ModalHeader pt={10} fontSize='18px'>
+                <ImageV src='labels/u6'></ImageV>
+              </ModalHeader>
+              <Formik
+                initialValues={{ message2: message }}
+                onSubmit={(values: any, actions) => {
+                  setTimeout(() => {
+                    setMessage(
+                      values['message' + timestamp]
+                        ? values['message' + timestamp].replaceAll('\n', ' ')
+                        : ''
+                    )
+                    actions.setSubmitting(false)
+                    onClose7()
+                  }, 100)
+                }}
+              >
+                {props => (
+                  <Form>
+                    <ModalBody pb={6} pt={6}>
+                      <Field
+                        name={'message' + timestamp}
+                        validate={validateMessage}
+                      >
+                        {({ field, form }) => (
+                          <FormControl
+                            id='message2'
+                            isInvalid={form.errors['message' + timestamp]}
+                          >
+                            <Textarea
+                              {...field}
+                              ref={initialRef7}
+                              placeholder='Enter a message, or leave empty'
+                            />
+                            <FormErrorMessage>
+                              {form.errors['message' + timestamp]}
+                            </FormErrorMessage>
+                          </FormControl>
+                        )}
+                      </Field>
+                    </ModalBody>
+                    <OkV />
                   </Form>
                 )}
               </Formik>

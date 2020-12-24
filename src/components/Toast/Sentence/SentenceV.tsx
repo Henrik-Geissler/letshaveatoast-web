@@ -28,6 +28,7 @@ interface SentenceVProps {
   category: string
   amount: string
   name: string
+  message: string
   visible: boolean
   reRoll: boolean
   setReRoll: any
@@ -48,6 +49,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
   category,
   amount,
   name,
+  message,
   visible,
   reRoll,
   setReRoll,
@@ -118,6 +120,7 @@ const SentenceV: React.FC<SentenceVProps> = ({
             <ToastContentV
               category={category}
               name={name}
+              message={message}
               amount={amount}
               colorCard={colorCard}
             />

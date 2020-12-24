@@ -10,6 +10,7 @@ interface ToastContentVProps {
   category: string
   colorCard: string
   name: string
+  message: string
 }
 
 const ToastContentV: React.FC<ToastContentVProps> = ({
@@ -17,7 +18,22 @@ const ToastContentV: React.FC<ToastContentVProps> = ({
   category,
   colorCard,
   name,
+  message,
 }) => {
+  const brokenMessage = message.split(' ')
+  let brokenM = []
+  brokenMessage.forEach(item => {
+    if (item.length < 20) {
+      brokenM.push(item)
+    } else if (item.length < 38) {
+      brokenM.push(item.slice(0, 18) + '-')
+      brokenM.push(item.slice(18))
+    } else {
+      brokenM.push(item.slice(0, 18) + '-')
+      brokenM.push(item.slice(18, 36) + '-')
+      brokenM.push(item.slice(36))
+    }
+  })
   const snippets = [
     <FaQuoteLeft
       style={{
@@ -38,6 +54,8 @@ const ToastContentV: React.FC<ToastContentVProps> = ({
       return <Box color={colorCard}>{item}</Box>
     }),
     '!',
+    ' ',
+    ...brokenM,
   ]
   return (
     <Flex

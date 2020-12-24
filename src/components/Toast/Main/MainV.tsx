@@ -14,6 +14,7 @@ interface MainVProps {
   onOpen3: any
   amount: string
   name: string
+  message: string
   reRoll: boolean
   setReRoll: any
 
@@ -37,6 +38,7 @@ const MainV: React.FC<MainVProps> = ({
   onOpen3,
   amount,
   name,
+  message,
   reRoll,
   setReRoll,
   dataStats,
@@ -79,6 +81,7 @@ const MainV: React.FC<MainVProps> = ({
         amount={amount}
         category={category}
         name={name}
+        message={message}
         reRoll={reRoll}
         setReRoll={setReRoll}
         color={color}
