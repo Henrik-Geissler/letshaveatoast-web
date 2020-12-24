@@ -18,7 +18,7 @@ const FooterV: React.FC<FooterVProps> = ({}) => {
       <Box maxW='100vw' mx='auto'>
         <Flex>
           <Link
-            href='/pdf/Terms and Conditions.pdf'
+            href='/pdf/Terms And Conditions.pdf'
             isExternal
             my={0}
             mx={1}

@@ -391,6 +391,7 @@ const Todos: React.FC<StyleVProps> = () => {
   const [pressed, setPressed] = useState(false)
   const [freeToast, setFreeToast] = useState(1)
   const [name, setName] = useState('')
+  const [dedication, setDedication] = useState('')
   const [category, setCategory] = useState('')
   const [categoryPreset, setCategoryPreset] = useState('')
   const [amount, setAmount] = useState('')
@@ -531,7 +532,7 @@ const Todos: React.FC<StyleVProps> = () => {
                   onPush={() => {
                     refetch({
                       options: {
-                        name: name,
+                        name: name + '*' + dedication,
                         amount: valueFromToast(amount),
                         category: valueFromCategory(category),
                       }!,
