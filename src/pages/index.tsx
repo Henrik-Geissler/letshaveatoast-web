@@ -64,8 +64,8 @@ import HeadV from '../components/Toast/Head/HeadV'
 
 const LOCAL = false //TODO: false for production
 const PAY_MODE = 0 //TODO: 0 for production
-const IDLE_DELAY = 12000 //TODO: 10 for production
-const TIMES_TOAST_STAY = 1000 //TODO: 1 for production
+const IDLE_DELAY = 12 //TODO: 10 for production
+const TIMES_TOAST_STAY = 1 //TODO: 1 for production
 const POLL_INTERVAL = 500 //TODO: 500 for production
 const POLL_STATS_INTERVAL = 20000 //TODO: 20000 for production
 
