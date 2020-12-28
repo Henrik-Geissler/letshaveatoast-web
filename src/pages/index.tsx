@@ -557,6 +557,7 @@ const Todos: React.FC<StyleVProps> = () => {
                     setCategory('')
                     setCategoryPreset('')
                     setName('')
+                    setMessage('notset')
                     updateUrl('', 'notset', '', '')
                   }}
                   color={ToastTable[valueFromToast(amount)].tcolor}
