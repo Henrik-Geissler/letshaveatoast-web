@@ -5,6 +5,7 @@ interface PaypalVProps {
   amount: number
   amountT: number
   category: number
+  message: string
   target: string
   sandbox: boolean
   name: string
@@ -21,6 +22,7 @@ const PaypalV: React.FC<PaypalVProps> = ({
   target,
   sandbox,
   name,
+  message,
   image,
   buy,
   local,
@@ -28,7 +30,7 @@ const PaypalV: React.FC<PaypalVProps> = ({
   console.log(amount)
   const backlink = `http://${
     local ? 'localhost:3000/' : 'letshaveatoast.app/'
-  }?n=${name}&c=${category}&a=${amountT}&s=`
+  }?n=${name}&m=${message}&c=${category}&a=${amountT}&s=`
   return (
     <form
       action={`https://www${

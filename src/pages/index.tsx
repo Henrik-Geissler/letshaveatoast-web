@@ -1091,6 +1091,7 @@ const Todos: React.FC<StyleVProps> = () => {
       <PaypalV
         target={CardTable[valueFromCategory(category)].paypal}
         name={name}
+        message={message}
         amount={Number.parseInt(ToastTable[valueFromToast(amount)].amount)}
         amountT={valueFromToast(amount)}
         category={valueFromCategory(category)}
