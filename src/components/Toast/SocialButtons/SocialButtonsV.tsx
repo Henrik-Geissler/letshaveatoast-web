@@ -40,7 +40,7 @@ const SocialButtonsV: React.FC<SocialButtonsVProps> = ({
   const categoryTarget = valueFromCategory(category)
   const shareToast = category !== '' && amount !== '' && toastId !== 0
   const URL = shareToast
-    ? 'https://letshaveatoast.app/?' + toastId
+    ? 'https://letshaveatoast.app/?' + (3333 + 7 * toastId)
     : 'https://letshaveatoast.app'
   const TEXT_PRIVATE = shareToast
     ? `Cheers, Prost and Salute🥂 I just raised a toast to a better future of tomorrow and dedicate that toast to you❤️\n\nThis toast donates ${

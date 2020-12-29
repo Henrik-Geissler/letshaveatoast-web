@@ -158,11 +158,6 @@ const FRESH_STATS = gql`
 `
 interface StyleVProps {}
 
-const product = {
-  price: 777.77,
-  name: 'comfy chair',
-  description: 'fancy chair, like new',
-}
 function validateName(value) {
   let error
   if (!value) {
@@ -308,6 +303,7 @@ const Todos: React.FC<StyleVProps> = () => {
   const [lastStats, setLastStats] = useState(0)
   const [toastMode, setToastMode] = useState(0)
   const [linkedToast, setLinkedToast] = useState(null)
+  const [toastEditMode, setToastEditMode] = useState(false)
 
   const { refetch } = useQuery(PUSH_TOAST, { skip: true })
   const { refetch: getToast } = useQuery(GET_TOAST, { skip: true })
@@ -337,7 +333,7 @@ const Todos: React.FC<StyleVProps> = () => {
       const toastId = Number.parseInt(window.location.search.slice(1))
       setToastMode(toastId)
       getToast({
-        id: toastId!,
+        id: (toastId < 3333 ? toastId % 100 : (toastId - 3333) / 7)!,
       }).then(value => {
         setLinkedToast(value)
       })
@@ -609,7 +605,7 @@ const Todos: React.FC<StyleVProps> = () => {
                   reRoll={reRoll && pending === -2}
                   setReRoll={setReRoll}
                   pending={pending !== -2}
-                  dataMode={dataMode}
+                  dataMode={dataMode || toastEditMode}
                   setDataMode={setDataMode}
                   toastMode={toastMode !== 0}
                   linkedToast={linkedToast}
