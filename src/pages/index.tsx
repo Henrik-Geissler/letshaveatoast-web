@@ -485,7 +485,16 @@ const Todos: React.FC<StyleVProps> = () => {
         setPushedToast(data.getToast.id)
       }
 
-  if (name !== '' && !isOpen && !isOpen2 && !isOpen3 && !isOpen4 && !isOpen5) {
+  if (
+    name !== '' &&
+    !isOpen &&
+    !isOpen2 &&
+    !isOpen3 &&
+    !isOpen4 &&
+    !isOpen5 &&
+    !isOpen6 &&
+    !isOpen7
+  ) {
     updateUrl(name, message, category, amount)
     if (categoryPreset === '' && category === '') {
       setTimeout(() => {
@@ -634,7 +643,7 @@ const Todos: React.FC<StyleVProps> = () => {
                 <ImageV src='labels/u1'></ImageV>
               </ModalHeader>
               <Formik
-                initialValues={{ name2: name }}
+                initialValues={{ ['name' + timestamp]: name }}
                 onSubmit={(values: any, actions) => {
                   setTimeout(() => {
                     setName(values['name' + timestamp])
@@ -672,7 +681,14 @@ const Todos: React.FC<StyleVProps> = () => {
                         )}
                       </Field>
                     </ModalBody>
-                    <OkV />
+                    <OkV
+                      onBack={() => {
+                        setName('')
+                        onClose()
+                      }}
+                      hasBack={true}
+                      hasOk={true}
+                    />
                   </Form>
                 )}
               </Formik>
@@ -772,6 +788,15 @@ const Todos: React.FC<StyleVProps> = () => {
                           )}
                         </Field>
                       </ModalBody>
+                      <OkV
+                        onBack={() => {
+                          setCategory('')
+                          onOpen()
+                          onClose2()
+                        }}
+                        hasBack={true}
+                        hasOk={false}
+                      />
                     </Form>
                   )}
                 </Formik>
@@ -854,6 +879,15 @@ const Todos: React.FC<StyleVProps> = () => {
                           )}
                         </Field>
                       </ModalBody>
+                      <OkV
+                        onBack={() => {
+                          setAmount('')
+                          onOpen7()
+                          onClose3()
+                        }}
+                        hasBack={true}
+                        hasOk={false}
+                      />
                     </Form>
                   )}
                 </Formik>
@@ -1014,7 +1048,7 @@ const Todos: React.FC<StyleVProps> = () => {
                           }}
                         />
                       </Box>
-                      <OkV />
+                      <OkV onBack={() => {}} hasBack={false} hasOk={true} />
                     </Flex>
                     <SpaceV x={20} y={100} />
                   </Form>
@@ -1043,7 +1077,7 @@ const Todos: React.FC<StyleVProps> = () => {
                 <ImageV src='labels/u6'></ImageV>
               </ModalHeader>
               <Formik
-                initialValues={{ message2: message }}
+                initialValues={{ ['message' + timestamp]: message }}
                 onSubmit={(values: any, actions) => {
                   setTimeout(() => {
                     setMessage(
@@ -1080,7 +1114,15 @@ const Todos: React.FC<StyleVProps> = () => {
                         )}
                       </Field>
                     </ModalBody>
-                    <OkV />
+                    <OkV
+                      onBack={() => {
+                        setMessage('notset')
+                        setCategory('')
+                        onClose7()
+                      }}
+                      hasBack={true}
+                      hasOk={true}
+                    />
                   </Form>
                 )}
               </Formik>
