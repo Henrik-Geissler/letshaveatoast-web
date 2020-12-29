@@ -77,7 +77,7 @@ const FRESH_TOAST = gql`
       id
       amount
       category
-      #createdAt
+      createdAt
     }
   }
 `
@@ -269,9 +269,8 @@ const packToast = (toast, name, message, category, amount, audio, fake) => {
     ),
   })
 }
-const idleToast = (newToast, setNewToast, toast, audio, first) => {
+const idleToast = (newToast, toast, audio, first) => {
   if (newToast) return
-  setNewToast(false)
   const seconds = Date.now() / 1000
   const period =
     (seconds - (seconds % IDLE_DELAY)) / IDLE_DELAY - (first ? 3 : 0)
@@ -302,7 +301,7 @@ const Todos: React.FC<StyleVProps> = () => {
   const [payMode, setPayMode] = useState(PAY_MODE)
   const [payState, setPayState] = useState(null)
   const [audioToast, setAudioToast] = useState(null)
-  const [newToast, setNewToast] = useState(false)
+  const [newToast, setNewToast] = useState(0)
   const [pending, setPending] = useState(-2)
   const [dataMode, setDataMode] = useState(false)
   const [dataStats, setDataStats] = useState()
@@ -353,24 +352,24 @@ const Todos: React.FC<StyleVProps> = () => {
   }, [])
   useEffect(() => {
     const interval = setInterval(() => {
+      const timeSinceLastToast = Date.now() - newToast
+
       idleToast(
-        newToast || pending !== -2,
-        setNewToast,
+        timeSinceLastToast < 10000 || pending !== -2,
         toast,
         audioToast,
         false
       )
     }, 1000 * IDLE_DELAY)
+    const timeSinceLastToast = Date.now() - newToast
     const timeout = idleToast(
-      newToast || pending !== -2 || toastMode !== 0,
-      setNewToast,
+      timeSinceLastToast < 10000 || pending !== -2 || toastMode !== 0,
       toast,
       audioToast,
       true
     )
     const timeout2 = idleToast(
-      newToast || pending !== -2,
-      setNewToast,
+      timeSinceLastToast < 10000 || pending !== -2,
       toast,
       audioToast,
       false
@@ -380,7 +379,7 @@ const Todos: React.FC<StyleVProps> = () => {
       clearTimeout(timeout)
       clearTimeout(timeout2)
     }
-  }, [newToast, pending, toastMode])
+  }, [newToast, pending, toastMode, audioToast])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
     isOpen: isOpen2,
@@ -469,7 +468,7 @@ const Todos: React.FC<StyleVProps> = () => {
     if (data.getToast !== undefined)
       if (data.getToast.id !== pushedToast) {
         if (pushedToast !== null) {
-          setNewToast(true)
+          setNewToast(data.getToast.createdAt)
           if (pending === data.getToast.id) {
             setPending(-2)
           }
