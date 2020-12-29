@@ -512,16 +512,16 @@ const Todos: React.FC<StyleVProps> = () => {
         const doScroll = document.querySelector('.modal2')
         if (doScroll !== null) {
           setTimeout(() => {
-            doScroll.scrollTo(0, 0)
-          }, 0)
+            doScroll.scrollTop = -100000
+          }, 100)
         }
       }, [isOpen2])
       useEffect(() => {
         const doScroll = document.querySelector('.modal6')
         if (doScroll !== null) {
           setTimeout(() => {
-            doScroll.scrollTo(0, 0)
-          }, 0)
+            doScroll.scrollTop = -100000
+          }, 100)
         }
       }, [isOpen6])
     }
