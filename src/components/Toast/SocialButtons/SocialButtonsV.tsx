@@ -14,7 +14,16 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from 'react-share'
+import CardTable from '../CardTable/CardTable'
 
+const valueFromCategory = cat => {
+  for (let each of CardTable) {
+    if (each.name === cat) {
+      return each.value
+    }
+  }
+  return 0
+}
 interface SocialButtonsVProps {
   category: string
   amount: string
@@ -28,12 +37,19 @@ const SocialButtonsV: React.FC<SocialButtonsVProps> = ({
   amount,
   toastId,
 }) => {
+  const categoryTarget = valueFromCategory(category)
   const shareToast = category !== '' && amount !== '' && toastId !== 0
   const URL = shareToast
     ? 'https://letshaveatoast.app/?' + toastId
     : 'https://letshaveatoast.app'
   const TEXT_PRIVATE = shareToast
-    ? `Hi,\nI just raised a ${amount} to ${category.toLowerCase()} & i dedicate that toast to you ❤️🥂\n\nFind here your dedicated toast & let's toast to the good:\n `
+    ? `Cheers, Prost and Salute🥂 I just raised a toast to a better future of tomorrow and dedicate that toast to you❤️\n\nThis toast donates ${
+        CardTable[categoryTarget].orga
+      } to a better world with ${CardTable[
+        categoryTarget
+      ].name.toLowerCase()} ${
+        CardTable[categoryTarget].emoji
+      }\n\nI invite you to toast with me on LET‘S HAVE A TOAST to a happy and prosperous new year✨ Here is my personal toast to you: `
     : `Hi,\nI just raised a toast & i dedicate that toast to you ❤️🥂\n\nLet's toast the good together on:\n `
   const TEXT_PUBLIC = shareToast
     ? `I just raised a ${amount} to ${category.toLowerCase()} ❤️🥂\n\nFind here my toast & let's toast to the good:\n `
