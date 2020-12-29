@@ -1077,7 +1077,9 @@ const Todos: React.FC<StyleVProps> = () => {
                 <ImageV src='labels/u6'></ImageV>
               </ModalHeader>
               <Formik
-                initialValues={{ ['message' + timestamp]: message }}
+                initialValues={{
+                  ['message' + timestamp]: message === 'notset' ? '' : message,
+                }}
                 onSubmit={(values: any, actions) => {
                   setTimeout(() => {
                     setMessage(

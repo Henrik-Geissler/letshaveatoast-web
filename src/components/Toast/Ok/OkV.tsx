@@ -12,7 +12,7 @@ interface OkVProps {
 
 const OkV: React.FC<OkVProps> = ({ onBack, hasBack, hasOk }) => {
   const back = hasBack ? (
-    <Box ml={1} mr='auto' mt='-32px'>
+    <Box ml={hasOk ? -3 : 3} mr='auto' mt={hasOk ? '-40px' : '-180px'}>
       <BackV onClose={onBack} />
     </Box>
   ) : (
