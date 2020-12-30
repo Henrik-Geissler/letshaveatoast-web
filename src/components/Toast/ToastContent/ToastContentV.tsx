@@ -34,29 +34,52 @@ const ToastContentV: React.FC<ToastContentVProps> = ({
       brokenM.push(item.slice(36))
     }
   })
-  const snippets = [
-    <FaQuoteLeft
-      style={{
-        marginRight: '4px',
-        marginTop: '0px',
-        marginBottom: '0px',
-      }}
-    />,
-    "Let's",
-    'have',
-    'a',
-    ...amount.split(' '),
-    'on',
-    <Box className='img20' bg={`${colorCard}00`}>
-      <ImageV src={`category/${category} copy`}></ImageV>
-    </Box>,
-    ...category.split(' ').map(item => {
-      return <Box color={colorCard}>{item}</Box>
-    }),
-    '!',
-    ' ',
-    ...brokenM,
-  ]
+  const snippets =
+    amount === ''
+      ? [
+          <FaQuoteLeft
+            style={{
+              marginRight: '4px',
+              marginTop: '0px',
+              marginBottom: '0px',
+            }}
+          />,
+          "Let's",
+          'have',
+          'a',
+          'toast',
+          '!',
+          '',
+          '',
+          <b>You</b>,
+          <b>pushed</b>,
+          <b>the</b>,
+          <b>button</b>,
+          <b>!</b>,
+        ]
+      : [
+          <FaQuoteLeft
+            style={{
+              marginRight: '4px',
+              marginTop: '0px',
+              marginBottom: '0px',
+            }}
+          />,
+          "Let's",
+          'have',
+          'a',
+          ...amount.split(' '),
+          'on',
+          <Box className='img20' bg={`${colorCard}00`}>
+            <ImageV src={`category/${category} copy`}></ImageV>
+          </Box>,
+          ...category.split(' ').map(item => {
+            return <Box color={colorCard}>{item}</Box>
+          }),
+          '!',
+          ' ',
+          ...brokenM,
+        ]
   return (
     <Flex
       wrap='wrap'

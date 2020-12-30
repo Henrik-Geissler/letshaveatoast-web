@@ -465,18 +465,29 @@
   opacity: 0;
 }
 .sideButton {
-  font-size: 40px;
+  font-size: 30px;
   padding: 4px !important;
 }
 .sideButtonRight {
   margin-right: 3vw !important;
 }
+.antiSide {
+  margin-right: 0 !important;
+}
 .sideButtonLeft {
   margin-left: 3vw !important;
 }
 @media (min-width: 420px) {
+  .sideButton {
+    font-size: 40px;
+    padding: 4px !important;
+  }
   .sideButtonRight {
     margin-right: 10vw !important;
+  }
+
+  .antiSide {
+    margin-right: -34.735px !important;
   }
   .sideButtonLeft {
     margin-left: 10vw !important;
@@ -490,15 +501,28 @@
     margin-left: 30vw !important;
   }
 }
-@media (min-width: 1300px) {
-  .sideButtonRight {
-    margin-right: 40vw !important;
-  }
-  .sideButtonLeft {
-    margin-left: 40vw !important;
-  }
-}
 
 tr:nth-child(2n) td {
   background-color: #f9f9f9;
+}
+
+.marginHeading {
+  width: 50%;
+}
+
+@media (min-width: 400px) {
+  .marginHeading {
+    width: 100%;
+  }
+}
+
+.toastEdit {
+  transition: 2s;
+  margin-top: -50px;
+}
+
+@media (min-height: 676px) {
+  .toastEdit {
+    margin-top: 0px;
+  }
 }

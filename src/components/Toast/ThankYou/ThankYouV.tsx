@@ -11,6 +11,7 @@ interface ThankYouVProps {
   category: string
   amount: string
   toastId: number
+  isDone: boolean
 }
 declare global {
   interface Window {
@@ -22,8 +23,29 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
   category,
   amount,
   toastId,
+  isDone,
 }) => {
   const [thanks, setThanks] = useState(false)
+  const restartButton = isDone ? (
+    <Center className='t77' w='100vw' m={0} pos='absolute' left='0px'>
+      <Fade in={true}>
+        <Flex direction='column'>
+          <HeadingV>Toast again</HeadingV>
+          <Box mx='auto'>
+            <IconButton
+              icon={
+                <AiOutlineReload style={{ width: '10vh', height: '10vh' }} />
+              }
+              aria-label=''
+              onClick={setReRoll}
+            />
+          </Box>
+        </Flex>
+      </Fade>
+    </Center>
+  ) : (
+    <></>
+  )
   const MAX_PARTICLES = 600
   const maxWidth = window.innerWidth + 10
   const maxHeight = window.innerHeight + 10
@@ -179,6 +201,8 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
     }
 
     // Click listener
+    {
+      /**
     document.body.addEventListener('click', function (event) {
       var x = event.clientX,
         y = event.clientY
@@ -186,7 +210,8 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
       if (particles.length <= MAX_PARTICLES)
         initParticles(config.particleNumber, x, y)
     })
-
+    */
+    }
     // First Frame
     frame()
 
@@ -275,20 +300,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
             />
           </Flex>
         </Center>
-        <Center className='t77' w='100vw' m={0} pos='absolute' left='0px'>
-          <Flex direction='column'>
-            <HeadingV>Toast again</HeadingV>
-            <Box mx='auto'>
-              <IconButton
-                icon={
-                  <AiOutlineReload style={{ width: '10vh', height: '10vh' }} />
-                }
-                aria-label=''
-                onClick={setReRoll}
-              />
-            </Box>
-          </Flex>
-        </Center>
+        {restartButton}
       </Fade>
     </>
   )

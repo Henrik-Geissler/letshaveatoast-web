@@ -55,6 +55,14 @@ const ToastTable = [
     tcolor: '#75540088',
     tcolor2: '#D3AE3688',
   },
+  {
+    value: 7,
+    name: '',
+    amount: '0',
+    color: '#000000',
+    tcolor: '#00000088',
+    tcolor2: '#00000088',
+  },
 ]
 
 export default ToastTable

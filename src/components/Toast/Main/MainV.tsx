@@ -12,6 +12,8 @@ interface MainVProps {
   onOpen: any
   onOpen2: any
   onOpen3: any
+
+  onOpen7: any
   amount: string
   name: string
   message: string
@@ -29,6 +31,10 @@ interface MainVProps {
   toastMode: boolean
   linkedToast: any
   toastId: number
+  toastEditMode: boolean
+  setToastEditMode: any
+  isDone: boolean
+  pending: boolean
 }
 
 const MainV: React.FC<MainVProps> = ({
@@ -36,6 +42,8 @@ const MainV: React.FC<MainVProps> = ({
   onOpen,
   onOpen2,
   onOpen3,
+
+  onOpen7,
   amount,
   name,
   message,
@@ -51,6 +59,10 @@ const MainV: React.FC<MainVProps> = ({
   toastMode,
   linkedToast,
   toastId,
+  toastEditMode,
+  setToastEditMode,
+  isDone,
+  pending,
 }) => {
   if (dataMode) {
     return <DataScreenV setDataMode={setDataMode} dataStats={dataStats} />
@@ -58,6 +70,30 @@ const MainV: React.FC<MainVProps> = ({
   const edit = category !== ''
   return (
     <>
+      <SentenceV
+        visible={edit && amount !== ''}
+        onOpen={onOpen}
+        onOpen2={onOpen2}
+        onOpen3={onOpen3}
+        onOpen7={onOpen7}
+        amount={amount}
+        category={category}
+        name={name}
+        message={message}
+        reRoll={reRoll}
+        setReRoll={setReRoll}
+        color={color}
+        color2={color2}
+        colorCard={colorCard}
+        payState={payState}
+        toastMode={toastMode}
+        linkedToast={linkedToast}
+        toastId={toastId}
+        toastEditMode={toastEditMode}
+        setToastEditMode={setToastEditMode}
+        isDone={isDone}
+        pending={pending}
+      />
       <Center
         className={edit || toastMode ? 't20' : 't40'}
         h='0px'
@@ -73,25 +109,6 @@ const MainV: React.FC<MainVProps> = ({
           </Box>
         </Box>
       </Center>
-      <SentenceV
-        visible={edit && amount !== ''}
-        onOpen={onOpen}
-        onOpen2={onOpen2}
-        onOpen3={onOpen3}
-        amount={amount}
-        category={category}
-        name={name}
-        message={message}
-        reRoll={reRoll}
-        setReRoll={setReRoll}
-        color={color}
-        color2={color2}
-        colorCard={colorCard}
-        payState={payState}
-        toastMode={toastMode}
-        linkedToast={linkedToast}
-        toastId={toastId}
-      />
     </>
   )
 }

@@ -2,6 +2,7 @@ import { Image } from '@chakra-ui/core'
 import { Button, Center, Box, Text, Spinner } from '@chakra-ui/react'
 import React, { ReactNode, useState } from 'react'
 import ImageV from '../../General/Image/ImageV'
+import HeadingV from '../Heading/HeadingV'
 
 interface ButtonVProps {
   onOpen: any
@@ -20,6 +21,10 @@ interface ButtonVProps {
   setReRoll: any
   pending: boolean
   clearLinkedToast: any
+  pushToast: any
+  pushAgain: any
+  shots: number
+  shoot: any
 }
 
 const ButtonV: React.FC<ButtonVProps> = ({
@@ -39,8 +44,12 @@ const ButtonV: React.FC<ButtonVProps> = ({
   setReRoll,
   pending,
   clearLinkedToast,
+  pushToast,
+  pushAgain,
+  shots,
+  shoot,
 }) => {
-  if (reRoll) {
+  if (shots <= 0 && reRoll) {
     return <></>
   }
   return (
@@ -52,11 +61,13 @@ const ButtonV: React.FC<ButtonVProps> = ({
           setTimeout(() => {
             clearLinkedToast()
             if (pending) {
+            } else if (reRoll) {
+              pushAgain()
             } else if (buttonLoaded) {
               onPush()
               setReRoll(true)
             } else if (name === '') {
-              onOpen()
+              pushToast('You', 'I pushed the button!', 8, 7)
             } else if (category === '') {
               onOpen2()
             } else if (amount === '' || amount === 'first toast') {
@@ -103,6 +114,18 @@ const ButtonV: React.FC<ButtonVProps> = ({
             visibility={pending ? 'visible' : 'hidden'}
             pointerEvents='none'
           />
+          <Box
+            width='50px'
+            height='50px'
+            marginTop='-50px'
+            marginLeft='-25px'
+            thickness='4px'
+            size='xl'
+            visibility={!pending && reRoll ? 'visible' : 'hidden'}
+            pointerEvents='none'
+          >
+            <HeadingV>{shots}</HeadingV>
+          </Box>
         </Box>
       </Button>
     </div>

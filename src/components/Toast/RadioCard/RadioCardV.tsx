@@ -103,7 +103,6 @@ const RadioCardV: React.FC<RadioCardVProps> = ({
             ></div>
           </figure>
         </div>
-        wait
       </section>
     </Square>
   )

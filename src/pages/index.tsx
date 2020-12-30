@@ -243,7 +243,10 @@ const packToast = (toast, name, message, category, amount, audio, fake) => {
   }
   return toast({
     duration:
-      (fake ? 2000 : 10000) + 2000 * (amount + 1) ** 1.7 * TIMES_TOAST_STAY,
+      amount === 7
+        ? 1500
+        : ((fake ? 2000 : 10000) + 2000 * (amount + 1) ** 1.7) *
+          TIMES_TOAST_STAY,
     isClosable: false,
     position: 'top-right',
     render: () => (
@@ -304,6 +307,7 @@ const Todos: React.FC<StyleVProps> = () => {
   const [toastMode, setToastMode] = useState(0)
   const [linkedToast, setLinkedToast] = useState(null)
   const [toastEditMode, setToastEditMode] = useState(false)
+  const [shots, setShots] = useState(0)
 
   const { refetch } = useQuery(PUSH_TOAST, { skip: true })
   const { refetch: getToast } = useQuery(GET_TOAST, { skip: true })
@@ -551,10 +555,11 @@ const Todos: React.FC<StyleVProps> = () => {
                   onOpen={onOpen}
                   onOpen2={onOpen2}
                   onOpen3={onOpen3}
+                  onOpen7={onOpen7}
                   amount={amount}
                   name={name}
                   message={message}
-                  reRoll={reRoll && pending === -2}
+                  reRoll={reRoll}
                   setReRoll={() => {
                     setReRoll(false)
                     setAmount('')
@@ -574,6 +579,10 @@ const Todos: React.FC<StyleVProps> = () => {
                   toastMode={toastMode !== 0}
                   linkedToast={linkedToast}
                   toastId={pushedToast ? pushedToast : 0}
+                  toastEditMode={toastEditMode}
+                  setToastEditMode={setToastEditMode}
+                  isDone={shots <= 0}
+                  pending={pending != -2}
                 />
                 <ButtonGroupV
                   onOpen={onOpen}
@@ -581,6 +590,7 @@ const Todos: React.FC<StyleVProps> = () => {
                   onOpen3={onOpen3}
                   onOpen5={onOpen4}
                   onPush={() => {
+                    setShots(10)
                     refetch({
                       options: {
                         name: name,
@@ -592,7 +602,6 @@ const Todos: React.FC<StyleVProps> = () => {
                       setPending(value.data.newToast.toast.id)
                     })
                     setPending(-1)
-                    setButtonLoaded(false)
                   }}
                   setPressed={setPressed}
                   name={name}
@@ -613,6 +622,34 @@ const Todos: React.FC<StyleVProps> = () => {
                     setToastMode(0)
                     setLinkedToast(null)
                   }}
+                  pushToast={(name, message, category, amount) => {
+                    packToast(
+                      toast,
+                      name,
+                      message,
+                      category,
+                      amount,
+                      audioToast,
+                      true
+                    )
+                  }}
+                  pushAgain={() => {
+                    setButtonLoaded(shots > 1)
+                    setShots(shots - 1)
+                    refetch({
+                      options: {
+                        name: name,
+                        message: message,
+                        amount: valueFromToast(amount),
+                        category: valueFromCategory(category),
+                      }!,
+                    }).then(value => {
+                      setPending(value.data.newToast.toast.id)
+                    })
+                    setPending(-1)
+                  }}
+                  shots={shots}
+                  shoot={''}
                 />
               </Form>
             )}
