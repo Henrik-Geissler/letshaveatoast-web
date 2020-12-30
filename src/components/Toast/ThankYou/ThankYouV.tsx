@@ -61,7 +61,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
     // Configuration, Play with these
     var config = {
       particleNumber: 300,
-      maxParticleSize: 10,
+      maxParticleSize: 4,
       maxSpeed: 10,
       colorVariation: 50,
     }
@@ -88,7 +88,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
       }
 
     // Particle Constructor
-    var Particle = function (x, y) {
+    var Particle = function (x, y, c) {
       // X Coordinate
       this.x = x || Math.round(Math.random() * canvas.width)
       // Y Coordinate
@@ -98,7 +98,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
       // Color of the rock, given some randomness
       this.c = colorVariation(
         colorPalette.matter[
-          Math.floor(Math.random() * colorPalette.matter.length)
+          Math.floor((c || Math.random()) * colorPalette.matter.length)
         ],
         true
       )
@@ -106,6 +106,8 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
       this.s = Math.pow(Math.ceil(Math.random() * config.maxSpeed), 0.4)
       // Direction the Rock flies
       this.d = Math.round(Math.random() * 360)
+
+      this.t = -2
     }
 
     // Provides some nice color variation
@@ -145,6 +147,8 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
       p.d > 90 && p.d < 270
         ? (p.y += (p.s * Math.sin(a)) / Math.sin(p.s))
         : (p.y -= (p.s * Math.sin(a)) / Math.sin(p.s))
+      p.y += p.t * Math.sqrt(Math.abs(p.t))
+      p.t = Math.min(p.t + 0.1, 4)
       return p
     }
 
@@ -165,9 +169,9 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
       })
     }
 
-    var initParticles = function (numParticles, x, y) {
+    var initParticles = function (numParticles, x, y, c) {
       for (let i = 0; i < numParticles; i++) {
-        particles.push(new Particle(x, y))
+        particles.push(new Particle(x, y, c))
       }
       particles.forEach(p => {
         drawParticle(p.x, p.y, p.r, p.c)
@@ -201,8 +205,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
     }
 
     // Click listener
-    {
-      /**
+    /**
     document.body.addEventListener('click', function (event) {
       var x = event.clientX,
         y = event.clientY
@@ -211,7 +214,6 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
         initParticles(config.particleNumber, x, y)
     })
     */
-    }
     // First Frame
     frame()
 
@@ -220,7 +222,8 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
       initParticles(
         config.particleNumber,
         window.innerWidth / 2,
-        window.innerHeight / 2
+        window.innerHeight / 2,
+        Math.random()
       )
 
       setThanks(true)
@@ -242,7 +245,8 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
           initParticles(
             config.particleNumber,
             window.innerWidth * Math.random(),
-            (window.innerHeight * Math.random()) / 1.5
+            (window.innerHeight * Math.random()) / 1.5,
+            Math.random()
           )
         }, 2300)
 
