@@ -24,13 +24,14 @@ const CardDetail: React.FC<CardDetailProps> = ({
   ctx,
 }) => {
   const [w, setW] = useState(false)
+  const [w2, setW2] = useState(false)
   const src = `img/category/${orga.replace('#', '')}.png`
   let top = (
     <Box
       height='0'
       overflow='visible'
       marginBottom='85px'
-      marginLeft={ctx ? '-14px' : '-5px'}
+      marginLeft={ctx ? (w2 ? '-14px' : '-25px') : w2 ? '-5px' : '-16px'}
       marginTop='0'
     >
       <RadioCardV
@@ -47,7 +48,8 @@ const CardDetail: React.FC<CardDetailProps> = ({
     top = <></>
   }
   useEffect(() => {
-    setW(window.innerWidth < 405)
+    setW(window.innerWidth <= 472)
+    setW2(window.innerWidth <= 405)
     return () => {}
   }, [window.innerWidth])
   return (
