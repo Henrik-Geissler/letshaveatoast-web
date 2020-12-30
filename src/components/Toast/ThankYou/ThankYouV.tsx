@@ -148,7 +148,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
         ? (p.y += (p.s * Math.sin(a)) / Math.sin(p.s))
         : (p.y -= (p.s * Math.sin(a)) / Math.sin(p.s))
       p.y += p.t * Math.sqrt(Math.abs(p.t))
-      p.t = Math.min(p.t + 0.1, 4)
+      p.t = Math.min(p.t + 0.07, 4)
       return p
     }
 
