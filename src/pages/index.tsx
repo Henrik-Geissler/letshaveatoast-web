@@ -214,7 +214,7 @@ const packToast = (toast, name, message, category, amount, audio, fake) => {
   return toast({
     duration:
       amount === 7
-        ? 1500
+        ? 2000
         : ((fake ? 2000 : 10000) + 2000 * (amount + 1) ** 1.7) *
           TIMES_TOAST_STAY,
     isClosable: false,
@@ -671,12 +671,9 @@ const Todos: React.FC<StyleVProps> = () => {
                                 children={<FaUser color='gray.300' />}
                               />
                             </InputGroup>
-                               */}
-                            <Input
-                              {...field}
                               ref={initialRef}
-                              placeholder='Enter your name'
-                            />
+                               */}
+                            <Input {...field} placeholder='Enter your name' />
                             <FormErrorMessage>
                               {form.errors['name' + timestamp]}
                             </FormErrorMessage>

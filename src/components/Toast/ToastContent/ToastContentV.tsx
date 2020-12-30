@@ -37,25 +37,20 @@ const ToastContentV: React.FC<ToastContentVProps> = ({
   const snippets =
     amount === ''
       ? [
-          <FaQuoteLeft
-            style={{
-              marginRight: '4px',
-              marginTop: '0px',
-              marginBottom: '0px',
-            }}
-          />,
-          "Let's",
-          'have',
-          'a',
-          'toast',
-          '!',
-          '',
-          '',
           <b>You</b>,
           <b>pushed</b>,
           <b>the</b>,
           <b>button</b>,
-          <b>!</b>,
+          '💪',
+          '',
+          '',
+          'Push',
+          'START',
+          'to',
+          'have',
+          'a',
+          'toast',
+          '!',
         ]
       : [
           <FaQuoteLeft
