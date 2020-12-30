@@ -171,7 +171,7 @@ function validateMessage(value) {
   let error
   if (!value) {
     return
-  } else if (value.length > 60) {
+  } else if (value.length > 120) {
     error = 'Message is to long'
   }
   return error
