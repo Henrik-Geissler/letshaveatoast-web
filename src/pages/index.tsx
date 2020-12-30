@@ -164,21 +164,6 @@ function validateName(value) {
     error = 'Name is required'
   } else if (value.length > 16) {
     error = 'Name is to long'
-  } else if (
-    value.includes('?') ||
-    value.includes('%') ||
-    value.includes('=') ||
-    value.includes('/') ||
-    value.includes('\\') ||
-    value.includes('&') ||
-    value.includes('.') ||
-    value.includes(':') ||
-    value.includes('(') ||
-    value.includes(')') ||
-    value.includes('{') ||
-    value.includes('}')
-  ) {
-    error = 'Only letters and numbers are allowed'
   }
   return error
 }
@@ -188,21 +173,6 @@ function validateMessage(value) {
     return
   } else if (value.length > 60) {
     error = 'Message is to long'
-  } else if (
-    value.includes('?') ||
-    value.includes('%') ||
-    value.includes('=') ||
-    value.includes('/') ||
-    value.includes('\\') ||
-    value.includes('&') ||
-    value.includes('.') ||
-    value.includes(':') ||
-    value.includes('(') ||
-    value.includes(')') ||
-    value.includes('{') ||
-    value.includes('}')
-  ) {
-    error = 'Only letters and numbers are allowed'
   }
   return error
 }
@@ -228,8 +198,8 @@ const updateUrl = (name, message, category, amount) => {
   window.history.replaceState(
     {},
     document.title,
-    `${name !== '' ? '?n=' : ''}${name}${
-      message !== 'notset' ? `&m=${message}` : ''
+    `${name !== '' ? '?n=' : ''}${encodeURIComponent(name)}${
+      message !== 'notset' ? `&m=${encodeURIComponent(message)}` : ''
     }${category !== '' ? `&c=${c}` : ''}${amount !== '' ? `&a=${a}` : ''}`
   )
 }
