@@ -30,7 +30,9 @@ const PaypalV: React.FC<PaypalVProps> = ({
   console.log(amount)
   const backlink = `http://${
     local ? 'localhost:3000/' : 'letshaveatoast.app/'
-  }?n=${name}&m=${message}&c=${category}&a=${amountT}&s=`
+  }?n=${encodeURIComponent(name)}&m=${encodeURIComponent(
+    message
+  )}&c=${category}&a=${amountT}&s=`
   return (
     <form
       action={`https://www${
