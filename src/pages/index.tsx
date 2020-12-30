@@ -560,7 +560,7 @@ const Todos: React.FC<StyleVProps> = () => {
                   onOpen3={onOpen3}
                   onOpen5={onOpen4}
                   onPush={() => {
-                    setShots(10)
+                    setShots(3)
                     refetch({
                       options: {
                         name: name,
