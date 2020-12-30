@@ -1,6 +1,8 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/core'
-import { Center } from '@chakra-ui/react'
+import { Center, IconButton } from '@chakra-ui/react'
+import Link from 'next/link'
 import React from 'react'
+import ImageV from '../../General/Image/ImageV'
 import FollowButtonsV from '../FollowButtons/FollowButtonsV'
 import LearnMoreV from '../LearnMore/LearnMoreV'
 import SocialButtonsV from '../SocialButtons/SocialButtonsV'
@@ -12,7 +14,8 @@ interface AboutVProps {
 const AboutV: React.FC<AboutVProps> = ({ onMore }) => {
   return (
     <Flex mt='5vh' direction='column' p={6}>
-      <Text mb='10vh' fontWeight='bold' textAlign='justify'>
+      <ImageV src='team' />
+      <Text mb='10vh' mt='1vh' fontWeight='bold' textAlign='justify'>
         We are Yanik, Henrik and Nils and our mission is to offer people the
         opportunity to feel a little bit less alone during the festive season by
         doing something good. Sounds crazy, huh? But that's exactly what we want
@@ -68,6 +71,21 @@ const AboutV: React.FC<AboutVProps> = ({ onMore }) => {
       <Box mt='5vh' mb='5vh'>
         <FollowButtonsV />
       </Box>
+
+      <Link href={'https://github.com/Henrik-Geissler'}>
+        <Text mt='5vh' textAlign='center' style={{ cursor: 'pointer' }}>
+          {'created with '}
+          <span style={{ color: 'red' }}> ♥ </span>
+          {' by Henrik Geißler '}
+          <IconButton
+            icon={<ImageV src='github' />}
+            aria-label='Henrik on github'
+            w='20px'
+            h='20px'
+            mt='-5px'
+          />
+        </Text>
+      </Link>
     </Flex>
   )
 }

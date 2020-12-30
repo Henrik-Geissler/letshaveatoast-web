@@ -8,7 +8,7 @@ import {
   Fade,
   SlideFade,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   AiOutlineQuestion,
   AiOutlineReload,
@@ -78,6 +78,12 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
   shoot,
 }) => {
   const [clicks, setClicks] = useState(0)
+  useEffect(() => {
+    if (clicks === 1)
+      setTimeout(() => {
+        setClicks(5)
+      }, 3000)
+  }, [clicks])
   if (dataMode) {
     return <></>
   }
@@ -175,7 +181,7 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
         pointerEvents={reRoll && shots <= 0 ? 'none' : 'auto'}
       >
         <Flex justifyContent='space-between' w='100vw'>
-          <SlideFade in={clicks > 0} offsetX='-20px' offsetY='0'>
+          <SlideFade in={clicks > 2} offsetX='-20px' offsetY='0'>
             <SideButtonV left={true} onClick={onOpen5}>
               <AiOutlineQuestion />
             </SideButtonV>
@@ -187,7 +193,7 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
           </SideButtonV>
            */}
           <Spacer pointerEvents='none' />
-          <SlideFade in={clicks > 0 && name === ''} offsetX='20px' offsetY='0'>
+          <SlideFade in={clicks > 2 && name === ''} offsetX='20px' offsetY='0'>
             {rightButton}
           </SlideFade>
         </Flex>

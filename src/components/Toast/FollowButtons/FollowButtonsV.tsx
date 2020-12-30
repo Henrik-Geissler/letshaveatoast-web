@@ -25,9 +25,6 @@ const FollowButtonsV: React.FC<FollowButtonsVProps> = () => {
     <Link href={accounts[2]}>
       <FacebookIcon size={45} round={true} />
     </Link>,
-    <Link href={accounts[3]}>
-      <LinkedinIcon size={45} round={true} />
-    </Link>,
   ]
   return (
     <Flex wrap='wrap' px={10} justifyContent='center' alignContent='start'>
