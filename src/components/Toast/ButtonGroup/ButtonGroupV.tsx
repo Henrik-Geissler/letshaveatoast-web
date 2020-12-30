@@ -175,7 +175,7 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
         pointerEvents={reRoll && shots <= 0 ? 'none' : 'auto'}
       >
         <Flex justifyContent='space-between' w='100vw'>
-          <SlideFade in={clicks > 3} offsetX='-20px' offsetY='0'>
+          <SlideFade in={clicks > 0} offsetX='-20px' offsetY='0'>
             <SideButtonV left={true} onClick={onOpen5}>
               <AiOutlineQuestion />
             </SideButtonV>
@@ -187,7 +187,7 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
           </SideButtonV>
            */}
           <Spacer pointerEvents='none' />
-          <SlideFade in={clicks > 3 && name === ''} offsetX='20px' offsetY='0'>
+          <SlideFade in={clicks > 0 && name === ''} offsetX='20px' offsetY='0'>
             {rightButton}
           </SlideFade>
         </Flex>
