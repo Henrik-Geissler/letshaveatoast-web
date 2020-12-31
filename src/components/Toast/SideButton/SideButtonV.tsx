@@ -16,9 +16,10 @@ const SideButtonV: React.FC<SideButtonVProps> = ({
 }) => {
   return (
     <Button
-      bg='#fff700'
+      bg={left ? '#ffffff' : '#fff700'}
+      borderColor={left ? '#fff700' : '#ffffff'}
       size='sm'
-      _hover={{ bg: '#ffba00' }}
+      _hover={left ? { borderColor: '#ffba00' } : { bg: '#ffba00' }}
       boxShadow=' 0 2px 3px -1px rgba(0,0,0,0.8)'
       borderRadius='20px'
       onClick={onClick}
