@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import {
+  AiOutlineArrowRight,
   AiOutlineQuestion,
   AiOutlineReload,
   AiOutlineTrophy,
@@ -99,11 +100,10 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
             lineHeight='1'
             transform='scale(0.6)'
             whiteSpace='nowrap'
-            mx={-6}
+            mx={-5}
           >
             <Flex>
-              <p>START</p>
-              <FaArrowRight />
+              <p>START</p> <AiOutlineArrowRight />
             </Flex>
           </Text>
         </SideButtonV>
@@ -181,10 +181,21 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
         pointerEvents={reRoll && shots <= 0 ? 'none' : 'auto'}
       >
         <Flex justifyContent='space-between' w='100vw'>
-          <SlideFade in={clicks > 2} offsetX='-20px' offsetY='0'>
-            <SideButtonV left={true} onClick={onOpen5}>
-              <AiOutlineQuestion />
-            </SideButtonV>
+          <SlideFade in={clicks > 2} offsetX='20px' offsetY='0'>
+            <Box className='antiSide2'>
+              <SideButtonV left={true} onClick={onOpen5}>
+                <Text
+                  lineHeight='1'
+                  transform='scale(0.6)'
+                  whiteSpace='nowrap'
+                  mx={-5}
+                >
+                  <Flex>
+                    <AiOutlineQuestion /> <p>ABOUT</p>
+                  </Flex>
+                </Text>
+              </SideButtonV>
+            </Box>
           </SlideFade>
 
           {/**

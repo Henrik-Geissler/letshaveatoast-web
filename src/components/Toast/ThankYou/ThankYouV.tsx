@@ -12,6 +12,8 @@ interface ThankYouVProps {
   amount: string
   toastId: number
   isDone: boolean
+  push: boolean
+  setPush: any
 }
 declare global {
   interface Window {
@@ -24,6 +26,8 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
   amount,
   toastId,
   isDone,
+  push,
+  setPush,
 }) => {
   const [thanks, setThanks] = useState(false)
   const restartButton = isDone ? (
@@ -63,17 +67,20 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
       particleNumber: 300,
       maxParticleSize: 4,
       maxSpeed: 10,
-      colorVariation: 50,
+      colorVariation: 20,
     }
 
     // Colors
     var colorPalette = {
       bg: { r: 255, g: 255, b: 255 },
       matter: [
-        { r: 248, g: 227, b: 219 }, // darkPRPL
-        { r: 248, g: 227, b: 219 }, // rockDust
-        { r: 252, g: 178, b: 96 }, // solorFlare
-        { r: 253, g: 238, b: 152 }, // totesASun
+        { r: 248, g: 227, b: 219 }, // lhat
+        { r: 0, g: 213, b: 114 }, // green
+        { r: 0, g: 178, b: 213 }, // cyan
+        { r: 252, g: 178, b: 96 }, // orange
+        { r: 213, g: 0, b: 0 }, // red
+        { r: 252, g: 178, b: 96 }, // orange
+        { r: 213, g: 0, b: 0 }, // red
       ],
     }
 
@@ -259,7 +266,7 @@ const ThankYouV: React.FC<ThankYouVProps> = ({
           }
         }
       }
-    }, 12000)
+    }, 1500)
 
     return () => {
       clearTimeout(timeout)

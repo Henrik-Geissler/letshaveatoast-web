@@ -466,13 +466,20 @@
 }
 .sideButton {
   font-size: 30px;
-  padding: 4px !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  width: 85px !important;
 }
 .sideButtonRight {
   margin-right: 3vw !important;
 }
 .antiSide {
   margin-right: 0 !important;
+}
+.antiSide2 {
+  margin-left: 0 !important;
 }
 .sideButtonLeft {
   margin-left: 3vw !important;
@@ -481,6 +488,7 @@
   .sideButton {
     font-size: 40px;
     padding: 4px !important;
+    width: 115px !important;
   }
   .sideButtonRight {
     margin-right: 10vw !important;
@@ -489,11 +497,17 @@
   .antiSide {
     margin-right: -34.735px !important;
   }
+  .antiSide2 {
+    margin-left: -34.735px !important;
+  }
   .sideButtonLeft {
     margin-left: 10vw !important;
   }
 }
 @media (min-width: 800px) {
+  .sideButton {
+    width: 130px !important;
+  }
   .sideButtonRight {
     margin-right: 30vw !important;
   }
