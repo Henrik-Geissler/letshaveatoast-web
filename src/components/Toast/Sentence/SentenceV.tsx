@@ -9,7 +9,7 @@ import {
 import { IconButton, Button, Spacer } from '@chakra-ui/react'
 import { Center } from '@chakra-ui/react'
 import { Field } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaChevronDown, FaQuoteLeft } from 'react-icons/fa'
 import { MdEdit } from 'react-icons/md'
 import ButtonV from '../Button/ButtonV'
@@ -76,6 +76,12 @@ const SentenceV: React.FC<SentenceVProps> = ({
   pending,
 }) => {
   const [firstPending, setFirstPending] = useState(true)
+  const [push, setPush] = useState(false)
+  useEffect(() => {
+    if (reRoll && pending && !push) {
+      setPush(true)
+    }
+  }, [reRoll, pending])
   if (!visible && !toastMode) {
     return <></>
   }
@@ -102,6 +108,8 @@ const SentenceV: React.FC<SentenceVProps> = ({
         amount={amount}
         toastId={toastId}
         isDone={isDone && !pending}
+        push={push}
+        setPush={setPush}
       />
     )
   }
