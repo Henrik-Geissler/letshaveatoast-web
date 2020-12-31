@@ -465,11 +465,7 @@
   opacity: 0;
 }
 .sideButton {
-  font-size: 30px;
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+  font-size: 14px;
   width: 85px !important;
 }
 .sideButtonRight {
@@ -486,8 +482,7 @@
 }
 @media (min-width: 420px) {
   .sideButton {
-    font-size: 40px;
-    padding: 4px !important;
+    font-size: 21px;
     width: 115px !important;
   }
   .sideButtonRight {

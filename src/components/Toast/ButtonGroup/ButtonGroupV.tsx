@@ -11,6 +11,9 @@ import {
 import React, { useEffect, useState } from 'react'
 import {
   AiOutlineArrowRight,
+  AiOutlineDown,
+  AiOutlineInfoCircle,
+  AiOutlineMore,
   AiOutlineQuestion,
   AiOutlineReload,
   AiOutlineTrophy,
@@ -95,17 +98,12 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
       </Box>
     ) : (
       <Box className='antiSide'>
-        <SideButtonV left={false} onClick={onOpen}>
-          <Text
-            lineHeight='1'
-            transform='scale(0.6)'
-            whiteSpace='nowrap'
-            mx={-5}
-          >
-            <Flex>
-              <p>START</p> <AiOutlineArrowRight />
-            </Flex>
-          </Text>
+        <SideButtonV
+          left={false}
+          onClick={onOpen}
+          icon={<AiOutlineArrowRight />}
+        >
+          START
         </SideButtonV>
       </Box>
     )
@@ -183,17 +181,12 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
         <Flex justifyContent='space-between' w='100vw'>
           <SlideFade in={clicks > 2} offsetX='20px' offsetY='0'>
             <Box className='antiSide2'>
-              <SideButtonV left={true} onClick={onOpen5}>
-                <Text
-                  lineHeight='1'
-                  transform='scale(0.6)'
-                  whiteSpace='nowrap'
-                  mx={-5}
-                >
-                  <Flex>
-                    <AiOutlineQuestion /> <p>ABOUT</p>
-                  </Flex>
-                </Text>
+              <SideButtonV
+                left={true}
+                onClick={onOpen5}
+                icon={<AiOutlineInfoCircle />}
+              >
+                ABOUT
               </SideButtonV>
             </Box>
           </SlideFade>
