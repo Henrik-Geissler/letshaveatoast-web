@@ -51,6 +51,7 @@ interface ButtonGroupVProps {
   pushAgain: any
   shots: number
   shoot: any
+  demo: boolean
 }
 
 const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
@@ -80,8 +81,9 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
   pushAgain,
   shots,
   shoot,
+  demo,
 }) => {
-  const [clicks, setClicks] = useState(0)
+  const [clicks, setClicks] = useState(demo ? 0 : 5)
   useEffect(() => {
     if (clicks === 1)
       setTimeout(() => {
@@ -92,7 +94,7 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
     return <></>
   }
   const rightButton =
-    reRoll || pending ? (
+    reRoll || pending || !demo ? (
       <Box className='antiSide'>
         <></>
       </Box>
@@ -108,7 +110,7 @@ const ButtonGroupV: React.FC<ButtonGroupVProps> = ({
       </Box>
     )
   const button =
-    reRoll && shots <= 0 ? (
+    (reRoll && shots <= 0) || !demo ? (
       <></>
     ) : (
       <Center

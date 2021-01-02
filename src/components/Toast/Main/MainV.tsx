@@ -1,9 +1,10 @@
-import { Box } from '@chakra-ui/core'
+import { Box, Flex, Text } from '@chakra-ui/core'
 import { Center } from '@chakra-ui/react'
 import React from 'react'
 import { FaBox } from 'react-icons/fa'
 import ImageV from '../../General/Image/ImageV'
 import DataScreenV from '../DataScreenV/DataScreenV'
+import HeadingV from '../Heading/HeadingV'
 import SentenceV from '../Sentence/SentenceV'
 import ToastView from '../ToastView/ToastView'
 
@@ -35,6 +36,7 @@ interface MainVProps {
   setToastEditMode: any
   isDone: boolean
   pending: boolean
+  demo: boolean
 }
 
 const MainV: React.FC<MainVProps> = ({
@@ -63,11 +65,38 @@ const MainV: React.FC<MainVProps> = ({
   setToastEditMode,
   isDone,
   pending,
+  demo,
 }) => {
   if (dataMode) {
     return <DataScreenV setDataMode={setDataMode} dataStats={dataStats} />
   }
   const edit = category !== ''
+  const demoText =
+    demo || toastMode ? (
+      <></>
+    ) : (
+      <Center
+        className='t50'
+        h='0px'
+        pos='absolute'
+        w='100vw'
+        p={4}
+        m={0}
+        left={0}
+      >
+        <Flex direction='column' maxWidth='600px' mt='60px'>
+          <HeadingV>{'Wow, thank you for over 10.000 toasts!'}</HeadingV>
+          <Text mb={'20px'} mt={'20px'}>
+            {
+              'We toast to all of you, the great initiatives and to a happy and prosperous year.'
+            }
+          </Text>
+          <Text mb={'20px'}>{"We'll come back soon :)"}</Text>
+          <Text>{'Cheers, Prost and Salute,'}</Text>
+          <Text>{'Yanik, Henrik and Nils'}</Text>
+        </Flex>
+      </Center>
+    )
   return (
     <>
       <SentenceV
@@ -95,7 +124,7 @@ const MainV: React.FC<MainVProps> = ({
         pending={pending}
       />
       <Center
-        className={edit || toastMode ? 't20' : 't40'}
+        className={edit || toastMode || !demo ? 't20' : 't40'}
         h='0px'
         pos='absolute'
         w='100vw'
@@ -109,6 +138,7 @@ const MainV: React.FC<MainVProps> = ({
           </Box>
         </Box>
       </Center>
+      {demoText}
     </>
   )
 }

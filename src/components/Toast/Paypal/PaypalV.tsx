@@ -12,6 +12,7 @@ interface PaypalVProps {
   image: string
   buy: boolean
   local: boolean
+  demo: boolean
 }
 
 const PaypalV: React.FC<PaypalVProps> = ({
@@ -26,11 +27,12 @@ const PaypalV: React.FC<PaypalVProps> = ({
   image,
   buy,
   local,
+  demo,
 }) => {
   console.log(amount)
   const backlink = `http://${
     local ? 'localhost:3000/' : 'letshaveatoast.app/'
-  }?n=${encodeURIComponent(name)}&m=${encodeURIComponent(
+  }${demo ? 'demo/' : ''}?n=${encodeURIComponent(name)}&m=${encodeURIComponent(
     message
   )}&c=${category}&a=${amountT}&s=`
   return (
