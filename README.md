@@ -53,8 +53,8 @@ Let’s have a toast is a web app where people from all over the world can virtu
 
 ### Media Coverage
 
-- BNN: https://bnn.de/karlsruhe/ettlingen/drei-ettlinger-erstellen-web-app-fuers-digitale-zuprosten-und-tun-damit-gutes
-- bigFM: https://www.bigfm.de/buzzhaltestelle/32411/lets-have-a-toast-brueder-entwickeln-app-gegen-die-einsamkeit-an-weihnachten
+- BNN (german): https://bnn.de/karlsruhe/ettlingen/drei-ettlinger-erstellen-web-app-fuers-digitale-zuprosten-und-tun-damit-gutes
+- bigFM (german): https://www.bigfm.de/buzzhaltestelle/32411/lets-have-a-toast-brueder-entwickeln-app-gegen-die-einsamkeit-an-weihnachten
 
 - Follow Us: https://www.instagram.com/letshave1toast/
 
