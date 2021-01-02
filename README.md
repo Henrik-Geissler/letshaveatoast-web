@@ -1,6 +1,6 @@
 # letshaveatoast-web
 
-A Frontend for the LET'S HAVE A TOAST App with React and Next.
+Frontend of the LET'S HAVE A TOAST App, made with React and Next.
 
 - See live at: https://letshaveatoast.app/demo
 - See the public App: https://letshaveatoast.app
